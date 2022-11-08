@@ -343,7 +343,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  print('В зону поиска входят места: $filteredMockList');
+                  print('В вашего зону поиска входят места: $filteredMockList');
                 },
                 child: Text(
                   'Показать ($filteredListLength)',
