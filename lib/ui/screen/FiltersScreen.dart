@@ -134,7 +134,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         children: [
           Container(
             margin: EdgeInsets.only(left: 15),
-            child: Text(AppStrings.categoties,
+            child: Text(AppStrings.categories,
                 style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
                 )

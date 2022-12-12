@@ -49,15 +49,27 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(),
-        body: SingleChildScrollView(
-            child: Column(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.green,
+        onPressed: () {},
+        label: Text(
+          AppStrings.addPlace,
+          style: TextStyle(fontSize: 18),
+        ),
+        icon: const Icon(Icons.add),
+      ),
+      appBar: MyAppBar(),
+      body: SingleChildScrollView(
+        child: Column(
           children: mocks
               .map((mock) => SightCard(
                   sight: mock,
                   listIndex: SightListIndex.mainList,
                   status: mock.status))
               .toList(),
-        )));
+        ),
+      ),
+    );
   }
 }

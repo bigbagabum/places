@@ -9,9 +9,11 @@ final darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.dmBackground,
   ),
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     headline1:
         TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+    headline2: TextStyle(
+        fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
   ),
 );
 
@@ -26,4 +28,6 @@ final lightTheme = ThemeData(
     textTheme: const TextTheme(
       headline1:
           TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+      headline2: TextStyle(
+          fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
     ));
