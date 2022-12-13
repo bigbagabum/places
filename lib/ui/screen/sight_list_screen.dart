@@ -6,6 +6,9 @@ import 'package:places/mocks.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/res/app_strings.dart';
+import 'package:places/ui/screen/CategoriesScreen.dart';
+
+import 'AddSightScreen.dart';
 
 // класс AppBar наследник от PrefferedSizeWidget
 
@@ -52,7 +55,10 @@ class _SightListScreenState extends State<SightListScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.green,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddSightScreen()));
+        },
         label: Text(
           AppStrings.addPlace,
           style: TextStyle(fontSize: 18),

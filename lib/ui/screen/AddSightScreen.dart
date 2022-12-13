@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/CategoriesScreen.dart';
 
 class AddSightScreen extends StatelessWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -23,7 +24,9 @@ class AddSightScreen extends StatelessWidget {
               child: Row(
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: Text(AppStrings.cancel,
                         style: Theme.of(context).textTheme.headline2),
                   ),
@@ -55,16 +58,28 @@ class AddSightScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Row(children: [
-              Text(AppStrings.noChoise, style: TextStyle(fontSize: 16)),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(17.0),
-                child: Image(
-                  image: AssetImage(AppAssets.iconNextScreen),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChooseCategories()),
+                );
+              },
+              child: Row(children: [
+                Text(
+                  AppStrings.noChoise,
+                  style: TextStyle(
+                      fontSize: 16, color: Theme.of(context).primaryColorLight),
                 ),
-              )
-            ]),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(17.0),
+                  child: Image(
+                    image: AssetImage(AppAssets.iconNextScreen),
+                  ),
+                )
+              ]),
+            ),
             Container(
               color: Color.fromARGB(56, 124, 126, 146),
               width: double.infinity,

@@ -19,9 +19,14 @@ class ChooseCategories extends StatelessWidget {
           SizedBox(
             height: 56,
             child: Row(children: [
-              Image(
-                image: AssetImage(AppAssets.iconBackScreen),
-                color: Theme.of(context).primaryColorLight,
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Image(
+                  image: AssetImage(AppAssets.iconBackScreen),
+                  color: Theme.of(context).primaryColorLight,
+                ),
               ),
               SizedBox(
                 width: 120,
