@@ -31,4 +31,5 @@ class AppStrings {
   static const createPlace = 'СОЗДАТЬ';
   static const savePlace = 'СОХРАНИТЬ';
   static const addPlace = 'новое место';
+  static const exampleName = 'Золотая долина';
 }

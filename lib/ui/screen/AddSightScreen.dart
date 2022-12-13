@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -27,17 +29,23 @@ class AddSightScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(AppStrings.cancel,
-                        style: Theme.of(context).textTheme.headline2),
+                    child: Text(
+                      AppStrings.cancel,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).primaryColorLight,
+                      ),
+                    ),
                   ),
                   SizedBox(
                     width: 56,
                   ),
-                  const Text(
+                  Text(
                     AppStrings.newPlace,
                     style: TextStyle(
                       fontSize: 18,
                       textBaseline: TextBaseline.ideographic,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                   )
                 ],
@@ -52,7 +60,7 @@ class AddSightScreen extends StatelessWidget {
                 Text(
                   AppStrings.category,
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Theme.of(context).primaryColorLight,
                     fontSize: 12,
                   ),
                 ),
@@ -75,7 +83,10 @@ class AddSightScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(17.0),
                   child: Image(
-                    image: AssetImage(AppAssets.iconNextScreen),
+                    color: Theme.of(context).primaryColorLight,
+                    image: AssetImage(
+                      AppAssets.iconNextScreen,
+                    ),
                   ),
                 )
               ]),
@@ -92,6 +103,9 @@ class AddSightScreen extends StatelessWidget {
               children: [
                 Text(
                   AppStrings.placeName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                 ),
               ],
             ),
@@ -104,8 +118,11 @@ class AddSightScreen extends StatelessWidget {
               child: TextField(
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
                   border: OutlineInputBorder(),
-                  labelText: 'Золотая долина',
+                  labelText: AppStrings.exampleName,
                 ),
               ),
             ),
@@ -116,7 +133,12 @@ class AddSightScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.latitude),
+                  Text(
+                    AppStrings.latitude,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorLight,
+                    ),
+                  ),
                   SizedBox(
                     height: 12,
                   ),
@@ -124,10 +146,16 @@ class AddSightScreen extends StatelessWidget {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColorLight,
+                      ),
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: AppStrings.latitude,
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).primaryColorLight,
+                        ),
                       ),
                     ),
                   ),
@@ -137,7 +165,12 @@ class AddSightScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.longitude),
+                  Text(
+                    AppStrings.longitude,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorLight,
+                    ),
+                  ),
                   SizedBox(
                     height: 12,
                   ),
@@ -147,6 +180,9 @@ class AddSightScreen extends StatelessWidget {
                     child: TextField(
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).primaryColorLight,
+                        ),
                         border: OutlineInputBorder(),
                         labelText: AppStrings.longitude,
                       ),
@@ -189,6 +225,9 @@ class AddSightScreen extends StatelessWidget {
               decoration: InputDecoration(
                 //floatingLabelStyle: false,
                 border: OutlineInputBorder(),
+                labelStyle: TextStyle(
+                  color: Theme.of(context).primaryColorLight,
+                ),
                 labelText: AppStrings.enterText,
               ),
             ),

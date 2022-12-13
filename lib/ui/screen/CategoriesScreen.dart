@@ -29,7 +29,7 @@ class ChooseCategories extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 120,
+                width: 80,
               ),
               Text(
                 AppStrings.newPlace,
