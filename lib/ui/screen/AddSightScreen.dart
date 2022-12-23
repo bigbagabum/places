@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,8 +10,57 @@ import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/CategoriesScreen.dart';
 
-class AddSightScreen extends StatelessWidget {
+import '../../domain/sight.dart';
+import '../../mocks.dart';
+
+class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddSightScreen> createState() => _AddSightScreenState();
+}
+
+class _AddSightScreenState extends State<AddSightScreen> {
+  bool isButtonDisabled = true;
+
+  final textFieldNameController = TextEditingController();
+  final textFieldLatController = TextEditingController();
+  final textFieldLonController = TextEditingController();
+  final textFieldDescriptionController = TextEditingController();
+  final newPlaceCategoty = '';
+
+  IsAllFieldsFilled() {
+    if (textFieldDescriptionController.text == '' ||
+        textFieldLatController.text == '' ||
+        textFieldLonController.text == '' ||
+        textFieldNameController.text == '') {
+      setState(() {
+        isButtonDisabled = true;
+      });
+      print(isButtonDisabled);
+    } else {
+      setState(() {
+        isButtonDisabled = false;
+      });
+      print(isButtonDisabled);
+    }
+  }
+
+  Color MyButtonColor(bool isGrey) {
+    return isGrey ? Colors.grey : Colors.green;
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    textFieldNameController.dispose();
+    textFieldLatController.dispose();
+    textFieldLonController.dispose();
+    textFieldDescriptionController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +167,8 @@ class AddSightScreen extends StatelessWidget {
               width: double.infinity,
               height: 40,
               child: TextField(
+                onChanged: IsAllFieldsFilled(),
+                controller: textFieldNameController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   labelStyle: TextStyle(
@@ -146,6 +199,8 @@ class AddSightScreen extends StatelessWidget {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      onChanged: IsAllFieldsFilled(),
+                      controller: textFieldLatController,
                       style: TextStyle(
                         color: Theme.of(context).primaryColorLight,
                       ),
@@ -178,6 +233,8 @@ class AddSightScreen extends StatelessWidget {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      onChanged: IsAllFieldsFilled(),
+                      controller: textFieldLonController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
@@ -219,6 +276,8 @@ class AddSightScreen extends StatelessWidget {
               height: 12,
             ),
             TextField(
+              onChanged: IsAllFieldsFilled(),
+              controller: textFieldDescriptionController,
               textAlignVertical: TextAlignVertical.top,
               maxLines: 3,
               textInputAction: TextInputAction.done,
@@ -237,9 +296,24 @@ class AddSightScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green)),
-                  onPressed: () {},
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          MyButtonColor(isButtonDisabled))),
+                  onPressed: isButtonDisabled
+                      ? null
+                      : () {
+                          Sight newPlace = Sight(
+                              textFieldNameController.text,
+                              'www',
+                              textFieldDescriptionController.text,
+                              'hotel',
+                              double.parse(textFieldLatController.text),
+                              double.parse(textFieldLonController.text),
+                              'lib/ui/res/images/jazz.jpg',
+                              SightStatus.sightToVisit);
+
+                          mocks.add(newPlace);
+                          print(newPlace.name);
+                        },
                   child: Text(
                     AppStrings.createPlace,
                     style: TextStyle(fontSize: 14),
