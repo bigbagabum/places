@@ -23,13 +23,13 @@ class AddSightScreen extends StatefulWidget {
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
 
-  final textFieldNameController = TextEditingController();
-  final textFieldLatController = TextEditingController();
-  final textFieldLonController = TextEditingController();
-  final textFieldDescriptionController = TextEditingController();
+  var textFieldNameController = TextEditingController();
+  var textFieldLatController = TextEditingController();
+  var textFieldLonController = TextEditingController();
+  var textFieldDescriptionController = TextEditingController();
   final newPlaceCategoty = '';
 
-  IsAllFieldsFilled() {
+  void _IsAllFieldsFilled() {
     if (textFieldDescriptionController.text == '' ||
         textFieldLatController.text == '' ||
         textFieldLonController.text == '' ||
@@ -167,7 +167,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               width: double.infinity,
               height: 40,
               child: TextField(
-                onChanged: IsAllFieldsFilled(),
+                onChanged: (_) => _IsAllFieldsFilled(),
                 controller: textFieldNameController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -199,7 +199,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
-                      onChanged: IsAllFieldsFilled(),
+                      onChanged: (_) => _IsAllFieldsFilled(),
                       controller: textFieldLatController,
                       style: TextStyle(
                         color: Theme.of(context).primaryColorLight,
@@ -233,7 +233,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
-                      onChanged: IsAllFieldsFilled(),
+                      onChanged: (_) => _IsAllFieldsFilled(),
                       controller: textFieldLonController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
@@ -276,7 +276,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               height: 12,
             ),
             TextField(
-              onChanged: IsAllFieldsFilled(),
+              onChanged: (_) => _IsAllFieldsFilled(),
               controller: textFieldDescriptionController,
               textAlignVertical: TextAlignVertical.top,
               maxLines: 3,
