@@ -4,8 +4,89 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 
-class ChooseCategories extends StatelessWidget {
+//row with category and marker if this cat is choised
+class CategoryRow extends StatelessWidget {
+  final CatRow cat;
+  const CategoryRow({Key? key, required this.cat}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 48,
+          width: double.infinity,
+          child: TextButton(
+            onPressed: (() {}),
+            child: Row(
+              children: [
+                Text(
+                  cat.catName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                Spacer(),
+                Text(cat.catChoised.toString())
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 1,
+          width: double.infinity,
+          color: Color.fromARGB(56, 124, 126, 146),
+        ),
+      ],
+    );
+  }
+}
+
+class CatRow {
+  String catName;
+  bool catChoised;
+  CatRow(this.catName, this.catChoised);
+}
+
+class ChooseCategories extends StatefulWidget {
   ChooseCategories({Key? key}) : super(key: key);
+
+  static bool isButtonDesible = true;
+
+  // static String get cat {
+  //   return _ChooseCategoriesState.isCafe
+  //       ? AppStrings.typeCafe
+  //       : _ChooseCategoriesState.isHotel
+  //           ? AppStrings.typeHotel
+  //           : _ChooseCategoriesState.isMuseum
+  //               ? AppStrings.typeMuseum
+  //               : _ChooseCategoriesState.isPark
+  //                   ? AppStrings.typePark
+  //                   : _ChooseCategoriesState.isRestourant
+  //                       ? AppStrings.typeRestourant
+  //                       : _ChooseCategoriesState.IsParticularPlace
+  //                           ? AppStrings.typePartikularPlace
+  //                           : AppStrings.noChoise;
+  // }
+
+  @override
+  State<ChooseCategories> createState() => _ChooseCategoriesState();
+}
+
+class _ChooseCategoriesState extends State<ChooseCategories> {
+  final cats = [
+    CatRow(AppStrings.typeCafe, false),
+    CatRow(AppStrings.typeHotel, false),
+    CatRow(AppStrings.typeMuseum, false),
+    CatRow(AppStrings.typePark, false),
+    CatRow(AppStrings.typePartikularPlace, false),
+    CatRow(AppStrings.typeRestourant, false),
+  ];
+
+  // Написать функцию которая обрабатывает ТАПы по категориям
+  //
+
+  void CategoryChoised() {}
 
   @override
   Widget build(BuildContext context) {
@@ -42,78 +123,14 @@ class ChooseCategories extends StatelessWidget {
             ]),
           ),
           SizedBox(height: 24),
-          SizedBox(
-            height: 48,
-            //width: double.infinity,
-            child: TextButton(
-                child: Text(
-                  AppStrings.typeCafe,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                ),
-                onPressed: () {}),
-          ),
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              child: Text(
-                AppStrings.typeHotel,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              child: Text(
-                AppStrings.typeMuseum,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              child: Text(
-                AppStrings.typePark,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              child: Text(
-                AppStrings.typePartikularPlace,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              child: Text(
-                AppStrings.typeRestourant,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
+          //here list of category from up to down
+          Column(
+              children: cats
+                  .map((item) => CategoryRow(
+                        cat: item,
+                      ))
+                  .toList()),
+
           Spacer(),
           SizedBox(
             height: 48,

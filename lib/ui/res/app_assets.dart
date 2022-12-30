@@ -14,4 +14,5 @@ class AppAssets {
   static const buttonCafe = 'lib/ui/res/icons/Cafe.png';
   static const iconInformation = 'lib/ui/res/icons/information.png';
   static const iconNextScreen = 'lib/ui/res/icons/nextScreen.png';
+  static const iconFilterItem = 'lib/ui/res/icons/iconFilterItem.png';
 }

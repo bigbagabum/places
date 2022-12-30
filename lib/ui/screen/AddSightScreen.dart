@@ -23,11 +23,15 @@ class AddSightScreen extends StatefulWidget {
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
 
+  // String categotyForNewPlace() {
+  //   return ChooseCategories.cat;
+  // }
+
   var textFieldNameController = TextEditingController();
   var textFieldLatController = TextEditingController();
   var textFieldLonController = TextEditingController();
   var textFieldDescriptionController = TextEditingController();
-  final newPlaceCategoty = '';
+  static String newPlaceCategoty = '';
 
   void _IsAllFieldsFilled() {
     if (textFieldDescriptionController.text == '' ||
