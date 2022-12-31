@@ -4,44 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 
-//row with category and marker if this cat is choised
-class CategoryRow extends StatelessWidget {
-  final CatRow cat;
-  const CategoryRow({Key? key, required this.cat}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: TextButton(
-            onPressed: (() {}),
-            child: Row(
-              children: [
-                Text(
-                  cat.catName,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                ),
-                Spacer(),
-                Text(cat.catChoised.toString())
-              ],
-            ),
-          ),
-        ),
-        Container(
-          height: 1,
-          width: double.infinity,
-          color: Color.fromARGB(56, 124, 126, 146),
-        ),
-      ],
-    );
-  }
-}
-
 class CatRow {
   String catName;
   bool catChoised;
@@ -73,8 +35,50 @@ class ChooseCategories extends StatefulWidget {
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
+void clearChoise(List<CatRow> choiseClear) {
+  for (var n in choiseClear) {
+    n.catChoised = false;
+  }
+}
+
 class _ChooseCategoriesState extends State<ChooseCategories> {
-  final cats = [
+  Widget setCategory(CatRow cat) => Column(
+        children: [
+          SizedBox(
+            height: 48,
+            width: double.infinity,
+            child: TextButton(
+              onPressed: (() {
+                setState(
+                  () {
+                    clearChoise(_cats);
+                    cat.catChoised = !cat.catChoised;
+                  },
+                );
+              }),
+              child: Row(
+                children: [
+                  Text(
+                    cat.catName,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorLight,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(cat.catChoised.toString())
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 1,
+            width: double.infinity,
+            color: Color.fromARGB(56, 124, 126, 146),
+          ),
+        ],
+      );
+
+  final _cats = [
     CatRow(AppStrings.typeCafe, false),
     CatRow(AppStrings.typeHotel, false),
     CatRow(AppStrings.typeMuseum, false),
@@ -82,11 +86,6 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
     CatRow(AppStrings.typePartikularPlace, false),
     CatRow(AppStrings.typeRestourant, false),
   ];
-
-  // Написать функцию которая обрабатывает ТАПы по категориям
-  //
-
-  void CategoryChoised() {}
 
   @override
   Widget build(BuildContext context) {
@@ -124,14 +123,16 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
           ),
           SizedBox(height: 24),
           //here list of category from up to down
-          Column(
-              children: cats
-                  .map((item) => CategoryRow(
-                        cat: item,
-                      ))
-                  .toList()),
+          // Column(
+          //     children: cats
+          //         .map((item) => CategoryRow(
+          //               cat: item,
+          //             ))
+          //         .toList()),
 
-          Spacer(),
+          Column(children: _cats.map((item) => setCategory(item)).toList()),
+
+          const Spacer(),
           SizedBox(
             height: 48,
             width: double.infinity,
