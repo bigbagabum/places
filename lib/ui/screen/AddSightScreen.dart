@@ -23,30 +23,27 @@ class AddSightScreen extends StatefulWidget {
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
 
-  // String categotyForNewPlace() {
-  //   return ChooseCategories.cat;
-  // }
+  String choisedCat = AppStrings.noChoise;
 
   var textFieldNameController = TextEditingController();
   var textFieldLatController = TextEditingController();
   var textFieldLonController = TextEditingController();
   var textFieldDescriptionController = TextEditingController();
-  static String newPlaceCategoty = '';
+  //static String newPlaceCategoty = choisedCat;
 
   void _IsAllFieldsFilled() {
     if (textFieldDescriptionController.text == '' ||
         textFieldLatController.text == '' ||
         textFieldLonController.text == '' ||
-        textFieldNameController.text == '') {
+        textFieldNameController.text == '' ||
+        choisedCat == AppStrings.noChoise) {
       setState(() {
         isButtonDisabled = true;
       });
-      print(isButtonDisabled);
     } else {
       setState(() {
         isButtonDisabled = false;
       });
-      print(isButtonDisabled);
     }
   }
 
@@ -122,15 +119,22 @@ class _AddSightScreenState extends State<AddSightScreen> {
               ],
             ),
             TextButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                String received = await Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChooseCategories()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ChooseCategories(catChoised: choisedCat)),
                 );
+
+                setState(() {
+                  choisedCat = received;
+                  _IsAllFieldsFilled();
+                });
               },
               child: Row(children: [
                 Text(
-                  AppStrings.noChoise,
+                  choisedCat,
                   style: TextStyle(
                       fontSize: 16, color: Theme.of(context).primaryColorLight),
                 ),

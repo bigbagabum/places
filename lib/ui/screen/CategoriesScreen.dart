@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 
+import 'AddSightScreen.dart';
+
 class CatRow {
   String catName;
   bool catChoised;
@@ -11,37 +13,39 @@ class CatRow {
 }
 
 class ChooseCategories extends StatefulWidget {
-  ChooseCategories({Key? key}) : super(key: key);
+  ChooseCategories({Key? key, required String catChoised}) : super(key: key);
 
-  static bool isButtonDesible = true;
-
-  // static String get cat {
-  //   return _ChooseCategoriesState.isCafe
-  //       ? AppStrings.typeCafe
-  //       : _ChooseCategoriesState.isHotel
-  //           ? AppStrings.typeHotel
-  //           : _ChooseCategoriesState.isMuseum
-  //               ? AppStrings.typeMuseum
-  //               : _ChooseCategoriesState.isPark
-  //                   ? AppStrings.typePark
-  //                   : _ChooseCategoriesState.isRestourant
-  //                       ? AppStrings.typeRestourant
-  //                       : _ChooseCategoriesState.IsParticularPlace
-  //                           ? AppStrings.typePartikularPlace
-  //                           : AppStrings.noChoise;
-  // }
+  String catChoised = AppStrings.noChoise;
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
-void clearChoise(List<CatRow> choiseClear) {
+void clearChoise(choiseClear) {
   for (var n in choiseClear) {
     n.catChoised = false;
   }
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
+  bool isButtonDisabled = true;
+
+  int itemOfCat = 0;
+
+  Color MyButtonColor(bool isGrey) {
+    return isGrey ? Colors.grey : Colors.green;
+  }
+
+  Widget showMarker(bool e) {
+    if (e == true) {
+      return Image(
+          image: AssetImage('lib/ui/res/icons/FilterItem.png'),
+          color: Colors.green);
+    } else {
+      return Text('');
+    }
+  }
+
   Widget setCategory(CatRow cat) => Column(
         children: [
           SizedBox(
@@ -51,8 +55,11 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
               onPressed: (() {
                 setState(
                   () {
-                    clearChoise(_cats);
-                    cat.catChoised = !cat.catChoised;
+                    bool checkStatus = cat.catChoised;
+                    clearChoise(cats);
+                    cat.catChoised = !checkStatus;
+                    isButtonDisabled = checkStatus;
+                    isButtonDisabled ? null : widget.catChoised = cat.catName;
                   },
                 );
               }),
@@ -65,7 +72,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                     ),
                   ),
                   Spacer(),
-                  Text(cat.catChoised.toString())
+                  showMarker(cat.catChoised)
+                  //Text(cat.catChoised.toString())
                 ],
               ),
             ),
@@ -78,7 +86,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
         ],
       );
 
-  final _cats = [
+  static List cats = [
     CatRow(AppStrings.typeCafe, false),
     CatRow(AppStrings.typeHotel, false),
     CatRow(AppStrings.typeMuseum, false),
@@ -101,7 +109,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: Row(children: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context, AppStrings.noChoise);
                 },
                 child: Image(
                   image: AssetImage(AppAssets.iconBackScreen),
@@ -122,26 +130,22 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             ]),
           ),
           SizedBox(height: 24),
-          //here list of category from up to down
-          // Column(
-          //     children: cats
-          //         .map((item) => CategoryRow(
-          //               cat: item,
-          //             ))
-          //         .toList()),
-
-          Column(children: _cats.map((item) => setCategory(item)).toList()),
-
+          Column(children: cats.map((item) => setCategory(item)).toList()),
           const Spacer(),
           SizedBox(
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green)),
-                onPressed: () {},
-                child: Text(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        MyButtonColor(isButtonDisabled))),
+                onPressed: isButtonDisabled
+                    ? null
+                    : () {
+                        Navigator.pop(context, widget.catChoised);
+                        clearChoise(cats);
+                      },
+                child: const Text(
                   AppStrings.savePlace,
                   style: TextStyle(fontSize: 14),
                 )),
