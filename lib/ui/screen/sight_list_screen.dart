@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/res/app_strings.dart';
@@ -22,16 +23,40 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
         toolbarHeight: AppSize.toolBarSize,
         elevation: 0,
+        centerTitle: true,
         //backgroundColor: Colors.white,
         title: Text(
           AppStrings.appTitle,
-          textAlign: TextAlign.left,
+          textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 32.0,
+              fontSize: 22.0,
               color: Theme.of(context).primaryColorLight,
               fontFamily: "Roboto",
               fontWeight: FontWeight.bold,
               height: 1),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(52.0),
+          child: Container(
+            margin: EdgeInsets.only(left: 16, right: 16),
+            height: 40,
+            width: double.infinity,
+            child: TextField(
+              readOnly: true,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                fillColor: Theme.of(context).primaryColorDark,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none),
+                hintText: AppStrings.searchBar,
+                hintStyle: Theme.of(context).textTheme.headline3,
+                filled: true,
+                prefixIcon: Image(image: AssetImage(AppAssets.iconSearch)),
+                suffixIcon: Image(image: AssetImage(AppAssets.iconFilter)),
+              ),
+            ),
+          ),
         ));
   }
 

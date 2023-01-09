@@ -320,7 +320,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               SightStatus.sightToVisit);
 
                           mocks.add(newPlace);
-                          print(newPlace.name);
+                          // print(newPlace.name);
+                          Navigator.pop(context);
                         },
                   child: Text(
                     AppStrings.createPlace,

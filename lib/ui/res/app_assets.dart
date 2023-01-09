@@ -15,4 +15,6 @@ class AppAssets {
   static const iconInformation = 'lib/ui/res/icons/information.png';
   static const iconNextScreen = 'lib/ui/res/icons/nextScreen.png';
   static const iconFilterItem = 'lib/ui/res/icons/iconFilterItem.png';
+  static const iconSearch = 'lib/ui/res/icons/search.png';
+  static const iconFilter = 'lib/ui/res/icons/filter.png';
 }

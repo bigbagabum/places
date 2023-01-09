@@ -9,12 +9,15 @@ final darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.dmBackground,
   ),
+  // ignore: prefer_const_constructors
   textTheme: TextTheme(
-    headline1:
-        TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
-    headline2: TextStyle(
-        fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-  ),
+      headline1:
+          TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+      // ignore: prefer_const_constructors
+      headline2: TextStyle(
+          fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
+      headline3: const TextStyle(
+          fontSize: 16, fontFamily: 'Roboto', color: AppColors.lightGrey)),
 );
 
 final lightTheme = ThemeData(
@@ -26,8 +29,9 @@ final lightTheme = ThemeData(
       backgroundColor: AppColors.dmPrimaryLightColor,
     ),
     textTheme: const TextTheme(
-      headline1:
-          TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
-      headline2: TextStyle(
-          fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    ));
+        headline1:
+            TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+        headline2: TextStyle(
+            fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
+        headline3: TextStyle(
+            fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey)));
