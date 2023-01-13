@@ -10,6 +10,7 @@ import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/CategoriesScreen.dart';
 
 import 'AddSightScreen.dart';
+import 'SightSearchScreen.dart';
 
 // класс AppBar наследник от PrefferedSizeWidget
 
@@ -42,6 +43,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 40,
             width: double.infinity,
             child: TextField(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SightSearchScreen()));
+              },
               readOnly: true,
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(

@@ -8,6 +8,7 @@ import 'package:places/ui/res/app_assets.dart';
 
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/SightSearchScreen.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   void _clickBack() {
-    print('Back button clicked');
+    Navigator.pop(context);
   }
 
   late int filteredListLength = fillListItems(mocks).length;

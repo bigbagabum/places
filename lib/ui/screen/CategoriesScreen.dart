@@ -7,9 +7,10 @@ import 'package:places/ui/res/app_strings.dart';
 import 'AddSightScreen.dart';
 
 class CatRow {
-  String catName;
-  bool catChoised;
-  CatRow(this.catName, this.catChoised);
+  // класс строки классов показывающий выбобр или не выбор текущей категории
+  String _catName;
+  bool _catChoised;
+  CatRow(this._catName, this._catChoised);
 }
 
 class ChooseCategories extends StatefulWidget {
@@ -23,14 +24,14 @@ class ChooseCategories extends StatefulWidget {
 
 void clearChoise(choiseClear) {
   for (var n in choiseClear) {
-    n.catChoised = false;
+    n._catChoised = false;
   }
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
   bool isButtonDisabled = true;
 
-  int itemOfCat = 0;
+  // int itemOfCat = 0;
 
   Color MyButtonColor(bool isGrey) {
     return isGrey ? Colors.grey : Colors.green;
@@ -55,24 +56,25 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
               onPressed: (() {
                 setState(
                   () {
-                    bool checkStatus = cat.catChoised;
+                    bool checkStatus = cat._catChoised;
                     clearChoise(cats);
-                    cat.catChoised = !checkStatus;
-                    isButtonDisabled = checkStatus;
-                    isButtonDisabled ? null : widget.catChoised = cat.catName;
+                    cat._catChoised = !checkStatus;
+                    isButtonDisabled =
+                        checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
+                    isButtonDisabled ? null : widget.catChoised = cat._catName;
                   },
                 );
               }),
               child: Row(
                 children: [
                   Text(
-                    cat.catName,
+                    cat._catName,
                     style: TextStyle(
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
                   Spacer(),
-                  showMarker(cat.catChoised)
+                  showMarker(cat._catChoised)
                   //Text(cat.catChoised.toString())
                 ],
               ),
@@ -109,6 +111,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: Row(children: [
               TextButton(
                 onPressed: () {
+//Navigator.pop(context, AppStrings.noChoise);
                   Navigator.pop(context, AppStrings.noChoise);
                 },
                 child: Image(
