@@ -7,7 +7,7 @@ import 'package:places/ui/res/app_strings.dart';
 import 'AddSightScreen.dart';
 
 class CatRow {
-  // класс строки классов показывающий выбобр или не выбор текущей категории
+  // класс строки классов показывающий выбор или не выбор текущей категории
   String _catName;
   bool _catChoised;
   CatRow(this._catName, this._catChoised);
