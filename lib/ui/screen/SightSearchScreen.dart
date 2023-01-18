@@ -39,28 +39,36 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   var TextSearchFieldController = TextEditingController();
 
   Widget SeightLine(Sight inputSight) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
-              height: 56,
-              width: 56,
-              child: Image(
-                image: AssetImage(inputSight.img),
-              ),
-            )
-          ],
-        ),
-        Container(
-          height: 1,
-          width: double.infinity,
-          color: Color.fromARGB(56, 124, 126, 146),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                height: 56,
+                width: 56,
+                child: SizedBox(
+                  child: Image(
+                    image: AssetImage(inputSight.img),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Container(
+            height: 1,
+            margin: const EdgeInsets.only(top: 10),
+            width: double.infinity,
+            color: Color.fromARGB(56, 124, 126, 146),
+          )
+        ],
+      ),
     );
   }
 
@@ -94,7 +102,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   textAlignVertical: TextAlignVertical.center,
                   onSubmitted: (_) {
                     //обрабатываем ввод в строке поиска
-                    //filteredListOfItems(TextSearchFieldController.text, mocks);
 
                     setState(() {
                       sightF = filteredListOfItems(
@@ -121,7 +128,9 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     hintText: AppStrings.searchBar,
                     hintStyle: Theme.of(context).textTheme.headline3,
                     filled: true,
-                    prefixIcon: Image(image: AssetImage(AppAssets.iconSearch)),
+                    prefixIcon: Image(
+                      image: AssetImage(AppAssets.iconSearch),
+                    ),
                     suffixIcon: IconButton(
                         onPressed: () {
                           //клик на иконку фильтра
