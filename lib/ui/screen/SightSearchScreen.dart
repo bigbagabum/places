@@ -46,6 +46,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           Row(
             children: [
               Container(
+                margin: EdgeInsets.only(right: 16),
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -58,6 +59,19 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(inputSight.name,
+                      style: Theme.of(context).textTheme.headline5
+                      //style: TextStyle(fontFamily: 'Roboto', fontSize: 16),
+                      ),
+                  SizedBox(height: 8),
+                  Text(inputSight.type,
+                      style: Theme.of(context).textTheme.headline4)
+                  //style: TextStyle(fontFamily: 'Roboto', fontSize: 14))
+                ],
               )
             ],
           ),
