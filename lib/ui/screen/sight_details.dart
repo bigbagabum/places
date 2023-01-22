@@ -3,24 +3,19 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
-class SightDetails extends StatelessWidget {
-  final Sight? sight;
-  const SightDetails({Key? key, this.sight}) : super(key: key);
-  void _clickBack() {
-    print('Back button clicked');
+class SightDetails extends StatefulWidget {
+  SightDetails({Key? key, required Sight s}) : super(key: key) {
+    this.sight = s;
   }
 
-  void _buildRouteClick() {
-    print('Build a route button click');
-  }
+  late Sight sight;
 
-  _favoriteButtonClick() {
-    print('favorite button click');
-  }
+  @override
+  State<SightDetails> createState() => _SightDetailsState();
+}
 
-  _calendarButtonClick() {
-    print('Calendar Button Clicked');
-  }
+class _SightDetailsState extends State<SightDetails> {
+  //Sight sight = sight;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class SightDetails extends StatelessWidget {
                   SizedBox(
                     height: double.infinity,
                     child: Image(
-                      image: AssetImage(sight!.img),
+                      image: AssetImage(widget.sight.img),
                       fit: BoxFit.fitHeight,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
@@ -57,7 +52,9 @@ class SightDetails extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: _clickBack,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Container(
                         height: 32,
                         width: 32,
@@ -90,7 +87,7 @@ class SightDetails extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        sight!.name,
+                        widget.sight.name,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Roboto',
@@ -102,7 +99,7 @@ class SightDetails extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          sight!.type,
+                          widget.sight.type,
                           style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).primaryColorLight,
@@ -126,7 +123,7 @@ class SightDetails extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 24.0, bottom: 24),
                       child: SingleChildScrollView(
                         child: Text(
-                          sight!.details,
+                          widget.sight.details,
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 14,
@@ -149,7 +146,7 @@ class SightDetails extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.green),
                           ),
-                          onPressed: _buildRouteClick,
+                          onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -184,7 +181,7 @@ class SightDetails extends StatelessWidget {
                       children: [
                         Flexible(
                           child: GestureDetector(
-                            onTap: _calendarButtonClick,
+                            onTap: () {},
                             child: Container(
                               //width: 164,
                               height: 40,
@@ -210,7 +207,7 @@ class SightDetails extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: GestureDetector(
-                            onTap: _favoriteButtonClick,
+                            onTap: () {},
                             child: Container(
                               //width: 164,
                               height: 40,

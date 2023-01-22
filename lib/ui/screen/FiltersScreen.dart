@@ -19,24 +19,24 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   void _clickBack() {
-    Navigator.pop(context);
+    Navigator.pop(context, filteredMockList);
   }
 
   late int filteredListLength = fillListItems(mocks).length;
 
-  late List<String> filteredMockList =
+  late List<Sight> filteredMockList =
       fillListItems(mocks); //наполняем первично лист с учетом удаленности
 
-  List<String> fillListItems(List<Sight> value) {
+  List<Sight> fillListItems(List<Sight> value) {
     //Наполняем изначальными данными список мест
-    List<String> filledList = [];
+    List<Sight> filledList = [];
     for (var n in value) {
       if (isPlaceNear(
           RedSquare,
           Location(n.lat, n.lan),
           _FiltersScreenState.currentRangeValues.start,
           _FiltersScreenState.currentRangeValues.end)) {
-        filledList.add(n.name);
+        filledList.add(n);
       }
     }
     return filledList;
@@ -54,7 +54,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   }
 
   void filterOfItems() {
-    List<String> filteredPlaces = [];
+    List<Sight> filteredPlaces = [];
 
     for (int e = 0; e < mocks.length; e++) {
       if (((mocks[e].type == 'отель' && isHotel) ||
@@ -68,13 +68,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
               Location(mocks[e].lat, mocks[e].lan),
               _FiltersScreenState.currentRangeValues.start,
               _FiltersScreenState.currentRangeValues.end)) {
-        filteredPlaces.add(mocks[e].name);
+        filteredPlaces.add(mocks[e]);
       }
       print(
           '${mocks[e].name}  расстояние до Красной площади =  ${haversineDistance.haversine(RedSquare, Location(mocks[e].lat, mocks[e].lan), Unit.METER).round()} м');
     }
-    filteredMockList = filteredPlaces;
-    filteredListLength = filteredMockList.length;
+    setState(() {
+      filteredMockList = filteredPlaces;
+      filteredListLength = filteredMockList.length;
+    });
   }
 
   Widget isCheckedFilterItem(bool value) {
@@ -344,7 +346,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  print('В вашего зону поиска входят места: $filteredMockList');
+                  print(
+                      'В вашего зону поиска входят места: ${filteredMockList.map((e) => e.name).toString()}');
+                  Navigator.pop(context, filteredMockList);
                 },
                 child: Text(
                   'Показать ($filteredListLength)',

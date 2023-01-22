@@ -122,9 +122,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               onPressed: () async {
                 String received = await Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ChooseCategories(catChoised: choisedCat)),
+                  MaterialPageRoute(builder: (context) => ChooseCategories()),
                 );
 
                 setState(() {

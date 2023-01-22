@@ -14,7 +14,9 @@ class CatRow {
 }
 
 class ChooseCategories extends StatefulWidget {
-  ChooseCategories({Key? key, required String catChoised}) : super(key: key);
+  ChooseCategories({
+    Key? key,
+  }) : super(key: key);
 
   String catChoised = AppStrings.noChoise;
 
