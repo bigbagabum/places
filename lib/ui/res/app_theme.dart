@@ -33,6 +33,7 @@ class AppTypography {
 }
 
 class AppColors {
+  static const rowSelectedColorGreen = Colors.green;
   static const dmPrimaryLightColor = Colors.white;
   static const dmCardBackground = Colors.black;
   static const lightGrey = Color.fromARGB(255, 245, 245, 245);

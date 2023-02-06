@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_assets.dart';
-import 'package:places/ui/screen/AddSightScreen.dart';
-import 'package:places/ui/screen/CategoriesScreen.dart';
-import 'package:places/ui/screen/FiltersScreen.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
+import 'package:places/ui/screen/categories_screen.dart';
+import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/map_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
-import 'package:places/ui/screen/settingsScreen.dart';
+import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/screen/sight_details.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';

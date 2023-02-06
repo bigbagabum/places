@@ -5,10 +5,10 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:haversine_distance/haversine_distance.dart';
 import 'package:places/ui/res/app_assets.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/SightSearchScreen.dart';
+import 'package:places/ui/screen/sight_search_screen.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -80,9 +80,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   }
 
   Widget isCheckedFilterItem(bool value) {
-    return value
-        ? Image(image: AssetImage(AppAssets.iconTickChoice))
-        : Container();
+    return value ? SvgPicture.asset(AppAssets.iconTickChoice) : Container();
   }
 
   bool isHotel = true,
@@ -98,20 +96,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leadingWidth: 0,
           elevation: 0,
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
                 onTap: _clickBack,
                 child: Container(
-                    height: 32,
-                    width: 32,
+                    height: 15,
+                    width: 15,
                     decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Image(
+                    child: SvgPicture.asset(
                         color: Theme.of(context).primaryColorLight,
-                        image: AssetImage(AppAssets.iconBackScreen))),
+                        AppAssets.iconBackScreen)),
               ),
               const Spacer(),
               TextButton(
@@ -136,7 +136,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(left: 15),
+            //margin: EdgeInsets.only(left: 15),
             child: Text(AppStrings.categories,
                 style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
@@ -338,7 +338,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 filterOfItems();
               }),
           Spacer(),
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(bottom: 8),
             height: 48,
             width: 328,
             child: ElevatedButton(

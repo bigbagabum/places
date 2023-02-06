@@ -4,8 +4,8 @@ import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 class SightDetails extends StatefulWidget {
-  SightDetails({Key? key, required Sight s}) : super(key: key) {
-    this.sight = s;
+  SightDetails({Key? key, required Sight detailSight}) : super(key: key) {
+    this.sight = detailSight;
   }
 
   late Sight sight;

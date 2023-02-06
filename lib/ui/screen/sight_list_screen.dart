@@ -7,10 +7,10 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/screen/CategoriesScreen.dart';
+import 'package:places/ui/screen/categories_screen.dart';
 
-import 'AddSightScreen.dart';
-import 'SightSearchScreen.dart';
+import 'add_sight_screen.dart';
+import 'sight_search_screen.dart';
 
 // класс AppBar наследник от PrefferedSizeWidget
 
@@ -23,7 +23,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
         toolbarHeight: AppSize.toolBarSize,
-        elevation: 0,
+        //elevation: 0,
         centerTitle: true,
         //backgroundColor: Colors.white,
         title: Text(
@@ -88,7 +88,7 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).selectedRowColor,
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddSightScreen()));

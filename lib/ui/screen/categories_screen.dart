@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-
-import 'AddSightScreen.dart';
 
 class CatRow {
   // класс строки классов показывающий выбор или не выбор текущей категории
@@ -36,16 +33,15 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
   // int itemOfCat = 0;
 
   Color MyButtonColor(bool isGrey) {
-    return isGrey ? Colors.grey : Colors.green;
+    return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
   }
 
   Widget showMarker(bool e) {
     if (e == true) {
-      return Image(
-          image: AssetImage('lib/ui/res/icons/FilterItem.png'),
-          color: Colors.green);
+      return SvgPicture.asset(AppAssets.iconFilterItem,
+          color: Theme.of(context).selectedRowColor);
     } else {
-      return Text('');
+      return const Text('');
     }
   }
 
@@ -116,8 +112,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
 //Navigator.pop(context, AppStrings.noChoise);
                   Navigator.pop(context, AppStrings.noChoise);
                 },
-                child: Image(
-                  image: AssetImage(AppAssets.iconBackScreen),
+                child: SvgPicture.asset(
+                  AppAssets.iconBackScreen,
                   color: Theme.of(context).primaryColorLight,
                 ),
               ),

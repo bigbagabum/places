@@ -5,13 +5,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/CategoriesScreen.dart';
+import 'package:places/ui/screen/categories_screen.dart';
 
-import '../../domain/sight.dart';
-import '../../mocks.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -139,11 +140,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(17.0),
-                  child: Image(
+                  child: SvgPicture.asset(
                     color: Theme.of(context).primaryColorLight,
-                    image: AssetImage(
-                      AppAssets.iconNextScreen,
-                    ),
+                    AppAssets.iconNextScreen,
                   ),
                 )
               ]),
@@ -261,7 +260,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   onPressed: () {},
                   child: Text(
                     AppStrings.showOnMap,
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: Theme.of(context).selectedRowColor),
                   ),
                 ),
               ],
@@ -274,7 +273,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
               children: [
                 Text(
                   AppStrings.description,
-                  style: TextStyle(color: Colors.grey),
+                  style:
+                      TextStyle(color: Theme.of(context).secondaryHeaderColor),
                 ),
               ],
             ),
