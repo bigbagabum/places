@@ -37,12 +37,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                 MaterialPageRoute(builder: (context) => FiltersScreen()));
 
             widget.sightList = customList;
-            setState(() {
-              filteredSightsList = filteredListOfItems(
-                  TextSearchFieldController.text, customList);
-
-              //filteredSightsList = customList;
-            });
           },
           // ignore: prefer_const_constructors
           icon: Image(
@@ -85,12 +79,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     List<String> nameWithMask;
     List<TextSpan> stringWithStyle = [];
 
-    // String Mask() {
-    //   return inputMask.endsWith(' ')
-    //       ? inputMask.substring(0, inputMask.length - 1)
-    //       : inputMask;
-    // }
-
     if (originalName.indexOf(Mask()) >= 0) {
       stringWithStyle.add(TextSpan(
           text: originalName.substring(0, originalName.indexOf(Mask())),
@@ -111,9 +99,37 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   late List<Sight> filteredSightsList = [];
+  List<String> searchHistory = []; //Список итемов истории поиска
+
+  Widget SearchHistoryItem(String itemName, int itemIndex) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+      child: Column(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Text(
+            itemName,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Spacer(),
+          GestureDetector(
+              onTap: () {
+                searchHistory.removeAt(itemIndex);
+                setState(() {});
+              },
+              child: SvgPicture.asset(AppAssets.iconCancel))
+        ]),
+        Container(
+          height: 1,
+          margin: const EdgeInsets.only(top: 10),
+          width: double.infinity,
+          color: Theme.of(context).secondaryHeaderColor,
+        ),
+      ]),
+    );
+  }
 
   //получаем отфильттрованный по вхождению строки в название список мест
-  List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
+  List<Sight> FilteredListOfItems(String inputMask, List<Sight> listData) {
     List<Sight> nameIsSame = [];
 
     for (Sight checkSight in listData) {
@@ -121,6 +137,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         nameIsSame.add(checkSight);
       }
     }
+    nameIsSame.isEmpty ? null : searchHistory.add(inputMask);
     return nameIsSame;
   }
 
@@ -156,6 +173,22 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       child: Image(
                         image: AssetImage(inputSight.img),
                         fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+
+                            //child
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -182,7 +215,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                 height: 1,
                 margin: const EdgeInsets.only(top: 10),
                 width: double.infinity,
-                color: Color.fromARGB(56, 124, 126, 146),
+                color: Theme.of(context).secondaryHeaderColor,
               )
             ],
           ),
@@ -191,90 +224,135 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     );
   }
 
+  Widget BodyContent() {
+    if (filteredSightsList.isEmpty) {
+      if (searchHistory.isEmpty == false) {
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 38,
+            ),
+            child: Text(AppStrings.searchHistory,
+                style: Theme.of(context).textTheme.headline4),
+          ),
+          Column(
+              children: (searchHistory
+                      .asMap()
+                      .entries
+                      .map((item) => SearchHistoryItem(item.value, item.key)))
+                  .toList()),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  searchHistory = [];
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, top: 28),
+                child: Text(AppStrings.clearHistory,
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 16,
+                        color: Colors.green)),
+              ))
+        ]);
+      }
+      return Text('');
+    }
+    return Column(
+      children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: AppSize.toolBarSize,
-          //elevation: 0,
-          centerTitle: true,
-          //backgroundColor: Colors.white,
-          title: Text(
-            AppStrings.appTitle,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 22.0,
-                color: Theme.of(context).primaryColorLight,
-                fontFamily: "Roboto",
-                fontWeight: FontWeight.bold,
-                height: 1),
-          ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(52.0),
-            child: Container(
-              margin: EdgeInsets.only(left: 16, right: 16),
-              height: 40,
-              width: double.infinity,
-              child: TextField(
-                //onTap: () {},
-                controller: TextSearchFieldController,
-                textAlignVertical: TextAlignVertical.center,
-                onSubmitted: (_) {
-                  //обрабатываем ввод в строке поиска
+      appBar: AppBar(
+        toolbarHeight: AppSize.toolBarSize,
+        //elevation: 0,
+        centerTitle: true,
+        //backgroundColor: Colors.white,
+        title: Text(
+          AppStrings.appTitle,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 22.0,
+              color: Theme.of(context).primaryColorLight,
+              fontFamily: "Roboto",
+              fontWeight: FontWeight.bold,
+              height: 1),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(52.0),
+          child: Container(
+            margin: EdgeInsets.only(left: 16, right: 16),
+            height: 40,
+            width: double.infinity,
+            child: TextField(
+              //onTap: () {},
+              controller: TextSearchFieldController,
+              textAlignVertical: TextAlignVertical.center,
+              onSubmitted: (_) {
+                //обрабатываем ввод в строке поиска
 
-                  if (TextSearchFieldController.text != '')
-                    setState(() {
-                      filteredSightsList = filteredListOfItems(
-                          TextSearchFieldController.text, widget.sightList);
-                    });
-                  else {
+                if (TextSearchFieldController.text != '') {
+                  setState(() {
+                    filteredSightsList = FilteredListOfItems(
+                        TextSearchFieldController.text, widget.sightList);
+                  });
+                } else {
+                  filteredSightsList = [];
+                }
+              },
+              onChanged: (_) {
+                //обрабатываем ввод в строке поиска
+                if (TextSearchFieldController.text.endsWith(' ')) {
+                  setState(
+                    () {
+                      if (TextSearchFieldController.text.endsWith(' ') &&
+                          !TextSearchFieldController.text.startsWith(' ')) {
+                        filteredSightsList = FilteredListOfItems(
+                            TextSearchFieldController.text.substring(
+                                0, TextSearchFieldController.text.length - 1),
+                            widget.sightList);
+
+                        // print('new search ');
+                        // print(widget.sightList.map((e) => e.name));
+
+                      }
+                    },
+                  );
+                } else if (TextSearchFieldController.text.isEmpty) {
+                  setState(() {
                     filteredSightsList = [];
-                  }
-                },
-                onChanged: (_) {
-                  //обрабатываем ввод в строке поиска
-                  if (TextSearchFieldController.text.endsWith(' '))
-                    setState(
-                      () {
-                        if (TextSearchFieldController.text.endsWith(' ') &&
-                            !TextSearchFieldController.text.startsWith(' ')) {
-                          filteredSightsList = filteredListOfItems(
-                              TextSearchFieldController.text.substring(
-                                  0, TextSearchFieldController.text.length - 1),
-                              widget.sightList);
+                  });
+                } else
+                  setState(() {});
+              },
 
-                          // print('new search ');
-                          // print(widget.sightList.map((e) => e.name));
-
-                        }
-                      },
-                    );
-                  else if (TextSearchFieldController.text.isEmpty)
-                    setState(() {
-                      filteredSightsList = [];
-                    });
-                  else
-                    setState(() {});
-                },
-
-                decoration: InputDecoration(
-                    fillColor: Theme.of(context).primaryColorDark,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    hintText: AppStrings.searchBar,
-                    hintStyle: Theme.of(context).textTheme.headline3,
-                    filled: true,
-                    prefixIcon: Image(
-                      image: AssetImage(AppAssets.iconSearch),
-                    ),
-                    suffixIcon: SuffixIcon(Mask().isEmpty)),
-              ),
+              decoration: InputDecoration(
+                  fillColor: Theme.of(context).primaryColorDark,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none),
+                  hintText: AppStrings.searchBar,
+                  hintStyle: Theme.of(context).textTheme.headline3,
+                  filled: true,
+                  prefixIcon: Image(
+                    image: const AssetImage(AppAssets.iconSearch),
+                  ),
+                  suffixIcon: SuffixIcon(Mask().isEmpty)),
             ),
           ),
         ),
-        body: Column(
-            children:
-                (filteredSightsList.map((item) => SeightLine(item))).toList()));
+      ),
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(child: BodyContent()),
+
+      // Column(
+      //   children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
+      // ),
+    );
   }
 }

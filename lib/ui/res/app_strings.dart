@@ -33,4 +33,6 @@ class AppStrings {
   static const addPlace = 'новое место';
   static const exampleName = 'Золотая долина';
   static const searchBar = 'Поиск';
+  static const searchHistory = 'ВЫ ИСКАЛИ';
+  static const clearHistory = 'Очистить историю';
 }
