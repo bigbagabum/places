@@ -30,7 +30,30 @@ class _AddSightScreenState extends State<AddSightScreen> {
   var textFieldLatController = TextEditingController();
   var textFieldLonController = TextEditingController();
   var textFieldDescriptionController = TextEditingController();
-  //static String newPlaceCategoty = choisedCat;
+
+  var focusName = FocusNode();
+  var focusLat = FocusNode();
+  var focusLon = FocusNode();
+
+  Widget SuffixClearButton(
+      bool isInFocus, TextEditingController currentTextController) {
+    if (isInFocus && currentTextController.text.isNotEmpty) {
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            currentTextController.clear();
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(right: 14),
+          child: SvgPicture.asset(
+            AppAssets.iconCancel,
+          ),
+        ),
+      );
+    }
+    return Container();
+  }
 
   void _IsAllFieldsFilled() {
     if (textFieldDescriptionController.text == '' ||
@@ -63,6 +86,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
     super.dispose();
   }
+
+  IsValidLat(TextEditingController fieldController) {}
+
+  IsValidLon() {}
 
   @override
   Widget build(BuildContext context) {
@@ -173,15 +200,19 @@ class _AddSightScreenState extends State<AddSightScreen> {
               height: 40,
               child: TextField(
                 onChanged: (_) => _IsAllFieldsFilled(),
+                focusNode: focusName,
                 controller: textFieldNameController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  border: OutlineInputBorder(),
-                  labelText: AppStrings.exampleName,
-                ),
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).primaryColorLight,
+                    ),
+                    border: OutlineInputBorder(),
+                    labelText: AppStrings.exampleName,
+                    suffixIconConstraints:
+                        BoxConstraints(minHeight: 20, minWidth: 20),
+                    suffixIcon: SuffixClearButton(
+                        focusName.hasFocus, textFieldNameController)),
               ),
             ),
             SizedBox(
@@ -205,18 +236,22 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     height: 40,
                     child: TextField(
                       onChanged: (_) => _IsAllFieldsFilled(),
+                      focusNode: focusLat,
                       controller: textFieldLatController,
                       style: TextStyle(
                         color: Theme.of(context).primaryColorLight,
                       ),
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: AppStrings.latitude,
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                      ),
+                          border: OutlineInputBorder(),
+                          labelText: AppStrings.latitude,
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                          ),
+                          suffixIconConstraints:
+                              BoxConstraints(minHeight: 20, minWidth: 20),
+                          suffixIcon: SuffixClearButton(
+                              focusLat.hasFocus, textFieldLatController)),
                     ),
                   ),
                 ],
@@ -238,16 +273,20 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      focusNode: focusLon,
                       onChanged: (_) => _IsAllFieldsFilled(),
                       controller: textFieldLonController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        border: OutlineInputBorder(),
-                        labelText: AppStrings.longitude,
-                      ),
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                          ),
+                          border: OutlineInputBorder(),
+                          labelText: AppStrings.longitude,
+                          suffixIconConstraints:
+                              BoxConstraints(minHeight: 20, minWidth: 20),
+                          suffixIcon: SuffixClearButton(
+                              focusLon.hasFocus, textFieldLonController)),
                     ),
                   ),
                 ],
