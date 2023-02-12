@@ -7,7 +7,7 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/screen/categories_screen.dart';
+//import 'package:places/ui/screen/categories_screen.dart';
 
 import 'add_sight_screen.dart';
 import 'sight_search_screen.dart';

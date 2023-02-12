@@ -28,7 +28,7 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
 //get listSelected => null;
 
-  IconButton SuffixIcon(bool searchIsEmpty) {
+  IconButton _suffixIcon(bool searchIsEmpty) {
     if (searchIsEmpty) {
       return IconButton(
           onPressed: () async {
@@ -342,7 +342,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   prefixIcon: Image(
                     image: const AssetImage(AppAssets.iconSearch),
                   ),
-                  suffixIcon: SuffixIcon(Mask().isEmpty)),
+                  suffixIcon: _suffixIcon(Mask().isEmpty)),
             ),
           ),
         ),

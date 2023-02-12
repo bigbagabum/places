@@ -8,15 +8,13 @@ class SightDetails extends StatefulWidget {
     this.sight = detailSight;
   }
 
-  late Sight sight;
+  late final Sight sight;
 
   @override
   State<SightDetails> createState() => _SightDetailsState();
 }
 
 class _SightDetailsState extends State<SightDetails> {
-  //Sight sight = sight;
-
   @override
   Widget build(BuildContext context) {
     return Material(

@@ -31,11 +31,26 @@ class _AddSightScreenState extends State<AddSightScreen> {
   var textFieldLonController = TextEditingController();
   var textFieldDescriptionController = TextEditingController();
 
-  var focusName = FocusNode();
-  var focusLat = FocusNode();
-  var focusLon = FocusNode();
+  late final FocusNode focusName;
+  late final FocusNode focusLat;
+  late final FocusNode focusLon;
 
-  Widget SuffixClearButton(
+  //var _coordinateFieldValidator(TextInputConfiguration)
+
+  @override
+  void initState() {
+    focusName = FocusNode();
+    focusLat = FocusNode();
+    focusLon = FocusNode();
+
+    focusName.addListener(() => setState(() {}));
+    focusLat.addListener(() => setState(() {}));
+    focusLon.addListener(() => setState(() {}));
+
+    super.initState();
+  }
+
+  Widget _suffixClearButton(
       bool isInFocus, TextEditingController currentTextController) {
     if (isInFocus && currentTextController.text.isNotEmpty) {
       return GestureDetector(
@@ -55,7 +70,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
     return Container();
   }
 
-  void _IsAllFieldsFilled() {
+  void _isAllFieldsFilled() {
     if (textFieldDescriptionController.text == '' ||
         textFieldLatController.text == '' ||
         textFieldLonController.text == '' ||
@@ -71,7 +86,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
     }
   }
 
-  Color MyButtonColor(bool isGrey) {
+  Color _myButtonColor(bool isGrey) {
     return isGrey ? Colors.grey : Colors.green;
   }
 
@@ -84,12 +99,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
     textFieldLonController.dispose();
     textFieldDescriptionController.dispose();
 
+    focusName.dispose();
+    focusLat.dispose();
+    focusLon.dispose();
+
     super.dispose();
   }
-
-  IsValidLat(TextEditingController fieldController) {}
-
-  IsValidLon() {}
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +170,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
                 setState(() {
                   choisedCat = received;
-                  _IsAllFieldsFilled();
+                  _isAllFieldsFilled();
                 });
               },
               child: Row(children: [
@@ -199,7 +214,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               width: double.infinity,
               height: 40,
               child: TextField(
-                onChanged: (_) => _IsAllFieldsFilled(),
+                onChanged: (_) => _isAllFieldsFilled(),
                 focusNode: focusName,
                 controller: textFieldNameController,
                 textInputAction: TextInputAction.next,
@@ -211,7 +226,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     labelText: AppStrings.exampleName,
                     suffixIconConstraints:
                         BoxConstraints(minHeight: 20, minWidth: 20),
-                    suffixIcon: SuffixClearButton(
+                    suffixIcon: _suffixClearButton(
                         focusName.hasFocus, textFieldNameController)),
               ),
             ),
@@ -235,13 +250,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
-                      onChanged: (_) => _IsAllFieldsFilled(),
+                      onChanged: (_) => _isAllFieldsFilled(),
                       focusNode: focusLat,
                       controller: textFieldLatController,
                       style: TextStyle(
                         color: Theme.of(context).primaryColorLight,
                       ),
                       textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: AppStrings.latitude,
@@ -250,7 +266,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           ),
                           suffixIconConstraints:
                               BoxConstraints(minHeight: 20, minWidth: 20),
-                          suffixIcon: SuffixClearButton(
+                          suffixIcon: _suffixClearButton(
                               focusLat.hasFocus, textFieldLatController)),
                     ),
                   ),
@@ -273,8 +289,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      keyboardType: TextInputType.number,
                       focusNode: focusLon,
-                      onChanged: (_) => _IsAllFieldsFilled(),
+                      onChanged: (_) => _isAllFieldsFilled(),
                       controller: textFieldLonController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
@@ -285,7 +302,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           labelText: AppStrings.longitude,
                           suffixIconConstraints:
                               BoxConstraints(minHeight: 20, minWidth: 20),
-                          suffixIcon: SuffixClearButton(
+                          suffixIcon: _suffixClearButton(
                               focusLon.hasFocus, textFieldLonController)),
                     ),
                   ),
@@ -321,7 +338,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               height: 12,
             ),
             TextField(
-              onChanged: (_) => _IsAllFieldsFilled(),
+              onChanged: (_) => _isAllFieldsFilled(),
               controller: textFieldDescriptionController,
               textAlignVertical: TextAlignVertical.top,
               maxLines: 3,
@@ -342,7 +359,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          MyButtonColor(isButtonDisabled))),
+                          _myButtonColor(isButtonDisabled))),
                   onPressed: isButtonDisabled
                       ? null
                       : () {
