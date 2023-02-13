@@ -296,7 +296,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
               onSubmitted: (_) {
                 //обрабатываем ввод в строке поиска
 
-                if (TextSearchFieldController.text != '') {
+                if (TextSearchFieldController.text.isNotEmpty) {
                   setState(() {
                     filteredSightsList = FilteredListOfItems(
                         TextSearchFieldController.text, widget.sightList);

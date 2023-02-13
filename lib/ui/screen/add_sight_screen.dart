@@ -31,21 +31,27 @@ class _AddSightScreenState extends State<AddSightScreen> {
   var textFieldLonController = TextEditingController();
   var textFieldDescriptionController = TextEditingController();
 
-  late final FocusNode focusName;
-  late final FocusNode focusLat;
-  late final FocusNode focusLon;
+  // late final FocusNode focusName;
+  // // late final FocusNode focusLat;
+  // late final FocusNode focusLon;
+
+  late final FocusNode focusNode;
 
   //var _coordinateFieldValidator(TextInputConfiguration)
 
   @override
   void initState() {
-    focusName = FocusNode();
-    focusLat = FocusNode();
-    focusLon = FocusNode();
+    // focusNamee = FocusNode();
+    // focusLat = FocusNode();
+    // focusLon = FocusNode();
 
-    focusName.addListener(() => setState(() {}));
-    focusLat.addListener(() => setState(() {}));
-    focusLon.addListener(() => setState(() {}));
+    focusNode = FocusNode();
+
+    focusNode.addListener(() => setState(() {}));
+
+    // focusName.addListener(() => setState(() {}));
+    // focusLat.addListener(() => setState(() {}));
+    // focusLon.addListener(() => setState(() {}));
 
     super.initState();
   }
@@ -99,9 +105,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
     textFieldLonController.dispose();
     textFieldDescriptionController.dispose();
 
-    focusName.dispose();
-    focusLat.dispose();
-    focusLon.dispose();
+    focusNode.dispose();
+
+    // focusName.dispose();
+    // focusLat.dispose();
+    // focusLon.dispose();
 
     super.dispose();
   }
@@ -215,7 +223,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
               height: 40,
               child: TextField(
                 onChanged: (_) => _isAllFieldsFilled(),
-                focusNode: focusName,
+                focusNode: focusNode,
                 controller: textFieldNameController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -227,7 +235,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     suffixIconConstraints:
                         BoxConstraints(minHeight: 20, minWidth: 20),
                     suffixIcon: _suffixClearButton(
-                        focusName.hasFocus, textFieldNameController)),
+                        focusNode.hasFocus, textFieldNameController)),
               ),
             ),
             SizedBox(
@@ -251,7 +259,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     height: 40,
                     child: TextField(
                       onChanged: (_) => _isAllFieldsFilled(),
-                      focusNode: focusLat,
+                      focusNode: focusNode,
                       controller: textFieldLatController,
                       style: TextStyle(
                         color: Theme.of(context).primaryColorLight,
@@ -267,7 +275,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           suffixIconConstraints:
                               BoxConstraints(minHeight: 20, minWidth: 20),
                           suffixIcon: _suffixClearButton(
-                              focusLat.hasFocus, textFieldLatController)),
+                              focusNode.hasFocus, textFieldLatController)),
                     ),
                   ),
                 ],
@@ -290,7 +298,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     height: 40,
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      focusNode: focusLon,
+                      focusNode: focusNode,
                       onChanged: (_) => _isAllFieldsFilled(),
                       controller: textFieldLonController,
                       textInputAction: TextInputAction.next,
@@ -303,7 +311,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           suffixIconConstraints:
                               BoxConstraints(minHeight: 20, minWidth: 20),
                           suffixIcon: _suffixClearButton(
-                              focusLon.hasFocus, textFieldLonController)),
+                              focusNode.hasFocus, textFieldLonController)),
                     ),
                   ),
                 ],
