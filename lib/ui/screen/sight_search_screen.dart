@@ -142,7 +142,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         ? {
             Fluttertoast.showToast(
                 msg: "Empty State",
-                toastLength: Toast.LENGTH_LONG,
+                toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.red,
