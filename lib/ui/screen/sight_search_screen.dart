@@ -226,7 +226,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
   Widget BodyContent() {
     if (filteredSightsList.isEmpty) {
-      if (searchHistory.isEmpty == false) {
+      if (searchHistory.isNotEmpty) {
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -303,6 +303,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   });
                 } else {
                   filteredSightsList = [];
+                  // Fluttertoast.showToast(
+                  //     msg: "Empty State",
+                  //     toastLength: Toast.LENGTH_SHORT,
+                  //     gravity: ToastGravity.CENTER,
+                  //     timeInSecForIosWeb: 1,
+                  //     backgroundColor: Colors.red,
+                  //     textColor: Colors.white,
+                  //     fontSize: 16.0);
                 }
               },
               onChanged: (_) {

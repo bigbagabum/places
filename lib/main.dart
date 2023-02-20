@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: _screenSelected.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          //showSelectedLabels: true,
           type: BottomNavigationBarType.fixed,
           elevation: 1.0,
           unselectedItemColor: Theme.of(context).secondaryHeaderColor,

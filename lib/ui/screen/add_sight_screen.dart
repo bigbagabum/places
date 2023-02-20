@@ -45,13 +45,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
     focusLat = FocusNode();
     focusLon = FocusNode();
 
-    //focusNode = FocusNode();
-
-    //focusNode.addListener(() => setState(() {}));
-
-    focusName.addListener(() => setState(() {}));
-    focusLat.addListener(() => setState(() {}));
-    focusLon.addListener(() => setState(() {}));
+    //   // focusName.addListener(() => setState(() {}));
+    //   // focusLat.addListener(() => setState(() {}));
+    //   // focusLon.addListener(() => setState(() {}));
 
     super.initState();
   }
@@ -107,9 +103,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
     //focusNode.dispose();
 
-    focusName.dispose();
-    focusLat.dispose();
-    focusLon.dispose();
+    // focusName.dispose();
+    // focusLat.dispose();
+    // focusLon.dispose();
 
     super.dispose();
   }
