@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
@@ -137,7 +138,18 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         nameIsSame.add(checkSight);
       }
     }
-    nameIsSame.isEmpty ? null : searchHistory.add(inputMask);
+    nameIsSame.isEmpty
+        ? {
+            Fluttertoast.showToast(
+                msg: "Empty State",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0)
+          }
+        : searchHistory.add(inputMask);
     return nameIsSame;
   }
 
@@ -303,14 +315,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   });
                 } else {
                   filteredSightsList = [];
-                  // Fluttertoast.showToast(
-                  //     msg: "Empty State",
-                  //     toastLength: Toast.LENGTH_SHORT,
-                  //     gravity: ToastGravity.CENTER,
-                  //     timeInSecForIosWeb: 1,
-                  //     backgroundColor: Colors.red,
-                  //     textColor: Colors.white,
-                  //     fontSize: 16.0);
                 }
               },
               onChanged: (_) {
@@ -327,7 +331,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
                         // print('new search ');
                         // print(widget.sightList.map((e) => e.name));
-
                       }
                     },
                   );
