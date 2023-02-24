@@ -1,11 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
@@ -45,9 +44,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
     focusLat = FocusNode();
     focusLon = FocusNode();
 
-    focusName.addListener(() => {});
-    focusLat.addListener(() => setState(() {}));
-    focusLon.addListener(() => setState(() {}));
+    // focusName.addListener(() => setState(() {}));
+    // focusLat.addListener(() => setState(() {}));
+    // focusLon.addListener(() => setState(() {}));
 
     super.initState();
   }
@@ -254,7 +253,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
-                      onChanged: (_) => _isAllFieldsFilled(),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^-?[0-9]+\.?[0-9]*$'))
+                      ],
+                      onChanged: (_) {
+                        _isAllFieldsFilled();
+                      },
                       focusNode: focusLat,
                       controller: textFieldLatController,
                       style: TextStyle(
@@ -293,6 +298,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     width: 160,
                     height: 40,
                     child: TextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^-?[0-9]+\.?[0-9]*$'))
+                      ],
                       keyboardType: TextInputType.number,
                       focusNode: focusLon,
                       onChanged: (_) => _isAllFieldsFilled(),
