@@ -5,10 +5,8 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:haversine_distance/haversine_distance.dart';
 import 'package:places/ui/res/app_assets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/sight_search_screen.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -80,7 +78,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
   }
 
   Widget isCheckedFilterItem(bool value) {
-    return value ? SvgPicture.asset(AppAssets.iconTickChoice) : Container();
+    return value
+        ? const Image(image: AssetImage(AppAssets.iconTickChoice))
+        : Container();
   }
 
   bool isHotel = true,
@@ -104,14 +104,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
               GestureDetector(
                 onTap: _clickBack,
                 child: Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: SvgPicture.asset(
-                        color: Theme.of(context).primaryColorLight,
-                        AppAssets.iconBackScreen)),
+                  height: 15,
+                  width: 15,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Image(
+                    image: const AssetImage(AppAssets.iconBackScreen),
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
               ),
               const Spacer(),
               TextButton(

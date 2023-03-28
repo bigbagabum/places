@@ -26,7 +26,7 @@ class AppStrings {
   static const longitude = 'долгота';
   static const latitude = 'широта';
   static const showOnMap = 'Указать на карте';
-  static const description = 'описание';
+  static const description = 'ОПИСАНИЕ';
   static const enterText = 'введите текст';
   static const createPlace = 'СОЗДАТЬ';
   static const savePlace = 'СОХРАНИТЬ';

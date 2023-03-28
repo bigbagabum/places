@@ -1,11 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:places/mocks.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
@@ -39,14 +35,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
             widget.sightList = customList;
           },
-          // ignore: prefer_const_constructors
           icon: Image(
             image: AssetImage(AppAssets.iconFilter),
           ));
     }
     {
       return IconButton(
-        icon: SvgPicture.asset(AppAssets.iconCancel),
+        icon: Image(image: AssetImage(AppAssets.iconCancel)),
         onPressed: () {
           TextSearchFieldController.clear();
           setState(() {
@@ -69,7 +64,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   String Mask() {
-    return TextSearchFieldController.text.endsWith(' ')
+    return TextSearchFieldController.text.toLowerCase().endsWith(' ')
         ? TextSearchFieldController.text
             .substring(0, TextSearchFieldController.text.length - 1)
         : TextSearchFieldController.text;
@@ -129,25 +124,34 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     );
   }
 
+//экран пустого результата поиска
+  Widget emptySearchResult() {
+    return Column(children: [
+      Image(
+        image: AssetImage(AppAssets.iconEmptySearch),
+      )
+    ]);
+  }
+
   //получаем отфильттрованный по вхождению строки в название список мест
   List<Sight> FilteredListOfItems(String inputMask, List<Sight> listData) {
     List<Sight> nameIsSame = [];
 
     for (Sight checkSight in listData) {
-      if (checkSight.name.contains(inputMask)) {
+      if (checkSight.name.toLowerCase().contains(inputMask)) {
         nameIsSame.add(checkSight);
       }
     }
     nameIsSame.isEmpty
         ? {
-            Fluttertoast.showToast(
-                msg: "Empty State",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0)
+            // Fluttertoast.showToast(
+            //     msg: "Empty State",
+            //     toastLength: Toast.LENGTH_SHORT,
+            //     gravity: ToastGravity.CENTER,
+            //     timeInSecForIosWeb: 1,
+            //     backgroundColor: Colors.red,
+            //     textColor: Colors.white,
+            //     fontSize: 16.0)
           }
         : searchHistory.add(inputMask);
     return nameIsSame;
@@ -236,41 +240,43 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     );
   }
 
+  Widget searchHistoryScreen() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 38,
+        ),
+        child: Text(AppStrings.searchHistory,
+            style: Theme.of(context).textTheme.headline4),
+      ),
+      Column(
+          children: (searchHistory
+                  .asMap()
+                  .entries
+                  .map((item) => SearchHistoryItem(item.value, item.key)))
+              .toList()),
+      GestureDetector(
+          onTap: () {
+            setState(() {
+              searchHistory = [];
+            });
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(left: 16, top: 28),
+            child: Text(AppStrings.clearHistory,
+                style: TextStyle(
+                    fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
+          ))
+    ]);
+  }
+
   Widget BodyContent() {
     if (filteredSightsList.isEmpty) {
       if (searchHistory.isNotEmpty) {
-        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              top: 38,
-            ),
-            child: Text(AppStrings.searchHistory,
-                style: Theme.of(context).textTheme.headline4),
-          ),
-          Column(
-              children: (searchHistory
-                      .asMap()
-                      .entries
-                      .map((item) => SearchHistoryItem(item.value, item.key)))
-                  .toList()),
-          GestureDetector(
-              onTap: () {
-                setState(() {
-                  searchHistory = [];
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, top: 28),
-                child: Text(AppStrings.clearHistory,
-                    style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 16,
-                        color: Colors.green)),
-              ))
-        ]);
+        return searchHistoryScreen();
       }
-      return Text('');
+      return emptySearchResult();
     }
     return Column(
       children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
@@ -319,14 +325,22 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
               },
               onChanged: (_) {
                 //обрабатываем ввод в строке поиска
-                if (TextSearchFieldController.text.endsWith(' ')) {
+                if (TextSearchFieldController.text
+                    .toLowerCase()
+                    .endsWith(' ')) {
                   setState(
                     () {
-                      if (TextSearchFieldController.text.endsWith(' ') &&
-                          !TextSearchFieldController.text.startsWith(' ')) {
+                      if (TextSearchFieldController.text
+                              .toLowerCase()
+                              .endsWith(' ') &&
+                          !TextSearchFieldController.text
+                              .toLowerCase()
+                              .startsWith(' ')) {
                         filteredSightsList = FilteredListOfItems(
-                            TextSearchFieldController.text.substring(
-                                0, TextSearchFieldController.text.length - 1),
+                            TextSearchFieldController.text
+                                .toLowerCase()
+                                .substring(0,
+                                    TextSearchFieldController.text.length - 1),
                             widget.sightList);
 
                         // print('new search ');

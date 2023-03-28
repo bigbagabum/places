@@ -2,12 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/categories_screen.dart';
 
 import 'package:places/domain/sight.dart';
@@ -60,15 +56,17 @@ class _AddSightScreenState extends State<AddSightScreen> {
             currentTextController.clear();
           });
         },
-        child: Padding(
-          padding: const EdgeInsets.only(right: 14),
-          child: SvgPicture.asset(
-            AppAssets.iconCancel,
+        child: const Padding(
+          padding: EdgeInsets.only(right: 14),
+          child: Image(
+            image: AssetImage(
+              AppAssets.iconCancel,
+            ),
           ),
         ),
       );
     }
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 
   void _isAllFieldsFilled() {
@@ -135,7 +133,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 56,
                   ),
                   Text(
@@ -149,7 +147,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Row(
@@ -182,22 +180,22 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   style: TextStyle(
                       fontSize: 16, color: Theme.of(context).primaryColorLight),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(17.0),
-                  child: SvgPicture.asset(
+                  child: Image(
+                    image: const AssetImage(AppAssets.iconNextScreen),
                     color: Theme.of(context).primaryColorLight,
-                    AppAssets.iconNextScreen,
                   ),
                 )
               ]),
             ),
             Container(
-              color: Color.fromARGB(56, 124, 126, 146),
+              color: const Color.fromARGB(56, 124, 126, 146),
               width: double.infinity,
               height: 1.0,
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Row(
@@ -210,7 +208,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             SizedBox(
@@ -225,15 +223,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
                     labelStyle: TextStyle(
                       color: Theme.of(context).primaryColorLight,
                     ),
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: AppStrings.exampleName,
                     suffixIconConstraints:
-                        BoxConstraints(minHeight: 20, minWidth: 20),
+                        const BoxConstraints(minHeight: 20, minWidth: 20),
                     suffixIcon: _suffixClearButton(
                         focusName.hasFocus, textFieldNameController)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Row(children: [
@@ -246,7 +244,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   SizedBox(
@@ -268,20 +266,20 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           labelText: AppStrings.latitude,
                           labelStyle: TextStyle(
                             color: Theme.of(context).primaryColorLight,
                           ),
                           suffixIconConstraints:
-                              BoxConstraints(minHeight: 20, minWidth: 20),
+                              const BoxConstraints(minHeight: 20, minWidth: 20),
                           suffixIcon: _suffixClearButton(
                               focusLat.hasFocus, textFieldLatController)),
                     ),
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -291,7 +289,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   SizedBox(
@@ -311,10 +309,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           labelStyle: TextStyle(
                             color: Theme.of(context).primaryColorLight,
                           ),
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           labelText: AppStrings.longitude,
                           suffixIconConstraints:
-                              BoxConstraints(minHeight: 20, minWidth: 20),
+                              const BoxConstraints(minHeight: 20, minWidth: 20),
                           suffixIcon: _suffixClearButton(
                               focusLon.hasFocus, textFieldLonController)),
                     ),
@@ -334,7 +332,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 37,
             ),
             Row(
@@ -347,7 +345,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             TextField(
@@ -358,14 +356,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 //floatingLabelStyle: false,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelStyle: TextStyle(
                   color: Theme.of(context).primaryColorLight,
                 ),
                 labelText: AppStrings.enterText,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               height: 48,
               width: double.infinity,
@@ -390,7 +388,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           // print(newPlace.name);
                           Navigator.pop(context);
                         },
-                  child: Text(
+                  child: const Text(
                     AppStrings.createPlace,
                     style: TextStyle(fontSize: 14),
                   )),

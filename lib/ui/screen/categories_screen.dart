@@ -38,7 +38,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
 
   Widget showMarker(bool e) {
     if (e == true) {
-      return SvgPicture.asset(AppAssets.iconFilterItem,
+      return Image(
+          image: AssetImage(AppAssets.iconFilterItem),
           color: Theme.of(context).selectedRowColor);
     } else {
       return const Text('');

@@ -12,7 +12,7 @@ final darkTheme = ThemeData(
     backgroundColor: AppColors.dmBackground,
   ),
   // ignore: prefer_const_constructors
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1:
@@ -48,7 +48,7 @@ final lightTheme = ThemeData(
     elevation: 0,
     backgroundColor: AppColors.dmPrimaryLightColor,
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1:
