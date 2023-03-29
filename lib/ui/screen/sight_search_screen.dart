@@ -71,24 +71,35 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   // ignore: non_constant_identifier_names
+
   List<TextSpan> NameOfSight(String inputMask, String originalName) {
-    List<String> nameWithMask;
     List<TextSpan> stringWithStyle = [];
 
-    if (originalName.indexOf(Mask()) >= 0) {
-      stringWithStyle.add(TextSpan(
-          text: originalName.substring(0, originalName.indexOf(Mask())),
-          style: Theme.of(context).textTheme.headline5));
-
-      stringWithStyle.add(
-        TextSpan(text: Mask(), style: Theme.of(context).textTheme.headline6),
-      );
+    int index = originalName.toLowerCase().indexOf(inputMask.toLowerCase());
+    if (index >= 0) {
+      String beforeMask = originalName.substring(0, index);
+      String mask = originalName.substring(index, index + inputMask.length);
+      String afterMask = originalName.substring(index + inputMask.length);
 
       stringWithStyle.add(TextSpan(
-          text: originalName.substring(
-              originalName.indexOf(Mask()) + Mask().length,
-              originalName.length),
-          style: Theme.of(context).textTheme.headline5));
+        text: beforeMask,
+        style: Theme.of(context).textTheme.headline5,
+      ));
+
+      stringWithStyle.add(TextSpan(
+        text: mask,
+        style: Theme.of(context).textTheme.headline6,
+      ));
+
+      stringWithStyle.add(TextSpan(
+        text: afterMask,
+        style: Theme.of(context).textTheme.headline5,
+      ));
+    } else {
+      stringWithStyle.add(TextSpan(
+        text: originalName,
+        style: Theme.of(context).textTheme.headline5,
+      ));
     }
 
     return stringWithStyle;
