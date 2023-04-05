@@ -12,7 +12,7 @@ final darkTheme = ThemeData(
     backgroundColor: AppColors.dmBackground,
   ),
   // ignore: prefer_const_constructors
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1:
@@ -35,6 +35,43 @@ final darkTheme = ThemeData(
         fontFamily: 'Roboto',
         color: AppColors.dmCardBackground,
         fontWeight: FontWeight.bold),
+
+    subtitle1: TextStyle(
+      fontSize: 18,
+      fontFamily: 'Roboto',
+      color: AppColors.lightGrey,
+      fontWeight: FontWeight.bold,
+    ),
+    subtitle2: TextStyle(
+      fontSize: 14,
+      fontFamily: 'Roboto',
+      color: AppColors.lightGrey,
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.black,
+        width: 1.0,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.black,
+        width: 1.0,
+      ),
+    ),
+    fillColor: AppColors.dmCardBackground,
+    filled: true,
+    labelStyle: TextStyle(
+      color: AppColors.lightGrey,
+    ),
+    hintStyle: TextStyle(
+      color: AppColors.lightGrey,
+    ),
+    errorStyle: TextStyle(
+      color: Colors.red,
+    ),
   ),
 );
 
@@ -66,5 +103,41 @@ final lightTheme = ThemeData(
         fontFamily: 'Roboto',
         color: AppColors.dmCardBackground,
         fontWeight: FontWeight.bold),
+    subtitle1: TextStyle(
+      fontSize: 18,
+      fontFamily: 'Roboto',
+      color: AppColors.darkGrey,
+      fontWeight: FontWeight.bold,
+    ),
+    subtitle2: TextStyle(
+      fontSize: 14,
+      fontFamily: 'Roboto',
+      color: AppColors.darkGrey,
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.darkGrey,
+        width: 1.0,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.lightGrey,
+        width: 1.0,
+      ),
+    ),
+    fillColor: AppColors.dmPrimaryLightColor,
+    filled: true,
+    labelStyle: TextStyle(
+      color: Colors.black,
+    ),
+    hintStyle: TextStyle(
+      color: Colors.black,
+    ),
+    errorStyle: TextStyle(
+      color: Colors.red,
+    ),
   ),
 );

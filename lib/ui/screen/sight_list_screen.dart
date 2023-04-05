@@ -48,7 +48,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SightSearchScreen(
-                              inputSightList: mocks,
+                              sightList: mocks,
                             )));
               },
               readOnly: true,
