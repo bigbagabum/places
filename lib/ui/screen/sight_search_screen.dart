@@ -11,12 +11,9 @@ import '../res/app_strings.dart';
 import '../res/app_theme.dart';
 
 class SightSearchScreen extends StatefulWidget {
-  SightSearchScreen({Key? key, required List<Sight> inputSightList})
-      : super(key: key) {
-    this.sightList = inputSightList;
-  }
+  SightSearchScreen({Key? key, required this.sightList}) : super(key: key) {}
 
-  late List<Sight> sightList;
+  List<Sight> sightList;
 
   @override
   State<SightSearchScreen> createState() => _SightSearchScreenState();
@@ -282,16 +279,49 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     ]);
   }
 
+  // Widget BodyContent() {
+  //   if (filteredSightsList.isEmpty) {
+  //     if (searchHistory.isNotEmpty) {
+  //       return searchHistoryScreen();
+  //     }
+  //     return emptySearchResult();
+  //   }
+  //   return Column(
+  //     children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
+  //   );
+  // }
+
   Widget BodyContent() {
     if (filteredSightsList.isEmpty) {
-      if (searchHistory.isNotEmpty) {
-        return searchHistoryScreen();
+      if (TextSearchFieldController.text.isNotEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(AppAssets.iconEmptySearch),
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                'Ничего не найдено',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                'Попробуйте изменить параметры поиска',
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ],
+          ),
+        );
+      } else {
+        return Container();
       }
-      return emptySearchResult();
+    } else {
+      return Column(
+        children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
+      );
     }
-    return Column(
-      children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
-    );
   }
 
   @override
