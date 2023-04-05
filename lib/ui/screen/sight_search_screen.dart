@@ -415,10 +415,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(child: BodyContent()),
-
-      // Column(
-      //   children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
-      // ),
     );
   }
 }
