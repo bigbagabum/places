@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -21,14 +19,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   String choisedCat = AppStrings.noChoise;
 
-  var textFieldNameController = TextEditingController();
-  var textFieldLatController = TextEditingController();
-  var textFieldLonController = TextEditingController();
-  var textFieldDescriptionController = TextEditingController();
+  final textFieldNameController = TextEditingController();
+  final textFieldLatController = TextEditingController();
+  final textFieldLonController = TextEditingController();
+  final textFieldDescriptionController = TextEditingController();
 
-  late final FocusNode focusName;
-  late final FocusNode focusLat;
-  late final FocusNode focusLon;
+  final FocusNode focusName = FocusNode();
+  final FocusNode focusLat = FocusNode();
+  final FocusNode focusLon = FocusNode();
 
   //late final FocusNode focusNode;
 
@@ -36,9 +34,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   @override
   void initState() {
-    focusName = FocusNode();
-    focusLat = FocusNode();
-    focusLon = FocusNode();
+    // focusName = FocusNode();
+    // focusLat = FocusNode();
+    // focusLon = FocusNode();
 
     // focusName.addListener(() => setState(() {}));
     // focusLat.addListener(() => setState(() {}));
@@ -86,7 +84,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   Color _myButtonColor(bool isGrey) {
-    return isGrey ? Colors.grey : Colors.green;
+    return isGrey ? Theme.of(context).primaryColorDark : Colors.green;
   }
 
   @override

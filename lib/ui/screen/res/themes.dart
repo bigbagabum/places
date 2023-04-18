@@ -55,6 +55,10 @@ final darkTheme = ThemeData(
         width: 1.0,
       ),
     ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
@@ -121,6 +125,10 @@ final lightTheme = ThemeData(
         color: AppColors.darkGrey,
         width: 1.0,
       ),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green),
+      borderRadius: BorderRadius.circular(10.0),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
