@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_assets.dart';
-import 'package:places/ui/screen/FiltersScreen.dart';
 import 'package:places/ui/screen/map_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
-import 'package:places/ui/screen/settingsScreen.dart';
-import 'package:places/ui/screen/sight_card.dart';
-import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_list_screen.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider<MyTheme>(
-      create: (context) => MyTheme(), child: MyApp()));
+  runApp(
+    ChangeNotifierProvider<MyTheme>(
+        create: (context) => MyTheme(), child: const MyApp()),
+  );
 }
 
 class MyTheme extends ChangeNotifier {
@@ -42,17 +40,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
-        //theme: darkTheme,
-        //theme: lightTheme,
         theme: context.watch<MyTheme>().currentTheme,
 
         //    home: VisitingScreen());
         //home: const SightListScreen());
         //home: SightCard(sight: mocks[1], listIndex: 0, status: 1));
         // home: SightDetails(sight: mocks[0]));
-        //home: const HomePage());
-        home: const FiltersScreen());
+        home: const HomePage());
+    //home: const FiltersScreen());
+    //home: AddSightScreen());
+    //home: ChooseCategories());
   }
 }
 
@@ -83,6 +80,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: _screenSelected.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
+          //showSelectedLabels: true,
           type: BottomNavigationBarType.fixed,
           elevation: 1.0,
           unselectedItemColor: Theme.of(context).secondaryHeaderColor,

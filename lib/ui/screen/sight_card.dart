@@ -150,108 +150,116 @@ class SightCard extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: AspectRatio(
-          aspectRatio: 3 / 2,
-          child: Container(
-            margin: const EdgeInsets.all(15),
-            clipBehavior: Clip.hardEdge,
-            decoration: const BoxDecoration(
-              //color: Colors.yellow,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            width: double.infinity,
-            child: Column(
-              children: [
-                Flexible(
-                    //flex: 1,
-                    child: Container(
+        aspectRatio: 3 / 2,
+        child: Container(
+          margin: const EdgeInsets.all(15),
+          clipBehavior: Clip.hardEdge,
+          decoration: const BoxDecoration(
+            //color: Colors.yellow,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          width: double.infinity,
+          child: Column(
+            children: [
+              Flexible(
+                //flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.topCenter,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      SizedBox(
                         width: double.infinity,
-                        alignment: Alignment.topCenter,
-                        child: Stack(clipBehavior: Clip.none, children: [
-                          SizedBox(
-                              width: double.infinity,
-                              child: Image(
-                                  image: AssetImage(sight.img),
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
+                        child: Image(
+                          image: AssetImage(sight.img),
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
 
-                                      //child
-                                    );
-                                  })),
-                          Row(children: [
-                            Container(
-                                padding: const EdgeInsets.all(16),
-                                alignment: Alignment.topLeft,
-                                child: Text(sight.type,
-                                    style: const TextStyle(
-                                        fontFamily: 'Roboto',
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold))),
-                            const Spacer(),
-                            Container(
-                                padding: const EdgeInsets.all(16),
-                                alignment: Alignment.topRight,
-                                child:
+                              //child
+                            );
+                          },
+                        ),
+                      ),
+                      Row(children: [
+                        Container(
+                            padding: const EdgeInsets.all(16),
+                            alignment: Alignment.topLeft,
+                            child: Text(sight.type,
+                                style: const TextStyle(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold))),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          alignment: Alignment.topRight,
+                          child:
 
-                                    // смотрим в каком мы списке и отображаем нужные иконки справа сверху
-                                    Row(
-                                  children: [
-                                    TopIconWidget(
-                                      listIndex: listIndex,
-                                      status: status,
-                                    )
-                                    //_topIconRow(),
-                                  ],
-                                ))
-                          ])
-                        ]))),
-                Flexible(
-                    //flex: 1,
-                    child: Container(
-                        padding: const EdgeInsets.all(16),
-                        //height: double.infinity,
-                        width: double.infinity,
-                        color: Theme.of(context).primaryColorDark,
-                        child: Column(children: [
-                          SizedBox(
-                              height: 25,
-                              width: double.infinity,
-                              child: Text(sight.name,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      overflow: TextOverflow.clip,
-                                      fontFamily: 'Roboto',
-                                      color:
-                                          Theme.of(context).primaryColorLight,
-                                      fontWeight: FontWeight.bold))),
-                          SizedBox(
-                              width: double.infinity,
+                              // смотрим в каком мы списке и отображаем нужные иконки справа сверху
+                              Row(
+                            children: [
+                              TopIconWidget(
+                                listIndex: listIndex,
+                                status: status,
+                              )
+                              //_topIconRow(),
+                            ],
+                          ),
+                        )
+                      ])
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                //flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  //height: double.infinity,
+                  width: double.infinity,
+                  color: Theme.of(context).primaryColorDark,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          height: 25,
+                          width: double.infinity,
+                          child: Text(sight.name,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  overflow: TextOverflow.clip,
+                                  fontFamily: 'Roboto',
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontWeight: FontWeight.bold))),
+                      SizedBox(
+                          width: double.infinity,
 
-                              //тут будет кастомная колонка отрисованная от выбранного списка
-                              child: BottomColumn(
-                                  sight: sight,
-                                  listIndex: listIndex,
-                                  status: status)),
-                        ])))
-              ],
-            ),
-          )),
+                          //тут будет кастомная колонка отрисованная от выбранного списка
+                          child: BottomColumn(
+                              sight: sight,
+                              listIndex: listIndex,
+                              status: status)),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

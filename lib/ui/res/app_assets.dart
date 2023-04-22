@@ -1,5 +1,5 @@
 class AppAssets {
-  static const iconFavorite = 'res/icons/heart_icon.svg';
+  static const iconFavorite = 'res/icons/heart_icon.png';
   static const iconList = 'lib/ui/res/icons/list.png';
   static const iconHeartFull = 'lib/ui/res/icons/heart_full.png';
   static const iconMap = 'lib/ui/res/icons/map.png';
@@ -13,4 +13,10 @@ class AppAssets {
   static const buttonParticularPlace = 'lib/ui/res/icons/Particular_place.png';
   static const buttonCafe = 'lib/ui/res/icons/Cafe.png';
   static const iconInformation = 'lib/ui/res/icons/information.png';
+  static const iconNextScreen = 'lib/ui/res/icons/nextScreen.png';
+  static const iconFilterItem = 'lib/ui/res/icons/filter_item.png';
+  static const iconSearch = 'lib/ui/res/icons/search.png';
+  static const iconFilter = 'lib/ui/res/icons/filter.png';
+  static const iconCancel = 'lib/ui/res/icons/iconCancel.png';
+  static const iconEmptySearch = 'lib/ui/res/icons/emptySearchScreen.png';
 }

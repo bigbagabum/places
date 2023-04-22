@@ -5,7 +5,6 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:haversine_distance/haversine_distance.dart';
 import 'package:places/ui/res/app_assets.dart';
-
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
@@ -18,24 +17,24 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   void _clickBack() {
-    print('Back button clicked');
+    Navigator.pop(context, filteredMockList);
   }
 
   late int filteredListLength = fillListItems(mocks).length;
 
-  late List<String> filteredMockList =
+  late List<Sight> filteredMockList =
       fillListItems(mocks); //наполняем первично лист с учетом удаленности
 
-  List<String> fillListItems(List<Sight> value) {
+  List<Sight> fillListItems(List<Sight> value) {
     //Наполняем изначальными данными список мест
-    List<String> filledList = [];
+    List<Sight> filledList = [];
     for (var n in value) {
       if (isPlaceNear(
           RedSquare,
           Location(n.lat, n.lan),
           _FiltersScreenState.currentRangeValues.start,
           _FiltersScreenState.currentRangeValues.end)) {
-        filledList.add(n.name);
+        filledList.add(n);
       }
     }
     return filledList;
@@ -53,7 +52,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   }
 
   void filterOfItems() {
-    List<String> filteredPlaces = [];
+    List<Sight> filteredPlaces = [];
 
     for (int e = 0; e < mocks.length; e++) {
       if (((mocks[e].type == 'отель' && isHotel) ||
@@ -67,18 +66,20 @@ class _FiltersScreenState extends State<FiltersScreen> {
               Location(mocks[e].lat, mocks[e].lan),
               _FiltersScreenState.currentRangeValues.start,
               _FiltersScreenState.currentRangeValues.end)) {
-        filteredPlaces.add(mocks[e].name);
+        filteredPlaces.add(mocks[e]);
       }
       print(
           '${mocks[e].name}  расстояние до Красной площади =  ${haversineDistance.haversine(RedSquare, Location(mocks[e].lat, mocks[e].lan), Unit.METER).round()} м');
     }
-    filteredMockList = filteredPlaces;
-    filteredListLength = filteredMockList.length;
+    setState(() {
+      filteredMockList = filteredPlaces;
+      filteredListLength = filteredMockList.length;
+    });
   }
 
   Widget isCheckedFilterItem(bool value) {
     return value
-        ? Image(image: AssetImage(AppAssets.iconTickChoice))
+        ? const Image(image: AssetImage(AppAssets.iconTickChoice))
         : Container();
   }
 
@@ -95,20 +96,24 @@ class _FiltersScreenState extends State<FiltersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leadingWidth: 0,
           elevation: 0,
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
                 onTap: _clickBack,
                 child: Container(
-                    height: 32,
-                    width: 32,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Image(
-                        color: Theme.of(context).primaryColorLight,
-                        image: AssetImage(AppAssets.iconBackScreen))),
+                  height: 15,
+                  width: 15,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Image(
+                    image: const AssetImage(AppAssets.iconBackScreen),
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
               ),
               const Spacer(),
               TextButton(
@@ -133,8 +138,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(left: 15),
-            child: Text(AppStrings.categoties,
+            //margin: EdgeInsets.only(left: 15),
+            child: Text(AppStrings.categories,
                 style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
                 )
@@ -335,7 +340,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 filterOfItems();
               }),
           Spacer(),
-          SizedBox(
+          Container(
+            margin: const EdgeInsets.only(bottom: 8),
             height: 48,
             width: 328,
             child: ElevatedButton(
@@ -343,7 +349,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  print('В зону поиска входят места: $filteredMockList');
+                  print(
+                      'В вашего зону поиска входят места: ${filteredMockList.map((e) => e.name).toString()}');
+                  Navigator.pop(context, filteredMockList);
                 },
                 child: Text(
                   'Показать ($filteredListLength)',
