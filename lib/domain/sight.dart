@@ -1,7 +1,7 @@
 class Sight {
   final String name, url, details, type, img;
   final double lat, lan;
-  dynamic status; // статус :никакой, хочу посетить, посетил
+  SightStatus status; // статус :никакой, хочу посетить, посетил
 
   Sight(this.name, this.url, this.details, this.type, this.lat, this.lan,
       this.img, this.status);
@@ -16,5 +16,4 @@ enum SightStatus {
 enum SightListIndex {
   mainList, // вид карточки в основном листе
   planList // вид карточки в листе "хочу посетить/посетил"
-
 }

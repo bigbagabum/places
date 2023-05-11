@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 class TopIconWidget extends StatelessWidget {
   final dynamic status, listIndex;
+  //final Sight sight;
 
   String _heartIconClick() {
     print('Heart icon Clicked');
@@ -15,9 +17,12 @@ class TopIconWidget extends StatelessWidget {
     return '';
   }
 
-  String _cancelIconClick() {
+  _cancelIconClick(Sight sight) {
+    final index = mocks.indexOf(sight);
+    if (index != -1) {
+      mocks[index].status = SightStatus.sightNoPlans;
+    }
     print('Cancel Buttun Clicked');
-    return '';
   }
 
   String _routeIconClick() {
@@ -25,7 +30,11 @@ class TopIconWidget extends StatelessWidget {
     return '';
   }
 
-  const TopIconWidget({Key? key, required this.status, required this.listIndex})
+  const TopIconWidget(
+      {Key? key,
+      // required this.sight,
+      required this.status,
+      required this.listIndex})
       : super(key: key);
 
   Widget _topIconRow() {
@@ -52,7 +61,7 @@ class TopIconWidget extends StatelessWidget {
                     color: AppColors.lightGrey),
               ),
               GestureDetector(
-                onTap: _cancelIconClick,
+                onTap: () => _cancelIconClick,
                 child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
                     color: AppColors.lightGrey),
@@ -66,7 +75,7 @@ class TopIconWidget extends StatelessWidget {
                   child: const Image(
                       image: AssetImage('lib/ui/res/icons/way.png'))),
               GestureDetector(
-                onTap: _cancelIconClick,
+                onTap: () => _cancelIconClick,
                 child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
                     color: AppColors.lightGrey),
@@ -213,6 +222,7 @@ class SightCard extends StatelessWidget {
                               Row(
                             children: [
                               TopIconWidget(
+                                // sight: sight,
                                 listIndex: listIndex,
                                 status: status,
                               )

@@ -6,11 +6,12 @@ import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_strings.dart';
 
+//new class with key of source data
+
 // получаем список в зависимости от статуса
 List<SightCard> listOfSights(List listSights, statusSight) {
   List<SightCard> list = [];
-  int i;
-  for (i = 0; i < listSights.length; i++) {
+  for (int i = 0; i < listSights.length; i++) {
     if (listSights[i].status == statusSight) {
       list.add(SightCard(
           sight: listSights[i],
