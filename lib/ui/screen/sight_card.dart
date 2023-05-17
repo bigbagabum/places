@@ -8,6 +8,7 @@ class SightCard extends StatefulWidget {
   final Sight sight;
   final listIndex, status;
   final ValueKey listKey;
+  final VoidCallback onDelete;
 
   const SightCard({
     Key? key,
@@ -15,6 +16,7 @@ class SightCard extends StatefulWidget {
     required this.listIndex,
     required this.status,
     required this.listKey,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -32,13 +34,14 @@ class _SightCardState extends State<SightCard> {
     return '';
   }
 
-  void _cancelIconClick(ValueKey index) {
-    mocks
-        .firstWhere((itemToCancelFromVisitList) =>
-            itemToCancelFromVisitList.sightId == index)
-        .status = SightStatus.sightNoPlans;
-    print("выбран набор с индексом ${index.toString()}");
-  }
+  // void _cancelIconClick(ValueKey index) {
+  //   mocks
+  //       .firstWhere((itemToCancelFromVisitList) =>
+  //           itemToCancelFromVisitList.sightId == index)
+  //       .status = SightStatus.sightNoPlans;
+  //   print("выбран набор с индексом ${index.toString()}");
+
+  // }
 
   String _routeIconClick() {
     print('Route Button Clicked');
@@ -71,7 +74,7 @@ class _SightCardState extends State<SightCard> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _cancelIconClick(widget.listKey),
+                  // onTap: () => _cancelIconClick(widget.listKey),
                   child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
                     color: AppColors.lightGrey,
@@ -91,7 +94,8 @@ class _SightCardState extends State<SightCard> {
                 ),
                 GestureDetector(
                   key: widget.listKey,
-                  onTap: () => _cancelIconClick(widget.listKey),
+                  //onTap: () => _cancelIconClick(widget.listKey),
+                  onTap: widget.onDelete,
                   child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
                     color: AppColors.lightGrey,

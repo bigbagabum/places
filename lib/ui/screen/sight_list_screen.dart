@@ -108,6 +108,7 @@ class _SightListScreenState extends State<SightListScreen> {
                     listIndex: SightListIndex.mainList,
                     status: mock.status,
                     listKey: ValueKey(mock.sightId),
+                    onDelete: () => {},
                   ))
               .toList(),
         ),

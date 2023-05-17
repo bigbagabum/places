@@ -18,6 +18,14 @@ class _VisitingScreenState extends State<VisitingScreen>
   late TabController _controller;
   final listKey = ValueKey;
 
+  void cancelIconClick(ValueKey index) {
+    mocks
+        .firstWhere((itemToCancelFromVisitList) =>
+            itemToCancelFromVisitList.sightId == index)
+        .status = SightStatus.sightNoPlans;
+    print("выбран набор с индексом ${index.toString()}");
+  }
+
   List<Widget> listOfSights(List<Sight> listSights, SightStatus statusSight) {
     List<Widget> list = [];
     for (int i = 0; i < listSights.length; i++) {
@@ -27,6 +35,7 @@ class _VisitingScreenState extends State<VisitingScreen>
           listIndex: SightListIndex.planList,
           status: statusSight,
           listKey: ValueKey(listSights[i].sightId),
+          onDelete: () => cancelIconClick(listKey as ValueKey),
         ));
       }
     }
