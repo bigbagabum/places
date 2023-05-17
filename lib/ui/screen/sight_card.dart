@@ -95,7 +95,7 @@ class _SightCardState extends State<SightCard> {
                 GestureDetector(
                   key: widget.listKey,
                   //onTap: () => _cancelIconClick(widget.listKey),
-                  onTap: widget.onDelete,
+                  onTap: () => widget.onDelete,
                   child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
                     color: AppColors.lightGrey,
