@@ -380,7 +380,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               double.parse(textFieldLatController.text),
                               double.parse(textFieldLonController.text),
                               'lib/ui/res/images/jazz.jpg',
-                              SightStatus.sightToVisit);
+                              SightStatus.sightToVisit,
+                              mocks.last.sightId + 1);
 
                           mocks.add(newPlace);
                           // print(newPlace.name);

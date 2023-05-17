@@ -1,10 +1,11 @@
 class Sight {
   final String name, url, details, type, img;
   final double lat, lan;
-  SightStatus status; // статус :никакой, хочу посетить, посетил
+  SightStatus status;
+  int sightId; // статус :никакой, хочу посетить, посетил
 
   Sight(this.name, this.url, this.details, this.type, this.lat, this.lan,
-      this.img, this.status);
+      this.img, this.status, this.sightId);
 }
 
 enum SightStatus {

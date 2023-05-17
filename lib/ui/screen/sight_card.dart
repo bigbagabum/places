@@ -2,11 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/visiting_screen.dart';
 
-class TopIconWidget extends StatelessWidget {
-  final dynamic status, listIndex;
-  //final Sight sight;
+class SightCard extends StatefulWidget {
+  final Sight sight;
+  final listIndex, status;
+  final ValueKey listKey;
 
+  const SightCard({
+    Key? key,
+    required this.sight,
+    required this.listIndex,
+    required this.status,
+    required this.listKey,
+  }) : super(key: key);
+
+  @override
+  State<SightCard> createState() => _SightCardState();
+}
+
+class _SightCardState extends State<SightCard> {
   String _heartIconClick() {
     print('Heart icon Clicked');
     return '';
@@ -17,12 +32,12 @@ class TopIconWidget extends StatelessWidget {
     return '';
   }
 
-  _cancelIconClick(Sight sight) {
-    final index = mocks.indexOf(sight);
-    if (index != -1) {
-      mocks[index].status = SightStatus.sightNoPlans;
-    }
-    print('Cancel Buttun Clicked');
+  void _cancelIconClick(ValueKey index) {
+    mocks
+        .firstWhere((itemToCancelFromVisitList) =>
+            itemToCancelFromVisitList.sightId == index)
+        .status = SightStatus.sightNoPlans;
+    print("выбран набор с индексом ${index.toString()}");
   }
 
   String _routeIconClick() {
@@ -30,129 +45,116 @@ class TopIconWidget extends StatelessWidget {
     return '';
   }
 
-  const TopIconWidget(
-      {Key? key,
-      // required this.sight,
-      required this.status,
-      required this.listIndex})
-      : super(key: key);
-
   Widget _topIconRow() {
-    switch (listIndex) {
+    switch (widget.listIndex) {
       case SightListIndex.mainList:
         return GestureDetector(
           onTap: _heartIconClick,
           child: Image(
-              image: AssetImage('lib/ui/res/icons/heart_icon.png'),
-              color: AppColors.lightGrey),
+            image: AssetImage('lib/ui/res/icons/heart_icon.png'),
+            color: AppColors.lightGrey,
+          ),
         );
       case SightListIndex.planList:
-        switch (status) {
+        switch (widget.status) {
           case SightStatus.sightNoPlans:
             break;
 
-          case SightStatus
-              .sightToVisit: // вид карточки в списке "Хочу посетить"
-            return Row(children: [
-              GestureDetector(
-                onTap: _calendarIconClick,
-                child: const Image(
+          case SightStatus.sightToVisit:
+            return Row(
+              children: [
+                GestureDetector(
+                  onTap: _calendarIconClick,
+                  child: const Image(
                     image: AssetImage('lib/ui/res/icons/calendar.png'),
-                    color: AppColors.lightGrey),
-              ),
-              GestureDetector(
-                onTap: () => _cancelIconClick,
-                child: const Image(
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _cancelIconClick(widget.listKey),
+                  child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
-                    color: AppColors.lightGrey),
-              )
-            ]);
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+              ],
+            );
 
-          case SightStatus.sightVisited: // вид карточк в списке "посетил"
-            return Row(children: [
-              GestureDetector(
+          case SightStatus.sightVisited:
+            return Row(
+              children: [
+                GestureDetector(
                   onTap: _routeIconClick,
                   child: const Image(
-                      image: AssetImage('lib/ui/res/icons/way.png'))),
-              GestureDetector(
-                onTap: () => _cancelIconClick,
-                child: const Image(
+                    image: AssetImage('lib/ui/res/icons/way.png'),
+                  ),
+                ),
+                GestureDetector(
+                  key: widget.listKey,
+                  onTap: () => _cancelIconClick(widget.listKey),
+                  child: const Image(
                     image: AssetImage('lib/ui/res/icons/cancel.png'),
-                    color: AppColors.lightGrey),
-              )
-            ]);
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+              ],
+            );
         }
     }
     throw '';
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return _topIconRow();
-  }
-}
-
-class BottomColumn extends StatelessWidget {
-  final dynamic listIndex, status;
-  final Sight sight;
-  const BottomColumn(
-      {Key? key, required this.sight, required this.listIndex, this.status})
-      : super(key: key);
-
-  Widget _bottomColumnData(context) {
-    switch (listIndex) {
+  Widget _bottomColumnData(BuildContext context) {
+    switch (widget.listIndex) {
       case SightListIndex.mainList:
-        return Text(sight.details,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: 14, color: Theme.of(context).primaryColorLight));
+        return Text(
+          widget.sight.details,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 14,
+            color: Theme.of(context).primaryColorLight,
+          ),
+        );
       case SightListIndex.planList:
-        switch (status) {
+        switch (widget.status) {
           case SightStatus.sightToVisit:
             return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Запланировано на 01.01.23\n',
-                      style: TextStyle(color: Colors.green)),
-                  Text('Закрыто до 09:00',
-                      style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor))
-                ]);
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Запланировано на 01.01.23\n',
+                  style: TextStyle(color: Colors.green),
+                ),
+                Text(
+                  'Закрыто до 09:00',
+                  style: TextStyle(
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
+                ),
+              ],
+            );
           case SightStatus.sightVisited:
             return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Цель достигнута 20.08.22\n',
-                    style:
-                        TextStyle(color: Theme.of(context).primaryColorLight),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Цель достигнута 20.08.22\n',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
                   ),
-                  Text('открыто круглосуточно',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColorLight,
-                      ))
-                ]);
+                ),
+                Text(
+                  'открыто круглосуточно',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+              ],
+            );
         }
     }
     throw '';
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return _bottomColumnData(context);
-  }
-}
-
-class SightCard extends StatelessWidget {
-  final Sight sight;
-  // ignore: prefer_typing_uninitialized_variables
-  final listIndex, status;
-  const SightCard(
-      {Key? key,
-      required this.sight,
-      required this.listIndex,
-      required this.status})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,14 +166,12 @@ class SightCard extends StatelessWidget {
           margin: const EdgeInsets.all(15),
           clipBehavior: Clip.hardEdge,
           decoration: const BoxDecoration(
-            //color: Colors.yellow,
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           width: double.infinity,
           child: Column(
             children: [
               Flexible(
-                //flex: 1,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.topCenter,
@@ -181,7 +181,7 @@ class SightCard extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: Image(
-                          image: AssetImage(sight.img),
+                          image: AssetImage(widget.sight.img),
                           fit: BoxFit.cover,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {
@@ -196,76 +196,70 @@ class SightCard extends StatelessWidget {
                                         loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
-
-                              //child
                             );
                           },
                         ),
                       ),
-                      Row(children: [
-                        Container(
+                      Row(
+                        children: [
+                          Container(
                             padding: const EdgeInsets.all(16),
                             alignment: Alignment.topLeft,
-                            child: Text(sight.type,
-                                style: const TextStyle(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold))),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          alignment: Alignment.topRight,
-                          child:
-
-                              // смотрим в каком мы списке и отображаем нужные иконки справа сверху
-                              Row(
-                            children: [
-                              TopIconWidget(
-                                // sight: sight,
-                                listIndex: listIndex,
-                                status: status,
-                              )
-                              //_topIconRow(),
-                            ],
+                            child: Text(
+                              widget.sight.type,
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        )
-                      ])
+                          const Spacer(),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            alignment: Alignment.topRight,
+                            child: Row(
+                              children: [
+                                _topIconRow(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ),
               Flexible(
-                //flex: 1,
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  //height: double.infinity,
                   width: double.infinity,
                   color: Theme.of(context).primaryColorDark,
                   child: Column(
                     children: [
                       SizedBox(
-                          height: 25,
-                          width: double.infinity,
-                          child: Text(sight.name,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  overflow: TextOverflow.clip,
-                                  fontFamily: 'Roboto',
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontWeight: FontWeight.bold))),
+                        height: 25,
+                        width: double.infinity,
+                        child: Text(
+                          widget.sight.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            overflow: TextOverflow.clip,
+                            fontFamily: 'Roboto',
+                            color: Theme.of(context).primaryColorLight,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       SizedBox(
-                          width: double.infinity,
-
-                          //тут будет кастомная колонка отрисованная от выбранного списка
-                          child: BottomColumn(
-                              sight: sight,
-                              listIndex: listIndex,
-                              status: status)),
+                        width: double.infinity,
+                        child: _bottomColumnData(context),
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

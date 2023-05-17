@@ -6,25 +6,8 @@ import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_strings.dart';
 
-//new class with key of source data
-
-// получаем список в зависимости от статуса
-List<SightCard> listOfSights(List listSights, statusSight) {
-  List<SightCard> list = [];
-  for (int i = 0; i < listSights.length; i++) {
-    if (listSights[i].status == statusSight) {
-      list.add(SightCard(
-          sight: listSights[i],
-          listIndex: SightListIndex.planList,
-          status: statusSight));
-    }
-  }
-
-  return list;
-}
-
 class VisitingScreen extends StatefulWidget {
-  const VisitingScreen({Key? key}) : super(key: key);
+  VisitingScreen({Key? key}) : super(key: key);
 
   @override
   State<VisitingScreen> createState() => _VisitingScreenState();
@@ -33,6 +16,23 @@ class VisitingScreen extends StatefulWidget {
 class _VisitingScreenState extends State<VisitingScreen>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
+  final listKey = ValueKey;
+
+  List<Widget> listOfSights(List<Sight> listSights, SightStatus statusSight) {
+    List<Widget> list = [];
+    for (int i = 0; i < listSights.length; i++) {
+      if (listSights[i].status == statusSight) {
+        list.add(SightCard(
+          sight: listSights[i],
+          listIndex: SightListIndex.planList,
+          status: statusSight,
+          listKey: ValueKey(listSights[i].sightId),
+        ));
+      }
+    }
+
+    return list;
+  }
 
   @override
   void initState() {

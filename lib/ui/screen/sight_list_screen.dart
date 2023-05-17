@@ -74,9 +74,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class SightListScreen extends StatefulWidget {
-  //final listIndex = SightListIndex.mainList;
+  final listKey = ValueKey(mocks);
 
-  const SightListScreen({Key? key}) : super(key: key);
+  SightListScreen({Key? key}) : super(key: key);
 
   @override
   State<SightListScreen> createState() => _SightListScreenState();
@@ -104,9 +104,11 @@ class _SightListScreenState extends State<SightListScreen> {
         child: Column(
           children: mocks
               .map((mock) => SightCard(
-                  sight: mock,
-                  listIndex: SightListIndex.mainList,
-                  status: mock.status))
+                    sight: mock,
+                    listIndex: SightListIndex.mainList,
+                    status: mock.status,
+                    listKey: ValueKey(mock.sightId),
+                  ))
               .toList(),
         ),
       ),
