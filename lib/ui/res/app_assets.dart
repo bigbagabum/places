@@ -18,5 +18,10 @@ class AppAssets {
   static const iconSearch = 'lib/ui/res/icons/search.png';
   static const iconFilter = 'lib/ui/res/icons/filter.png';
   static const iconCancel = 'lib/ui/res/icons/iconCancel.png';
+  static const iconDelete = 'lib/ui/res/icons/cancel.png';
   static const iconEmptySearch = 'lib/ui/res/icons/emptySearchScreen.png';
+  static const iconHeart = 'lib/ui/res/icons/heart_icon.png';
+  static const iconCalendar = 'lib/ui/res/icons/calendar.png';
+  static const iconWay = 'lib/ui/res/icons/way.png';
+  static const iconBack = 'lib/ui/res/icons/back.png';
 }

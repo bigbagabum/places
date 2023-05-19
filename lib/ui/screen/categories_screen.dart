@@ -5,7 +5,7 @@ import 'package:places/ui/res/app_strings.dart';
 
 class CatRow {
   // класс строки классов показывающий выбор или не выбор текущей категории
-  String _catName;
+  final String _catName;
   bool _catChoised;
   CatRow(this._catName, this._catChoised);
 }
@@ -32,14 +32,14 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
 
   // int itemOfCat = 0;
 
-  Color MyButtonColor(bool isGrey) {
+  Color myButtonColor(bool isGrey) {
     return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
   }
 
   Widget showMarker(bool e) {
     if (e == true) {
       return Image(
-          image: AssetImage(AppAssets.iconFilterItem),
+          image: const AssetImage(AppAssets.iconFilterItem),
           color: Theme.of(context).selectedRowColor);
     } else {
       return const Text('');
@@ -72,7 +72,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   showMarker(cat._catChoised)
                   //Text(cat.catChoised.toString())
                 ],
@@ -82,7 +82,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
           Container(
             height: 1,
             width: double.infinity,
-            color: Color.fromARGB(56, 124, 126, 146),
+            color: const Color.fromARGB(56, 124, 126, 146),
           ),
         ],
       );
@@ -102,9 +102,9 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColorDark,
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           SizedBox(
             height: 56,
             child: Row(children: [
@@ -118,7 +118,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                   color: Theme.of(context).primaryColorLight,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 80,
               ),
               Text(
@@ -131,7 +131,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
               )
             ]),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Column(children: cats.map((item) => setCategory(item)).toList()),
           const Spacer(),
           SizedBox(
@@ -140,7 +140,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        MyButtonColor(isButtonDisabled))),
+                        myButtonColor(isButtonDisabled))),
                 onPressed: isButtonDisabled
                     ? null
                     : () {

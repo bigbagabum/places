@@ -11,7 +11,7 @@ import '../res/app_strings.dart';
 import '../res/app_theme.dart';
 
 class SightSearchScreen extends StatefulWidget {
-  SightSearchScreen({Key? key, required this.sightList}) : super(key: key) {}
+  SightSearchScreen({Key? key, required this.sightList}) : super(key: key);
 
   List<Sight> sightList;
 
@@ -28,26 +28,25 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           onPressed: () async {
             //клик на иконку фильтра
             List<Sight> customList = await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FiltersScreen()));
+                MaterialPageRoute(builder: (context) => const FiltersScreen()));
 
             widget.sightList = customList;
           },
-          icon: Image(
+          icon: const Image(
             image: AssetImage(AppAssets.iconFilter),
           ));
     }
     {
       return IconButton(
-        icon: Image(image: AssetImage(AppAssets.iconCancel)),
+        icon: const Image(image: AssetImage(AppAssets.iconCancel)),
         onPressed: () {
-          TextSearchFieldController.clear();
+          textSearchFieldController.clear();
           setState(() {
             filteredSightsList = [];
           });
         },
       );
     }
-    ;
   }
 
   @override
@@ -55,21 +54,19 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     // Clean up the controller when the widget is removed from the
     // widget tree.
 
-    TextSearchFieldController.dispose();
+    textSearchFieldController.dispose();
 
     super.dispose();
   }
 
-  String Mask() {
-    return TextSearchFieldController.text.toLowerCase().endsWith(' ')
-        ? TextSearchFieldController.text
-            .substring(0, TextSearchFieldController.text.length - 1)
-        : TextSearchFieldController.text;
+  String mask() {
+    return textSearchFieldController.text.toLowerCase().endsWith(' ')
+        ? textSearchFieldController.text
+            .substring(0, textSearchFieldController.text.length - 1)
+        : textSearchFieldController.text;
   }
 
-  // ignore: non_constant_identifier_names
-
-  List<TextSpan> NameOfSight(String inputMask, String originalName) {
+  List<TextSpan> nameOfSight(String inputMask, String originalName) {
     List<TextSpan> stringWithStyle = [];
 
     int index = originalName.toLowerCase().indexOf(inputMask.toLowerCase());
@@ -105,7 +102,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   late List<Sight> filteredSightsList = [];
   List<String> searchHistory = []; //Список итемов истории поиска
 
-  Widget SearchHistoryItem(String itemName, int itemIndex) {
+  Widget searchHistoryItem(String itemName, int itemIndex) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
       child: Column(children: [
@@ -114,7 +111,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             itemName,
             style: Theme.of(context).textTheme.headline3,
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
               onTap: () {
                 searchHistory.removeAt(itemIndex);
@@ -134,7 +131,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
 //экран пустого результата поиска
   Widget emptySearchResult() {
-    return Column(children: [
+    return Column(children: const [
       Image(
         image: AssetImage(AppAssets.iconEmptySearch),
       )
@@ -142,7 +139,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   //получаем отфильттрованный по вхождению строки в название список мест
-  List<Sight> FilteredListOfItems(String inputMask, List<Sight> listData) {
+  List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
     List<Sight> nameIsSame = [];
 
     for (Sight checkSight in listData) {
@@ -150,24 +147,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         nameIsSame.add(checkSight);
       }
     }
-    nameIsSame.isEmpty
-        ? {
-            // Fluttertoast.showToast(
-            //     msg: "Empty State",
-            //     toastLength: Toast.LENGTH_SHORT,
-            //     gravity: ToastGravity.CENTER,
-            //     timeInSecForIosWeb: 1,
-            //     backgroundColor: Colors.red,
-            //     textColor: Colors.white,
-            //     fontSize: 16.0)
-          }
-        : searchHistory.add(inputMask);
+    nameIsSame.isEmpty ? {} : searchHistory.add(inputMask);
     return nameIsSame;
   }
 
-  var TextSearchFieldController = TextEditingController();
+  var textSearchFieldController = TextEditingController();
 
-  Widget SeightLine(Sight inputSight) {
+  Widget seightLine(Sight inputSight) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
       child: InkWell(
@@ -180,69 +166,63 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             ),
           );
         },
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 16),
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    height: 56,
-                    width: 56,
-                    child: SizedBox(
-                      child: Image(
-                        image: AssetImage(inputSight.img),
-                        fit: BoxFit.cover,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 16),
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  height: 56,
+                  width: 56,
+                  child: SizedBox(
+                    child: Image(
+                      image: AssetImage(inputSight.img),
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
 
-                            //child
-                          );
-                        },
-                      ),
+                          //child
+                        );
+                      },
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            //text: inputSight.name,
-                            children: NameOfSight(
-                                TextSearchFieldController.text,
-                                inputSight.name)),
-
-                        //  style: Theme.of(context).textTheme.headline5
-                      ),
-                      SizedBox(height: 8),
-                      Text(inputSight.type,
-                          style: Theme.of(context).textTheme.headline4)
-                    ],
-                  )
-                ],
-              ),
-              Container(
-                height: 1,
-                margin: const EdgeInsets.only(top: 10),
-                width: double.infinity,
-                color: Theme.of(context).secondaryHeaderColor,
-              )
-            ],
-          ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          children: nameOfSight(
+                              textSearchFieldController.text, inputSight.name)),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(inputSight.type,
+                        style: Theme.of(context).textTheme.headline4)
+                  ],
+                )
+              ],
+            ),
+            Container(
+              height: 1,
+              margin: const EdgeInsets.only(top: 10),
+              width: double.infinity,
+              color: Theme.of(context).secondaryHeaderColor,
+            )
+          ],
         ),
       ),
     );
@@ -262,7 +242,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           children: (searchHistory
                   .asMap()
                   .entries
-                  .map((item) => SearchHistoryItem(item.value, item.key)))
+                  .map((item) => searchHistoryItem(item.value, item.key)))
               .toList()),
       GestureDetector(
           onTap: () {
@@ -279,36 +259,24 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     ]);
   }
 
-  // Widget BodyContent() {
-  //   if (filteredSightsList.isEmpty) {
-  //     if (searchHistory.isNotEmpty) {
-  //       return searchHistoryScreen();
-  //     }
-  //     return emptySearchResult();
-  //   }
-  //   return Column(
-  //     children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
-  //   );
-  // }
-
-  Widget BodyContent() {
+  Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
-      if (TextSearchFieldController.text.isNotEmpty) {
+      if (textSearchFieldController.text.isNotEmpty) {
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
+              const Image(
                 image: AssetImage(AppAssets.iconEmptySearch),
               ),
               const SizedBox(height: 16.0),
               Text(
-                'Ничего не найдено',
+                AppStrings.emptySearchResult,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               const SizedBox(height: 8.0),
               Text(
-                'Попробуйте изменить параметры поиска',
+                AppStrings.tryToChangeParametersForSearch,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ],
@@ -319,7 +287,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
       }
     } else {
       return Column(
-        children: (filteredSightsList.map((item) => SeightLine(item))).toList(),
+        children: (filteredSightsList.map((item) => seightLine(item))).toList(),
       );
     }
   }
@@ -345,20 +313,20 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(52.0),
           child: Container(
-            margin: EdgeInsets.only(left: 16, right: 16),
+            margin: const EdgeInsets.only(left: 16, right: 16),
             height: 40,
             width: double.infinity,
             child: TextField(
               //onTap: () {},
-              controller: TextSearchFieldController,
+              controller: textSearchFieldController,
               textAlignVertical: TextAlignVertical.center,
               onSubmitted: (_) {
                 //обрабатываем ввод в строке поиска
 
-                if (TextSearchFieldController.text.isNotEmpty) {
+                if (textSearchFieldController.text.isNotEmpty) {
                   setState(() {
-                    filteredSightsList = FilteredListOfItems(
-                        TextSearchFieldController.text, widget.sightList);
+                    filteredSightsList = filteredListOfItems(
+                        textSearchFieldController.text, widget.sightList);
                   });
                 } else {
                   filteredSightsList = [];
@@ -366,22 +334,22 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
               },
               onChanged: (_) {
                 //обрабатываем ввод в строке поиска
-                if (TextSearchFieldController.text
+                if (textSearchFieldController.text
                     .toLowerCase()
                     .endsWith(' ')) {
                   setState(
                     () {
-                      if (TextSearchFieldController.text
+                      if (textSearchFieldController.text
                               .toLowerCase()
                               .endsWith(' ') &&
-                          !TextSearchFieldController.text
+                          !textSearchFieldController.text
                               .toLowerCase()
                               .startsWith(' ')) {
-                        filteredSightsList = FilteredListOfItems(
-                            TextSearchFieldController.text
+                        filteredSightsList = filteredListOfItems(
+                            textSearchFieldController.text
                                 .toLowerCase()
                                 .substring(0,
-                                    TextSearchFieldController.text.length - 1),
+                                    textSearchFieldController.text.length - 1),
                             widget.sightList);
 
                         // print('new search ');
@@ -389,12 +357,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       }
                     },
                   );
-                } else if (TextSearchFieldController.text.isEmpty) {
+                } else if (textSearchFieldController.text.isEmpty) {
                   setState(() {
                     filteredSightsList = [];
                   });
-                } else
+                } else {
                   setState(() {});
+                }
               },
 
               decoration: InputDecoration(
@@ -405,16 +374,16 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   hintText: AppStrings.searchBar,
                   hintStyle: Theme.of(context).textTheme.headline3,
                   filled: true,
-                  prefixIcon: Image(
-                    image: const AssetImage(AppAssets.iconSearch),
+                  prefixIcon: const Image(
+                    image: AssetImage(AppAssets.iconSearch),
                   ),
-                  suffixIcon: _suffixIcon(Mask().isEmpty)),
+                  suffixIcon: _suffixIcon(mask().isEmpty)),
             ),
           ),
         ),
       ),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(child: BodyContent()),
+      body: SingleChildScrollView(child: bodyContent()),
     );
   }
 }

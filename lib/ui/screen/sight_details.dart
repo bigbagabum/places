@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 class SightDetails extends StatefulWidget {
   SightDetails({Key? key, required Sight detailSight}) : super(key: key) {
-    this.sight = detailSight;
+    sight = detailSight;
   }
 
   late final Sight sight;
@@ -59,11 +60,11 @@ class _SightDetailsState extends State<SightDetails> {
                         decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         margin: const EdgeInsets.only(left: 16, top: 36),
                         child: Image(
                             color: Theme.of(context).primaryColorLight,
-                            image: AssetImage('lib/ui/res/icons/back.png'))),
+                            image: const AssetImage(AppAssets.iconBack))),
                   ),
                 ],
               ),
@@ -157,10 +158,6 @@ class _SightDetailsState extends State<SightDetails> {
                               Text(
                                 AppStrings.builtRoute,
                                 style: Theme.of(context).textTheme.headline1,
-                                // TextStyle(
-                                //     fontSize: 14,
-                                //     fontFamily: 'Roboto',
-                                //     color: Colors.white),
                               ),
                             ],
                           ),

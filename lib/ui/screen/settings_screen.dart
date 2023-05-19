@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Container(
               height: 1,
               width: double.infinity,
-              color: Color.fromRGBO(124, 126, 146, 0.3),
+              color: const Color.fromRGBO(124, 126, 146, 0.3),
               margin: const EdgeInsets.only(left: 16, right: 16)),
           Container(
               padding: const EdgeInsets.only(left: 5.0, right: 30.0),
@@ -85,9 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      print('Open tutorial icon clicked');
-                    },
+                    onTap: () {},
                     child: const Image(
                         image: AssetImage(AppAssets.iconInformation)),
                   ),
@@ -96,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Container(
               height: 1,
               width: double.infinity,
-              color: Color.fromRGBO(124, 126, 146, 0.3),
+              color: const Color.fromRGBO(124, 126, 146, 0.3),
               margin: const EdgeInsets.only(left: 16, right: 16)),
         ],
       ),

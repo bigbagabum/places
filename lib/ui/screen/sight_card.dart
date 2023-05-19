@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
+import 'package:places/ui/res/app_assets.dart';
+import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/visiting_screen.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
-  final listIndex, status;
+  final dynamic listIndex, status;
   final ValueKey listKey;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
 
   const SightCard({
     Key? key,
@@ -16,7 +16,7 @@ class SightCard extends StatefulWidget {
     required this.listIndex,
     required this.status,
     required this.listKey,
-    required this.onDelete,
+    this.onDelete,
   }) : super(key: key);
 
   @override
@@ -25,26 +25,14 @@ class SightCard extends StatefulWidget {
 
 class _SightCardState extends State<SightCard> {
   String _heartIconClick() {
-    print('Heart icon Clicked');
     return '';
   }
 
   String _calendarIconClick() {
-    print('Calendar Icon Click');
     return '';
   }
 
-  // void _cancelIconClick(ValueKey index) {
-  //   mocks
-  //       .firstWhere((itemToCancelFromVisitList) =>
-  //           itemToCancelFromVisitList.sightId == index)
-  //       .status = SightStatus.sightNoPlans;
-  //   print("выбран набор с индексом ${index.toString()}");
-
-  // }
-
   String _routeIconClick() {
-    print('Route Button Clicked');
     return '';
   }
 
@@ -53,8 +41,8 @@ class _SightCardState extends State<SightCard> {
       case SightListIndex.mainList:
         return GestureDetector(
           onTap: _heartIconClick,
-          child: Image(
-            image: AssetImage('lib/ui/res/icons/heart_icon.png'),
+          child: const Image(
+            image: AssetImage(AppAssets.iconHeart),
             color: AppColors.lightGrey,
           ),
         );
@@ -69,14 +57,14 @@ class _SightCardState extends State<SightCard> {
                 GestureDetector(
                   onTap: _calendarIconClick,
                   child: const Image(
-                    image: AssetImage('lib/ui/res/icons/calendar.png'),
+                    image: AssetImage(AppAssets.iconCalendar),
                     color: AppColors.lightGrey,
                   ),
                 ),
                 GestureDetector(
-                  // onTap: () => _cancelIconClick(widget.listKey),
+                  onTap: () => widget.onDelete?.call(),
                   child: const Image(
-                    image: AssetImage('lib/ui/res/icons/cancel.png'),
+                    image: AssetImage(AppAssets.iconDelete),
                     color: AppColors.lightGrey,
                   ),
                 ),
@@ -89,15 +77,13 @@ class _SightCardState extends State<SightCard> {
                 GestureDetector(
                   onTap: _routeIconClick,
                   child: const Image(
-                    image: AssetImage('lib/ui/res/icons/way.png'),
+                    image: AssetImage(AppAssets.iconWay),
                   ),
                 ),
                 GestureDetector(
-                  key: widget.listKey,
-                  //onTap: () => _cancelIconClick(widget.listKey),
-                  onTap: () => widget.onDelete,
+                  onTap: () => widget.onDelete?.call(),
                   child: const Image(
-                    image: AssetImage('lib/ui/res/icons/cancel.png'),
+                    image: AssetImage(AppAssets.iconDelete),
                     color: AppColors.lightGrey,
                   ),
                 ),
@@ -125,12 +111,12 @@ class _SightCardState extends State<SightCard> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Запланировано на 01.01.23\n',
+                const Text(
+                  AppStrings.planDate,
                   style: TextStyle(color: Colors.green),
                 ),
                 Text(
-                  'Закрыто до 09:00',
+                  AppStrings.openTime,
                   style: TextStyle(
                     color: Theme.of(context).secondaryHeaderColor,
                   ),
@@ -142,13 +128,13 @@ class _SightCardState extends State<SightCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Цель достигнута 20.08.22\n',
+                  AppStrings.visitedDate,
                   style: TextStyle(
                     color: Theme.of(context).primaryColorLight,
                   ),
                 ),
                 Text(
-                  'открыто круглосуточно',
+                  AppStrings.openTime24,
                   style: TextStyle(
                     color: Theme.of(context).primaryColorLight,
                   ),

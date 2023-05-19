@@ -30,7 +30,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     List<Sight> filledList = [];
     for (var n in value) {
       if (isPlaceNear(
-          RedSquare,
+          redSquare,
           Location(n.lat, n.lan),
           _FiltersScreenState.currentRangeValues.start,
           _FiltersScreenState.currentRangeValues.end)) {
@@ -40,13 +40,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return filledList;
   }
 
-  static Location RedSquare = Location(55.754840, 37.620881);
+  final Location redSquare = Location(55.754840, 37.620881);
 
   final haversineDistance = HaversineDistance();
 
-  bool isPlaceNear(Location CheckPlace, Location CenterPlace, kmMin, kmMax) {
+  bool isPlaceNear(Location checkPlace, Location centerPlace, kmMin, kmMax) {
     double distanceInMeter =
-        haversineDistance.haversine(CheckPlace, CenterPlace, Unit.METER);
+        haversineDistance.haversine(checkPlace, centerPlace, Unit.METER);
     return (_FiltersScreenState.currentRangeValues.start <= distanceInMeter) &&
         (distanceInMeter <= _FiltersScreenState.currentRangeValues.end);
   }
@@ -62,14 +62,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
               (mocks[e].type == 'музей' && isMuseum) ||
               (mocks[e].type == 'кафе' && isCafe)) &&
           isPlaceNear(
-              RedSquare,
+              redSquare,
               Location(mocks[e].lat, mocks[e].lan),
               _FiltersScreenState.currentRangeValues.start,
               _FiltersScreenState.currentRangeValues.end)) {
         filteredPlaces.add(mocks[e]);
       }
-      print(
-          '${mocks[e].name}  расстояние до Красной площади =  ${haversineDistance.haversine(RedSquare, Location(mocks[e].lat, mocks[e].lan), Unit.METER).round()} м');
     }
     setState(() {
       filteredMockList = filteredPlaces;
@@ -108,7 +106,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   width: 15,
                   decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
                   child: Image(
                     image: const AssetImage(AppAssets.iconBackScreen),
                     color: Theme.of(context).primaryColorLight,
@@ -137,43 +136,37 @@ class _FiltersScreenState extends State<FiltersScreen> {
       body: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(AppStrings.categories,
+              style: TextStyle(
+                color: Theme.of(context).secondaryHeaderColor,
+              )
+              // ),
+              ),
           Container(
-            //margin: EdgeInsets.only(left: 15),
-            child: Text(AppStrings.categories,
-                style: TextStyle(
-                  color: Theme.of(context).secondaryHeaderColor,
-                )
-                // ),
-                ),
-          ),
-          Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
                   Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 25, right: 24),
+                        margin: const EdgeInsets.only(left: 25, right: 24),
                         child: Column(
                           children: [
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    isHotel = !isHotel;
-                                    filterOfItems();
-                                  });
-                                },
-                                child: Stack(
-                                  //фильтр Отелей
-                                  alignment: AlignmentDirectional.bottomEnd,
-                                  children: [
-                                    const Image(
-                                        image:
-                                            AssetImage(AppAssets.buttonHotel)),
-                                    isCheckedFilterItem(isHotel),
-                                  ],
-                                ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  isHotel = !isHotel;
+                                  filterOfItems();
+                                });
+                              },
+                              child: Stack(
+                                //фильтр Отелей
+                                alignment: AlignmentDirectional.bottomEnd,
+                                children: [
+                                  const Image(
+                                      image: AssetImage(AppAssets.buttonHotel)),
+                                  isCheckedFilterItem(isHotel),
+                                ],
                               ),
                             ),
                             const Text(
@@ -208,7 +201,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 22, right: 22),
+                        margin: const EdgeInsets.only(left: 22, right: 22),
                         child: Column(
                           children: [
                             InkWell(
@@ -313,12 +306,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       )
                     ],
                   ),
-                  SizedBox(height: 56),
+                  const SizedBox(height: 56),
                   Row(
                     children: [
-                      Text(AppStrings.distance,
+                      const Text(AppStrings.distance,
                           style: AppTypography.textText16Regular),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                           'от ${currentRangeValues.start.round()} до ${currentRangeValues.end.round()} м.',
                           style: AppTypography.textText16Regular)
@@ -339,7 +332,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 });
                 filterOfItems();
               }),
-          Spacer(),
+          const Spacer(),
           Container(
             margin: const EdgeInsets.only(bottom: 8),
             height: 48,
@@ -349,8 +342,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  print(
-                      'В вашего зону поиска входят места: ${filteredMockList.map((e) => e.name).toString()}');
                   Navigator.pop(context, filteredMockList);
                 },
                 child: Text(

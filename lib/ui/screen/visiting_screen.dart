@@ -7,7 +7,7 @@ import 'package:places/ui/screen/sight_card.dart';
 import 'package:places/ui/res/app_strings.dart';
 
 class VisitingScreen extends StatefulWidget {
-  VisitingScreen({Key? key}) : super(key: key);
+  const VisitingScreen({Key? key}) : super(key: key);
 
   @override
   State<VisitingScreen> createState() => _VisitingScreenState();
@@ -18,12 +18,13 @@ class _VisitingScreenState extends State<VisitingScreen>
   late TabController _controller;
   final listKey = ValueKey;
 
-  void cancelIconClick(ValueKey index) {
-    mocks
-        .firstWhere((itemToCancelFromVisitList) =>
-            itemToCancelFromVisitList.sightId == index)
-        .status = SightStatus.sightNoPlans;
-    print("выбран набор с индексом ${index.toString()}");
+  void cancelIconClick(int index) {
+    setState(() {
+      mocks
+          .firstWhere((itemToCancelFromVisitList) =>
+              itemToCancelFromVisitList.sightId == index)
+          .status = SightStatus.sightNoPlans;
+    });
   }
 
   List<Widget> listOfSights(List<Sight> listSights, SightStatus statusSight) {
@@ -35,7 +36,7 @@ class _VisitingScreenState extends State<VisitingScreen>
           listIndex: SightListIndex.planList,
           status: statusSight,
           listKey: ValueKey(listSights[i].sightId),
-          onDelete: () => cancelIconClick(ValueKey(listSights[i].sightId)),
+          onDelete: () => cancelIconClick(listSights[i].sightId),
         ));
       }
     }

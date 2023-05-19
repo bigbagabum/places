@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _screenSelected = <Widget>[
     SightListScreen(),
     const MapScreen(),
-    VisitingScreen(),
+    const VisitingScreen(),
     const SettingsScreen(),
   ];
 
