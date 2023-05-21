@@ -77,22 +77,22 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
       stringWithStyle.add(TextSpan(
         text: beforeMask,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ));
 
       stringWithStyle.add(TextSpan(
         text: mask,
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.titleLarge,
       ));
 
       stringWithStyle.add(TextSpan(
         text: afterMask,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ));
     } else {
       stringWithStyle.add(TextSpan(
         text: originalName,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headlineSmall,
       ));
     }
 
@@ -109,7 +109,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Text(
             itemName,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
           const Spacer(),
           GestureDetector(
@@ -131,7 +131,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
 //экран пустого результата поиска
   Widget emptySearchResult() {
-    return Column(children: const [
+    return Column(children: [
       Image(
         image: AssetImage(AppAssets.iconEmptySearch),
       )
@@ -211,7 +211,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(inputSight.type,
-                        style: Theme.of(context).textTheme.headline4)
+                        style: Theme.of(context).textTheme.headlineMedium)
                   ],
                 )
               ],
@@ -236,7 +236,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           top: 38,
         ),
         child: Text(AppStrings.searchHistory,
-            style: Theme.of(context).textTheme.headline4),
+            style: Theme.of(context).textTheme.headlineMedium),
       ),
       Column(
           children: (searchHistory
@@ -272,12 +272,12 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
               const SizedBox(height: 16.0),
               Text(
                 AppStrings.emptySearchResult,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8.0),
               Text(
                 AppStrings.tryToChangeParametersForSearch,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
@@ -372,7 +372,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none),
                   hintText: AppStrings.searchBar,
-                  hintStyle: Theme.of(context).textTheme.headline3,
+                  hintStyle: Theme.of(context).textTheme.displaySmall,
                   filled: true,
                   prefixIcon: const Image(
                     image: AssetImage(AppAssets.iconSearch),

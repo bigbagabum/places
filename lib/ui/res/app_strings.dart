@@ -42,4 +42,6 @@ class AppStrings {
   static const emptySearchResult = 'Ничего не найдено';
   static const tryToChangeParametersForSearch =
       'Попробуйте изменить параметры поиска';
+  static const getPlan = 'Запланировать';
+  static const inFavorite = 'В избранное';
 }

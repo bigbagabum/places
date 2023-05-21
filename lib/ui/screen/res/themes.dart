@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 final darkTheme = ThemeData(
-  selectedRowColor: AppColors.rowSelectedColorGreen,
   scaffoldBackgroundColor: AppColors.dmBackground,
   primaryColorDark: AppColors.dmCardBackground, //фон карточек и инпутов
   primaryColorLight: AppColors.dmPrimaryLightColor,
@@ -15,51 +14,51 @@ final darkTheme = ThemeData(
   textTheme: TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
-    headline1:
-        TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+    displayLarge:
+        const TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     // ignore: prefer_const_constructors
-    headline2: TextStyle(
+    displayMedium: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    headline3: const TextStyle(
+    displaySmall: const TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.lightGrey),
-    headline5: const TextStyle(
+    headlineSmall: const TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    headline4: TextStyle(
+    headlineMedium: const TextStyle(
         fontSize: 14,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    headline6: TextStyle(
+    titleLarge: const TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmCardBackground,
         fontWeight: FontWeight.bold),
 
-    subtitle1: TextStyle(
+    titleMedium: const TextStyle(
       fontSize: 18,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
       fontWeight: FontWeight.bold,
     ),
-    subtitle2: TextStyle(
+    titleSmall: const TextStyle(
       fontSize: 14,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
         width: 1.0,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
+      borderSide: const BorderSide(color: Colors.green),
       borderRadius: BorderRadius.circular(10.0),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
         width: 1.0,
@@ -67,20 +66,19 @@ final darkTheme = ThemeData(
     ),
     fillColor: AppColors.dmCardBackground,
     filled: true,
-    labelStyle: TextStyle(
+    labelStyle: const TextStyle(
       color: AppColors.lightGrey,
     ),
-    hintStyle: TextStyle(
+    hintStyle: const TextStyle(
       color: AppColors.lightGrey,
     ),
-    errorStyle: TextStyle(
+    errorStyle: const TextStyle(
       color: Colors.red,
     ),
   ),
 );
 
 final lightTheme = ThemeData(
-  selectedRowColor: AppColors.rowSelectedColorGreen,
   primaryColorDark: AppColors.lightGrey,
   primaryColorLight: AppColors.dmCardBackground,
   scaffoldBackgroundColor: AppColors.dmPrimaryLightColor,
@@ -92,45 +90,45 @@ final lightTheme = ThemeData(
   textTheme: const TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
-    headline1:
+    displayLarge:
         TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    headline4: TextStyle(
+    headlineMedium: TextStyle(
         fontSize: 14, fontFamily: 'Roboto', color: AppColors.dmBackground),
-    headline5: TextStyle(
+    headlineSmall: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.dmCardBackground),
-    headline6: TextStyle(
+    titleLarge: TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmCardBackground,
         fontWeight: FontWeight.bold),
-    subtitle1: TextStyle(
+    titleMedium: TextStyle(
       fontSize: 18,
       fontFamily: 'Roboto',
       color: AppColors.darkGrey,
       fontWeight: FontWeight.bold,
     ),
-    subtitle2: TextStyle(
+    titleSmall: TextStyle(
       fontSize: 14,
       fontFamily: 'Roboto',
       color: AppColors.darkGrey,
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.darkGrey,
         width: 1.0,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
+      borderSide: const BorderSide(color: Colors.green),
       borderRadius: BorderRadius.circular(10.0),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.lightGrey,
         width: 1.0,
@@ -138,13 +136,13 @@ final lightTheme = ThemeData(
     ),
     fillColor: AppColors.dmPrimaryLightColor,
     filled: true,
-    labelStyle: TextStyle(
+    labelStyle: const TextStyle(
       color: Colors.black,
     ),
-    hintStyle: TextStyle(
+    hintStyle: const TextStyle(
       color: Colors.black,
     ),
-    errorStyle: TextStyle(
+    errorStyle: const TextStyle(
       color: Colors.red,
     ),
   ),
