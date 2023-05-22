@@ -59,7 +59,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide.none),
                 hintText: AppStrings.searchBar,
-                hintStyle: Theme.of(context).textTheme.headline3,
+                hintStyle: Theme.of(context).textTheme.displaySmall,
                 filled: true,
                 prefixIcon: Image(image: AssetImage(AppAssets.iconSearch)),
                 suffixIcon: Image(image: AssetImage(AppAssets.iconFilter)),

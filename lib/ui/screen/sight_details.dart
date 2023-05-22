@@ -157,7 +157,7 @@ class _SightDetailsState extends State<SightDetails> {
                               ),
                               Text(
                                 AppStrings.builtRoute,
-                                style: Theme.of(context).textTheme.headline1,
+                                style: Theme.of(context).textTheme.displayLarge,
                               ),
                             ],
                           ),
@@ -185,11 +185,10 @@ class _SightDetailsState extends State<SightDetails> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Image(
-                                      image: AssetImage(
-                                          'lib/ui/res/icons/calendar.png'),
+                                      image: AssetImage(AppAssets.iconCalendar),
                                       color: AppColors.darkIcon),
                                   Text(
-                                    'Запланировать',
+                                    AppStrings.getPlan,
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Color.fromARGB(255, 58, 63, 91)),
@@ -211,11 +210,10 @@ class _SightDetailsState extends State<SightDetails> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Image(
-                                      image: AssetImage(
-                                          'lib/ui/res/icons/heart_icon.png'),
+                                      image: AssetImage(AppAssets.iconHeart),
                                       color: AppColors.darkIcon),
                                   Text(
-                                    'В избранное',
+                                    AppStrings.inFavorite,
                                     style: TextStyle(
                                       //fontFamily: 'Roboto',
                                       fontSize: 14,

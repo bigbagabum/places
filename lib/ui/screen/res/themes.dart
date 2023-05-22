@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 final darkTheme = ThemeData(
+  //useMaterial3: true,
+  selectedRowColor: AppColors.rowSelectedColorGreen,
   scaffoldBackgroundColor: AppColors.dmBackground,
   primaryColorDark: AppColors.dmCardBackground, //фон карточек и инпутов
   primaryColorLight: AppColors.dmPrimaryLightColor,
@@ -14,34 +16,34 @@ final darkTheme = ThemeData(
   textTheme: TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
-    displayLarge:
-        const TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+    headline1: const TextStyle(
+        fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     // ignore: prefer_const_constructors
-    displayMedium: TextStyle(
+    headline2: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    displaySmall: const TextStyle(
+    headline3: const TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.lightGrey),
-    headlineSmall: const TextStyle(
+    headline5: const TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    headlineMedium: const TextStyle(
+    headline4: const TextStyle(
         fontSize: 14,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    titleLarge: const TextStyle(
+    headline6: const TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
-        color: AppColors.dmCardBackground,
+        color: Color.fromARGB(255, 196, 37, 37),
         fontWeight: FontWeight.bold),
 
-    titleMedium: const TextStyle(
+    subtitle1: const TextStyle(
       fontSize: 18,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
       fontWeight: FontWeight.bold,
     ),
-    titleSmall: const TextStyle(
+    subtitle2: const TextStyle(
       fontSize: 14,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
@@ -79,6 +81,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  selectedRowColor: AppColors.rowSelectedColorGreen,
   primaryColorDark: AppColors.lightGrey,
   primaryColorLight: AppColors.dmCardBackground,
   scaffoldBackgroundColor: AppColors.dmPrimaryLightColor,
@@ -90,28 +93,28 @@ final lightTheme = ThemeData(
   textTheme: const TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
-    displayLarge:
+    headline1:
         TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
-    displayMedium: TextStyle(
+    headline2: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    displaySmall: TextStyle(
+    headline3: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
-    headlineMedium: TextStyle(
+    headline4: TextStyle(
         fontSize: 14, fontFamily: 'Roboto', color: AppColors.dmBackground),
-    headlineSmall: TextStyle(
+    headline5: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.dmCardBackground),
-    titleLarge: TextStyle(
+    headline6: TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmCardBackground,
         fontWeight: FontWeight.bold),
-    titleMedium: TextStyle(
+    subtitle1: TextStyle(
       fontSize: 18,
       fontFamily: 'Roboto',
       color: AppColors.darkGrey,
       fontWeight: FontWeight.bold,
     ),
-    titleSmall: TextStyle(
+    subtitle2: TextStyle(
       fontSize: 14,
       fontFamily: 'Roboto',
       color: AppColors.darkGrey,
