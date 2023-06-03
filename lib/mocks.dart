@@ -9,7 +9,8 @@ final mocks = [
       55.66,
       37.62,
       'lib/ui/res/images/jazz.jpg',
-      SightStatus.sightToVisit),
+      SightStatus.sightToVisit,
+      1),
   Sight(
       'Kristal Hotel',
       'http://hkristal.ru/',
@@ -18,7 +19,8 @@ final mocks = [
       55.68,
       37.57,
       'lib/ui/res/images/kristal.jpg',
-      SightStatus.sightToVisit),
+      SightStatus.sightToVisit,
+      2),
   Sight(
       'Metropol Hotel',
       'https://metropol-moscow.ru/',
@@ -28,7 +30,8 @@ final mocks = [
       55.75,
       37.62,
       'lib/ui/res/images/metropol.jpg',
-      SightStatus.sightVisited),
+      SightStatus.sightVisited,
+      3),
   Sight(
       'Historical museum',
       'https://shm.ru/',
@@ -39,5 +42,6 @@ final mocks = [
       55.75,
       37.62,
       'lib/ui/res/images/historical_museum.jpg',
-      SightStatus.sightNoPlans)
+      SightStatus.sightNoPlans,
+      4)
 ];

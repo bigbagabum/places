@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 final darkTheme = ThemeData(
+  //useMaterial3: true,
   selectedRowColor: AppColors.rowSelectedColorGreen,
   scaffoldBackgroundColor: AppColors.dmBackground,
   primaryColorDark: AppColors.dmCardBackground, //фон карточек и инпутов
@@ -15,8 +16,8 @@ final darkTheme = ThemeData(
   textTheme: TextTheme(
     // headlineSmall:
     //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
-    headline1:
-        TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
+    headline1: const TextStyle(
+        fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     // ignore: prefer_const_constructors
     headline2: TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: AppColors.darkGrey),
@@ -26,40 +27,40 @@ final darkTheme = ThemeData(
         fontSize: 16,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    headline4: TextStyle(
+    headline4: const TextStyle(
         fontSize: 14,
         fontFamily: 'Roboto',
         color: AppColors.dmPrimaryLightColor),
-    headline6: TextStyle(
+    headline6: const TextStyle(
         fontSize: 16,
         fontFamily: 'Roboto',
-        color: AppColors.dmCardBackground,
+        color: Color.fromARGB(255, 196, 37, 37),
         fontWeight: FontWeight.bold),
 
-    subtitle1: TextStyle(
+    subtitle1: const TextStyle(
       fontSize: 18,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
       fontWeight: FontWeight.bold,
     ),
-    subtitle2: TextStyle(
+    subtitle2: const TextStyle(
       fontSize: 14,
       fontFamily: 'Roboto',
       color: AppColors.lightGrey,
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
         width: 1.0,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
+      borderSide: const BorderSide(color: Colors.green),
       borderRadius: BorderRadius.circular(10.0),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
         width: 1.0,
@@ -67,13 +68,13 @@ final darkTheme = ThemeData(
     ),
     fillColor: AppColors.dmCardBackground,
     filled: true,
-    labelStyle: TextStyle(
+    labelStyle: const TextStyle(
       color: AppColors.lightGrey,
     ),
-    hintStyle: TextStyle(
+    hintStyle: const TextStyle(
       color: AppColors.lightGrey,
     ),
-    errorStyle: TextStyle(
+    errorStyle: const TextStyle(
       color: Colors.red,
     ),
   ),
@@ -120,17 +121,17 @@ final lightTheme = ThemeData(
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
+    border: const OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.darkGrey,
         width: 1.0,
       ),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
+      borderSide: const BorderSide(color: Colors.green),
       borderRadius: BorderRadius.circular(10.0),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.lightGrey,
         width: 1.0,
@@ -138,13 +139,13 @@ final lightTheme = ThemeData(
     ),
     fillColor: AppColors.dmPrimaryLightColor,
     filled: true,
-    labelStyle: TextStyle(
+    labelStyle: const TextStyle(
       color: Colors.black,
     ),
-    hintStyle: TextStyle(
+    hintStyle: const TextStyle(
       color: Colors.black,
     ),
-    errorStyle: TextStyle(
+    errorStyle: const TextStyle(
       color: Colors.red,
     ),
   ),

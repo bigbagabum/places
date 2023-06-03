@@ -35,4 +35,13 @@ class AppStrings {
   static const searchBar = 'Поиск';
   static const searchHistory = 'ВЫ ИСКАЛИ';
   static const clearHistory = 'Очистить историю';
+  static const planDate = 'Запланировано на 01.01.23\n';
+  static const openTime = 'Закрыто до 09:00';
+  static const visitedDate = 'Цель достигнута 20.08.22\n';
+  static const openTime24 = 'открыто круглосуточно';
+  static const emptySearchResult = 'Ничего не найдено';
+  static const tryToChangeParametersForSearch =
+      'Попробуйте изменить параметры поиска';
+  static const getPlan = 'Запланировать';
+  static const inFavorite = 'В избранное';
 }
