@@ -24,4 +24,5 @@ class AppAssets {
   static const iconCalendar = 'lib/ui/res/icons/calendar.png';
   static const iconWay = 'lib/ui/res/icons/way.png';
   static const iconBack = 'lib/ui/res/icons/back.png';
+  static const iconAddImage = 'lib/ui/res/icons/addNewImage.png';
 }

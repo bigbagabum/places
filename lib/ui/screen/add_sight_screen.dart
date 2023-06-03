@@ -145,6 +145,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24, bottom: 24),
+              child: const Row(children: [
+                Image(image: AssetImage(AppAssets.iconAddImage)),
+              ]),
+            ),
             const SizedBox(
               width: 24,
             ),
