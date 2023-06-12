@@ -10,6 +10,7 @@ class CatRow {
   CatRow(this._catName, this._catChoised);
 }
 
+// ignore: must_be_immutable
 class ChooseCategories extends StatefulWidget {
   ChooseCategories({
     Key? key,

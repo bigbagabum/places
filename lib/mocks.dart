@@ -45,3 +45,8 @@ final mocks = [
       SightStatus.sightNoPlans,
       4)
 ];
+
+List<String> mockImages = [
+  'lib/ui/res/images/marina_alimos.jpg',
+  'lib/ui/res/images/marina_palma.jpg',
+];

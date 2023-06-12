@@ -17,6 +17,80 @@ class AddSightScreen extends StatefulWidget {
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
 
+  Image imgForNewPlace(img) {
+    return Image(
+      image: AssetImage(img),
+      fit: BoxFit.cover,
+      height: 72,
+      width: 72,
+    );
+  }
+
+// кнопка добавления
+  Widget addNewImage() {
+    return GestureDetector(
+      onTap: () => imageList.add(''),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: const Image(
+          image: AssetImage(AppAssets.iconAddImage),
+          width: 72,
+          height: 72,
+        ),
+      ),
+    );
+  }
+
+  void deleteFromImageList(index) {
+    setState(() {
+      imageList.removeAt(index);
+    });
+  }
+
+// одна отдельная карточка картинки
+  Widget imageListItem(img) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Dismissible(
+        direction: DismissDirection.up,
+        key: ValueKey(imageList),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: 72,
+          height: 72,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Stack(children: [
+              Positioned.fill(
+                child: Image(
+                  image: AssetImage(img),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Row(children: [
+                Spacer(),
+                Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Image(
+                      image: AssetImage(AppAssets.iconCancel),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    )),
+              ])
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<String> imageList = [mockImages[0], mockImages[1]];
+
+  Widget listOfImages() {
+    return Row(children: imageList.map((item) => imageListItem(item)).toList());
+  }
+
   String choisedCat = AppStrings.noChoise;
 
   final textFieldNameController = TextEditingController();
@@ -28,20 +102,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode focusLat = FocusNode();
   final FocusNode focusLon = FocusNode();
 
-  //late final FocusNode focusNode;
-
-  //var _coordinateFieldValidator(TextInputConfiguration)
-
   @override
   void initState() {
-    // focusName = FocusNode();
-    // focusLat = FocusNode();
-    // focusLon = FocusNode();
-
-    // focusName.addListener(() => setState(() {}));
-    // focusLat.addListener(() => setState(() {}));
-    // focusLon.addListener(() => setState(() {}));
-
     super.initState();
   }
 
@@ -147,9 +209,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24, bottom: 24),
-              child: const Row(children: [
-                Image(image: AssetImage(AppAssets.iconAddImage)),
-              ]),
+              child: SingleChildScrollView(
+                child: Row(children: [
+                  addNewImage(),
+                  listOfImages(),
+                ]),
+              ),
             ),
             const SizedBox(
               width: 24,
