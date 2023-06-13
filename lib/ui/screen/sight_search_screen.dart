@@ -10,6 +10,7 @@ import '../res/app_assets.dart';
 import '../res/app_strings.dart';
 import '../res/app_theme.dart';
 
+// ignore: must_be_immutable
 class SightSearchScreen extends StatefulWidget {
   SightSearchScreen({Key? key, required this.sightList}) : super(key: key);
 
@@ -131,7 +132,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
 //экран пустого результата поиска
   Widget emptySearchResult() {
-    return Column(children: [
+    return const Column(children: [
       Image(
         image: AssetImage(AppAssets.iconEmptySearch),
       )

@@ -107,7 +107,7 @@ class _SightListScreenState extends State<SightListScreen> {
                     sight: mock,
                     listIndex: SightListIndex.mainList,
                     status: mock.status,
-                    listKey: ValueKey(mock.sightId),
+                    // listKey: ValueKey(mock.sightId),
                   ))
               .toList(),
         ),

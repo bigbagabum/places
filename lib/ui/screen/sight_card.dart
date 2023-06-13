@@ -7,7 +7,7 @@ import 'package:places/ui/res/app_theme.dart';
 class SightCard extends StatefulWidget {
   final Sight sight;
   final dynamic listIndex, status;
-  final ValueKey listKey;
+  //final ValueKey listKey;
   final VoidCallback? onDelete;
 
   const SightCard({
@@ -15,7 +15,7 @@ class SightCard extends StatefulWidget {
     required this.sight,
     required this.listIndex,
     required this.status,
-    required this.listKey,
+    ////required this.listKey,
     this.onDelete,
   }) : super(key: key);
 
@@ -152,105 +152,116 @@ class _SightCardState extends State<SightCard> {
       onTap: () {},
       child: AspectRatio(
         aspectRatio: 3 / 2,
-        child: Container(
-          margin: const EdgeInsets.all(15),
-          clipBehavior: Clip.hardEdge,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+        child: Dismissible(
+          direction: DismissDirection.endToStart,
+          background: Container(
+            color: Colors.red,
+            child: const Image(image: AssetImage(AppAssets.deletefromList)),
           ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Flexible(
-                child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.topCenter,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Image(
-                          image: AssetImage(widget.sight.img),
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              widget.sight.type,
-                              style: const TextStyle(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            alignment: Alignment.topRight,
-                            child: Row(
-                              children: [
-                                _topIconRow(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  color: Theme.of(context).primaryColorDark,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 25,
-                        width: double.infinity,
-                        child: Text(
-                          widget.sight.name,
-                          style: TextStyle(
-                            fontSize: 16,
-                            overflow: TextOverflow.clip,
-                            fontFamily: 'Roboto',
-                            color: Theme.of(context).primaryColorLight,
-                            fontWeight: FontWeight.bold,
+          key: ValueKey(widget.sight.sightId),
+          onDismissed: (dir) => {
+            dir == DismissDirection.endToStart ? widget.onDelete?.call() : null
+          },
+          child: Container(
+            margin: const EdgeInsets.all(15),
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            width: double.infinity,
+            child: Column(
+              children: [
+                Flexible(
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.topCenter,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Image(
+                            image: AssetImage(widget.sight.img),
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: _bottomColumnData(context),
-                      ),
-                    ],
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                widget.sight.type,
+                                style: const TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              alignment: Alignment.topRight,
+                              child: Row(
+                                children: [
+                                  _topIconRow(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    width: double.infinity,
+                    color: Theme.of(context).primaryColorDark,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 25,
+                          width: double.infinity,
+                          child: Text(
+                            widget.sight.name,
+                            style: TextStyle(
+                              fontSize: 16,
+                              overflow: TextOverflow.clip,
+                              fontFamily: 'Roboto',
+                              color: Theme.of(context).primaryColorLight,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: _bottomColumnData(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

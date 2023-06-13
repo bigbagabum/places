@@ -30,9 +30,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
   Widget addNewImage() {
     return GestureDetector(
       onTap: () => imageList.add(''),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: const Image(
+      child: const Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: Image(
           image: AssetImage(AppAssets.iconAddImage),
           width: 72,
           height: 72,
@@ -41,9 +41,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
-  void deleteFromImageList(index) {
+  void deleteFromImageList(img_id) {
     setState(() {
-      imageList.removeAt(index);
+      imageList.removeAt(imageList.indexOf(img_id));
     });
   }
 
@@ -54,6 +54,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
       child: Dismissible(
         direction: DismissDirection.up,
         key: ValueKey(imageList),
+        background: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Image(image: AssetImage(AppAssets.dismissUp))],
+        ),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -73,9 +77,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 Spacer(),
                 Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Image(
-                      image: AssetImage(AppAssets.iconCancel),
-                      color: Theme.of(context).scaffoldBackgroundColor,
+                    child: GestureDetector(
+                      //    onTap: () => deleteFromImageList(img),
+                      child: Image(
+                        image: AssetImage(AppAssets.iconCancel),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
                     )),
               ])
             ]),
