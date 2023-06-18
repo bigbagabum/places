@@ -7,7 +7,7 @@ import 'package:places/ui/res/app_theme.dart';
 class SightCard extends StatefulWidget {
   final Sight sight;
   final dynamic listIndex, status;
-  //final ValueKey listKey;
+  final ValueKey listKey;
   final VoidCallback? onDelete;
 
   const SightCard({
@@ -15,7 +15,7 @@ class SightCard extends StatefulWidget {
     required this.sight,
     required this.listIndex,
     required this.status,
-    ////required this.listKey,
+    required this.listKey,
     this.onDelete,
   }) : super(key: key);
 
@@ -153,15 +153,15 @@ class _SightCardState extends State<SightCard> {
       child: AspectRatio(
         aspectRatio: 3 / 2,
         child: Dismissible(
-          direction: DismissDirection.endToStart,
+          direction: widget.listIndex == SightListIndex.mainList
+              ? DismissDirection.none
+              : DismissDirection.endToStart,
           background: Container(
             color: Colors.red,
             child: const Image(image: AssetImage(AppAssets.deletefromList)),
           ),
           key: ValueKey(widget.sight.sightId),
-          onDismissed: (dir) => {
-            dir == DismissDirection.endToStart ? widget.onDelete?.call() : null
-          },
+          onDismissed: (_) => widget.onDelete?.call(),
           child: Container(
             margin: const EdgeInsets.all(15),
             clipBehavior: Clip.hardEdge,

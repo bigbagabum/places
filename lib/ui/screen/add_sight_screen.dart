@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -14,22 +16,23 @@ class AddSightScreen extends StatefulWidget {
   State<AddSightScreen> createState() => _AddSightScreenState();
 }
 
+class CardItem {
+  final String img;
+  final int imgId;
+
+  const CardItem(this.img, this.imgId);
+}
+
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
-
-  Image imgForNewPlace(img) {
-    return Image(
-      image: AssetImage(img),
-      fit: BoxFit.cover,
-      height: 72,
-      width: 72,
-    );
-  }
-
-// кнопка добавления
+  int imgId = 0;
+  // кнопка добавления
   Widget addNewImage() {
     return GestureDetector(
-      onTap: () => imageList.add(''),
+      onTap: () => setState(() {
+        imageList.add(CardItem(mockImages[Random().nextInt(2)], imgId));
+        imgId++;
+      }),
       child: const Padding(
         padding: EdgeInsets.only(right: 8.0),
         child: Image(
@@ -41,23 +44,25 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
-  void deleteFromImageList(img_id) {
+  void deleteFromImageList(imgID) {
     setState(() {
-      imageList.removeAt(imageList.indexOf(img_id));
+      imageList.removeAt(imageList
+          .indexOf(imageList.firstWhere((element) => element.imgId == imgID)));
     });
   }
 
 // одна отдельная карточка картинки
-  Widget imageListItem(img) {
+  Widget imageListItem(String img, listK) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Dismissible(
         direction: DismissDirection.up,
-        key: ValueKey(imageList),
+        key: listK,
         background: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image(image: AssetImage(AppAssets.dismissUp))],
         ),
+        onDismissed: (_) => deleteFromImageList(listK),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -78,7 +83,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 Padding(
                     padding: EdgeInsets.all(5.0),
                     child: GestureDetector(
-                      //    onTap: () => deleteFromImageList(img),
+                      onTap: () => deleteFromImageList(listK),
                       child: Image(
                         image: AssetImage(AppAssets.iconCancel),
                         color: Theme.of(context).scaffoldBackgroundColor,
@@ -92,10 +97,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
-  List<String> imageList = [mockImages[0], mockImages[1]];
+  List<CardItem> imageList = [];
 
   Widget listOfImages() {
-    return Row(children: imageList.map((item) => imageListItem(item)).toList());
+    return Row(
+
+        // children: ,
+        children: imageList
+            .map((item) => imageListItem(item.img, ValueKey(item.imgId)))
+            .toList());
   }
 
   String choisedCat = AppStrings.noChoise;
@@ -164,12 +174,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
     textFieldLatController.dispose();
     textFieldLonController.dispose();
     textFieldDescriptionController.dispose();
-
-    //focusNode.dispose();
-
-    // focusName.dispose();
-    // focusLat.dispose();
-    // focusLon.dispose();
 
     super.dispose();
   }
