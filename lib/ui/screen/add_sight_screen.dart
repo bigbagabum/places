@@ -185,7 +185,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: double.infinity,
@@ -221,6 +221,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 24, bottom: 24),
               child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   addNewImage(),
                   listOfImages(),
