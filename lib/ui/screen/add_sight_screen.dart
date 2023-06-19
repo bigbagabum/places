@@ -46,8 +46,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   void deleteFromImageList(imgID) {
     setState(() {
-      imageList.removeAt(imageList
-          .indexOf(imageList.firstWhere((element) => element.imgId == imgID)));
+      //   imageList.removeAt(imageList
+      //       .indexOf(imageList.firstWhere((element) => element.imgId == imgID)));
+      imageList
+          .removeAt(imageList.indexWhere((element) => element.imgId == imgID));
     });
   }
 
@@ -57,7 +59,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       padding: const EdgeInsets.all(8),
       child: Dismissible(
         direction: DismissDirection.up,
-        key: listK,
+        key: ValueKey(listK),
         background: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image(image: AssetImage(AppAssets.dismissUp))],
@@ -101,10 +103,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   Widget listOfImages() {
     return Row(
-
-        // children: ,
         children: imageList
-            .map((item) => imageListItem(item.img, ValueKey(item.imgId)))
+            .map((item) => imageListItem(item.img, item.imgId))
             .toList());
   }
 
