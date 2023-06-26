@@ -32,6 +32,7 @@ class _VisitingScreenState extends State<VisitingScreen>
     for (int i = 0; i < listSights.length; i++) {
       if (listSights[i].status == statusSight) {
         list.add(SightCard(
+          key: ValueKey(listSights[i].sightId),
           sight: listSights[i],
           listIndex: SightListIndex.planList,
           status: statusSight,
@@ -50,6 +51,16 @@ class _VisitingScreenState extends State<VisitingScreen>
     _controller = TabController(length: 2, vsync: this);
     _controller.addListener(() {
       setState(() {});
+    });
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      final item = mocks.removeAt(oldIndex);
+      mocks.insert(newIndex, item);
     });
   }
 
@@ -102,7 +113,6 @@ class _VisitingScreenState extends State<VisitingScreen>
                   )
                 ]),
           )),
-          // child: ,
         ),
         title: Center(
           child: Text(
@@ -115,14 +125,12 @@ class _VisitingScreenState extends State<VisitingScreen>
         ),
       ),
       body: TabBarView(controller: _controller, children: [
-        SingleChildScrollView(
-          child:
-              Column(children: listOfSights(mocks, SightStatus.sightToVisit)),
-        ),
-        SingleChildScrollView(
-          child: Column(
-            children: listOfSights(mocks, SightStatus.sightVisited),
-          ),
+        ReorderableListView(
+            onReorder: _onReorder,
+            children: listOfSights(mocks, SightStatus.sightToVisit)),
+        ReorderableListView(
+          onReorder: _onReorder,
+          children: listOfSights(mocks, SightStatus.sightVisited),
         ),
       ]),
     );
