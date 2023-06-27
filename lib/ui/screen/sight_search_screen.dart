@@ -1,14 +1,12 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/ui/screen/filters_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
-import '../../domain/sight.dart';
-import '../res/app_assets.dart';
-import '../res/app_strings.dart';
-import '../res/app_theme.dart';
+import 'package:places/domain/sight.dart';
+import 'package:places/ui/res/app_assets.dart';
+import 'package:places/ui/res/app_strings.dart';
+import 'package:places/ui/res/app_theme.dart';
 
 // ignore: must_be_immutable
 class SightSearchScreen extends StatefulWidget {
@@ -373,7 +371,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none),
                   hintText: AppStrings.searchBar,
-                  hintStyle: Theme.of(context).textTheme.displaySmall,
+                  hintStyle: Theme.of(context).textTheme.headlineSmall,
                   filled: true,
                   prefixIcon: const Image(
                     image: AssetImage(AppAssets.iconSearch),

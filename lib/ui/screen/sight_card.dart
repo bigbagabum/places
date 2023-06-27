@@ -152,19 +152,6 @@ class _SightCardState extends State<SightCard> {
         onTap: () {},
         child: AspectRatio(
           aspectRatio: 3 / 2,
-          // child: Draggable(
-          //   key: GlobalKey(),
-          //   axis: Axis.vertical,
-          //   feedback: Container(
-          //     margin: const EdgeInsets.all(15),
-          //     clipBehavior: Clip.hardEdge,
-          //     decoration: const BoxDecoration(
-          //       color: DefaultSelectionStyle.defaultColor,
-          //       borderRadius: BorderRadius.all(Radius.circular(15)),
-          //     ),
-          //     width: 360,
-          //     height: 230,
-          //   ),
           child: Dismissible(
             direction: widget.listIndex == SightListIndex.mainList
                 ? DismissDirection.none
@@ -258,13 +245,7 @@ class _SightCardState extends State<SightCard> {
                             width: double.infinity,
                             child: Text(
                               widget.sight.name,
-                              style: TextStyle(
-                                fontSize: 16,
-                                overflow: TextOverflow.clip,
-                                fontFamily: 'Roboto',
-                                color: Theme.of(context).primaryColorLight,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                           SizedBox(

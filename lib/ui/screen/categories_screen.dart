@@ -10,38 +10,35 @@ class CatRow {
   CatRow(this._catName, this._catChoised);
 }
 
-// ignore: must_be_immutable
 class ChooseCategories extends StatefulWidget {
-  ChooseCategories({
+  const ChooseCategories({
     Key? key,
   }) : super(key: key);
-
-  String catChoised = AppStrings.noChoise;
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
-void clearChoise(choiseClear) {
-  for (var n in choiseClear) {
-    n._catChoised = false;
-  }
-}
-
 class _ChooseCategoriesState extends State<ChooseCategories> {
   bool isButtonDisabled = true;
 
-  // int itemOfCat = 0;
+  String catChoised = AppStrings.noChoise;
+
+  void clearChoise(List choiseClear) {
+    for (var n in choiseClear) {
+      n._catChoised = false;
+    }
+  }
 
   Color myButtonColor(bool isGrey) {
-    return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
+    return isGrey ? Colors.grey : Theme.of(context).cardColor;
   }
 
   Widget showMarker(bool e) {
-    if (e == true) {
+    if (e) {
       return Image(
           image: const AssetImage(AppAssets.iconFilterItem),
-          color: Theme.of(context).selectedRowColor);
+          color: Theme.of(context).cardColor);
     } else {
       return const Text('');
     }
@@ -61,7 +58,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                     cat._catChoised = !checkStatus;
                     isButtonDisabled =
                         checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
-                    isButtonDisabled ? null : widget.catChoised = cat._catName;
+                    isButtonDisabled ? null : catChoised = cat._catName;
                   },
                 );
               }),
@@ -80,10 +77,9 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
               ),
             ),
           ),
-          Container(
+          const Divider(
             height: 1,
-            width: double.infinity,
-            color: const Color.fromARGB(56, 124, 126, 146),
+            color: Color.fromARGB(56, 124, 126, 146),
           ),
         ],
       );
@@ -99,9 +95,11 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).primaryColorDark,
+      backgroundColor: theme.primaryColorDark,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -116,7 +114,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                 },
                 child: SvgPicture.asset(
                   AppAssets.iconBackScreen,
-                  color: Theme.of(context).primaryColorLight,
+                  color: theme.primaryColorLight,
                 ),
               ),
               const SizedBox(
@@ -126,7 +124,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                 AppStrings.newPlace,
                 style: TextStyle(
                   fontSize: 18,
-                  color: Theme.of(context).primaryColorLight,
+                  color: theme.primaryColorLight,
                   textBaseline: TextBaseline.ideographic,
                 ),
               )
@@ -145,7 +143,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                 onPressed: isButtonDisabled
                     ? null
                     : () {
-                        Navigator.pop(context, widget.catChoised);
+                        Navigator.pop(context, catChoised);
                         clearChoise(cats);
                       },
                 child: const Text(

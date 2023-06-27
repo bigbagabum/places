@@ -81,13 +81,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ),
               ),
               Row(children: [
-                Spacer(),
+                const Spacer(),
                 Padding(
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: GestureDetector(
                       onTap: () => deleteFromImageList(listK),
                       child: Image(
-                        image: AssetImage(AppAssets.iconCancel),
+                        image: const AssetImage(AppAssets.iconCancel),
                         color: Theme.of(context).scaffoldBackgroundColor,
                       ),
                     )),
@@ -247,7 +247,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
               onPressed: () async {
                 String received = await Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChooseCategories()),
+                  MaterialPageRoute(
+                      builder: (context) => const ChooseCategories()),
                 );
 
                 setState(() {
@@ -408,7 +409,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   onPressed: () {},
                   child: Text(
                     AppStrings.showOnMap,
-                    style: TextStyle(color: Theme.of(context).selectedRowColor),
+                    style: TextStyle(color: Theme.of(context).cardColor),
                   ),
                 ),
               ],

@@ -88,7 +88,7 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Theme.of(context).selectedRowColor,
+        backgroundColor: Theme.of(context).cardColor,
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddSightScreen()));
