@@ -3,6 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 
+List<CatRow> cats = [
+  CatRow(AppStrings.typeCafe, false),
+  CatRow(AppStrings.typeHotel, false),
+  CatRow(AppStrings.typeMuseum, false),
+  CatRow(AppStrings.typePark, false),
+  CatRow(AppStrings.typePartikularPlace, false),
+  CatRow(AppStrings.typeRestourant, false),
+];
+
 class CatRow {
   // класс строки классов показывающий выбор или не выбор текущей категории
   final String _catName;
@@ -10,10 +19,92 @@ class CatRow {
   CatRow(this._catName, this._catChoised);
 }
 
+class ShowMarker extends StatelessWidget {
+  final bool flag;
+  const ShowMarker({super.key, required this.flag});
+
+  @override
+  Widget build(BuildContext context) {
+    if (flag) {
+      return Image(
+          image: const AssetImage(AppAssets.iconFilterItem),
+          color: Theme.of(context).selectedRowColor);
+    } else {
+      return const Text('');
+    }
+  }
+}
+
+class SetCategory extends StatefulWidget {
+  final VoidCallback? stateUpdate;
+  final CatRow cat;
+  const SetCategory({super.key, required this.cat, this.stateUpdate});
+
+  @override
+  State<SetCategory> createState() => _SetCategoryState();
+}
+
+class _SetCategoryState extends State<SetCategory> {
+  String catChoised = AppStrings.noChoise;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 48,
+          width: double.infinity,
+          child: TextButton(
+            onPressed: (() {
+              bool checkStatus = widget.cat._catChoised;
+
+              setState(
+                () {
+                  clearChoise(cats);
+                  widget.cat._catChoised = !checkStatus;
+                  isButtonDisabled =
+                      checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
+                  isButtonDisabled ? null : catChoised = widget.cat._catName;
+                },
+              );
+            }),
+            child: Row(
+              children: [
+                Text(
+                  widget.cat._catName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                const Spacer(),
+                ShowMarker(flag: widget.cat._catChoised)
+                //Text(cat.catChoised.toString())
+              ],
+            ),
+          ),
+        ),
+        const Divider(
+          height: 1,
+          color: Color.fromARGB(56, 124, 126, 146),
+        ),
+      ],
+    );
+  }
+}
+
+void clearChoise(List<CatRow> choiseClear) {
+  for (var n in choiseClear) {
+    n._catChoised = false;
+  }
+}
+
+String catChoised = AppStrings
+    .noChoise; //переменная обозначающая выбранную категорию для передачи в предыдущий экран, по-умолчанию выбор пуст
+
+bool isButtonDisabled = true; // если true главная кнопка не активна
+
 class ChooseCategories extends StatefulWidget {
-  const ChooseCategories({
-    Key? key,
-  }) : super(key: key);
+  const ChooseCategories({Key? key, List<CatRow>? cats}) : super(key: key);
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
@@ -22,76 +113,11 @@ class ChooseCategories extends StatefulWidget {
 class _ChooseCategoriesState extends State<ChooseCategories> {
   bool isButtonDisabled = true;
 
-  String catChoised = AppStrings.noChoise;
-
-  void clearChoise(List choiseClear) {
-    for (var n in choiseClear) {
-      n._catChoised = false;
-    }
-  }
+  //String catChoised = AppStrings.noChoise;
 
   Color myButtonColor(bool isGrey) {
-    return isGrey ? Colors.grey : Theme.of(context).cardColor;
+    return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
   }
-
-  Widget showMarker(bool e) {
-    if (e) {
-      return Image(
-          image: const AssetImage(AppAssets.iconFilterItem),
-          color: Theme.of(context).cardColor);
-    } else {
-      return const Text('');
-    }
-  }
-
-  Widget setCategory(CatRow cat) => Column(
-        children: [
-          SizedBox(
-            height: 48,
-            width: double.infinity,
-            child: TextButton(
-              onPressed: (() {
-                setState(
-                  () {
-                    bool checkStatus = cat._catChoised;
-                    clearChoise(cats);
-                    cat._catChoised = !checkStatus;
-                    isButtonDisabled =
-                        checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
-                    isButtonDisabled ? null : catChoised = cat._catName;
-                  },
-                );
-              }),
-              child: Row(
-                children: [
-                  Text(
-                    cat._catName,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColorLight,
-                    ),
-                  ),
-                  const Spacer(),
-                  showMarker(cat._catChoised)
-                  //Text(cat.catChoised.toString())
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            color: Color.fromARGB(56, 124, 126, 146),
-          ),
-        ],
-      );
-
-  static List cats = [
-    CatRow(AppStrings.typeCafe, false),
-    CatRow(AppStrings.typeHotel, false),
-    CatRow(AppStrings.typeMuseum, false),
-    CatRow(AppStrings.typePark, false),
-    CatRow(AppStrings.typePartikularPlace, false),
-    CatRow(AppStrings.typeRestourant, false),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +135,6 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: Row(children: [
               TextButton(
                 onPressed: () {
-//Navigator.pop(context, AppStrings.noChoise);
                   Navigator.pop(context, AppStrings.noChoise);
                 },
                 child: SvgPicture.asset(
@@ -131,7 +156,13 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             ]),
           ),
           const SizedBox(height: 24),
-          Column(children: cats.map((item) => setCategory(item)).toList()),
+          Column(
+              children: cats
+                  .map((item) => SetCategory(
+                        cat: item,
+                        stateUpdate: () => setState(() {}),
+                      ))
+                  .toList()),
           const Spacer(),
           SizedBox(
             height: 48,
