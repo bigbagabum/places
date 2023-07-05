@@ -8,19 +8,20 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
-// ignore: must_be_immutable
 class SightSearchScreen extends StatefulWidget {
-  SightSearchScreen({Key? key, required this.sightList}) : super(key: key);
+  SightSearchScreen({Key? key, required List<Sight> listOfSights})
+      : super(key: key) {
+    sightList = listOfSights;
+  }
 
-  List<Sight> sightList;
+  // List<Sight> sightList;
+  late final List<Sight> sightList;
 
   @override
   State<SightSearchScreen> createState() => _SightSearchScreenState();
 }
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
-//get listSelected => null;
-
   IconButton _suffixIcon(bool searchIsEmpty) {
     if (searchIsEmpty) {
       return IconButton(

@@ -5,7 +5,7 @@ class AppAssets {
   static const iconMap = 'lib/ui/res/icons/map.png';
   static const iconSettings = 'lib/ui/res/icons/settings.png';
   static const iconTickChoice = 'lib/ui/res/icons/tick_choice.png';
-  static const iconBackScreen = 'lib/ui/res/icons/back.png';
+  static const iconBackScreen = 'lib/ui/res/icons/backScreen.png';
   static const buttonHotel = 'lib/ui/res/icons/Hotel.png';
   static const buttonPark = 'lib/ui/res/icons/Park.png';
   static const buttonRestaurant = 'lib/ui/res/icons/Restourant.png';
