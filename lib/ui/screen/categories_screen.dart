@@ -66,7 +66,10 @@ class _SetCategoryState extends State<SetCategory> {
                   isButtonDisabled =
                       checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
                   isButtonDisabled ? null : catChoised = widget.cat._catName;
-                  ChooseCategories(buttonStatus: isButtonDisabled);
+                  ChooseCategories(
+                    isButtonDisabled: isButtonDisabled,
+                    catChoised: catChoised,
+                  );
                 },
               );
             }),
@@ -100,25 +103,28 @@ void clearChoise(List<CatRow> choiseClear) {
   }
 }
 
-String catChoised = AppStrings
-    .noChoise; //переменная обозначающая выбранную категорию для передачи в предыдущий экран, по-умолчанию выбор пуст
+//String catChoised = AppStrings.noChoise; //переменная обозначающая выбранную категорию для передачи в предыдущий экран, по-умолчанию выбор пуст
 
-//bool isButtonDisabled = true; // если true главная кнопка не активна
+//late bool isButtonDisabled; // если true главная кнопка не активна
 
 class ChooseCategories extends StatefulWidget {
-  final bool buttonStatus; // если true главная кнопка не активна
-  ChooseCategories({Key? key, List<CatRow>? cats, required this.buttonStatus})
-      : super(key: key);
+  final bool isButtonDisabled; // если true главная кнопка не активна
+  final String catChoised;
+
+  ChooseCategories(
+      {Key? key,
+      List<CatRow>? cats,
+      required this.isButtonDisabled,
+      required this.catChoised})
+      : super(key: key) {
+    //isButtonDisabled = buttonStatus;
+  }
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
-  //bool isButtonDisabled = widget.buttonStatus;
-
-  //String catChoised = AppStrings.noChoise;
-
   Color myButtonColor(bool isGrey) {
     return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
   }
@@ -174,11 +180,11 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        myButtonColor(widget.buttonStatus))),
-                onPressed: widget.buttonStatus
+                        myButtonColor(widget.isButtonDisabled))),
+                onPressed: widget.isButtonDisabled
                     ? null
                     : () {
-                        Navigator.pop(context, catChoised);
+                        Navigator.pop(context, widget.catChoised);
                         clearChoise(cats);
                       },
                 child: const Text(
