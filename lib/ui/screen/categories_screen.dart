@@ -46,6 +46,7 @@ class SetCategory extends StatefulWidget {
 
 class _SetCategoryState extends State<SetCategory> {
   String catChoised = AppStrings.noChoise;
+  bool isButtonDisabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class _SetCategoryState extends State<SetCategory> {
                   isButtonDisabled =
                       checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
                   isButtonDisabled ? null : catChoised = widget.cat._catName;
+                  ChooseCategories(buttonStatus: isButtonDisabled);
                 },
               );
             }),
@@ -101,17 +103,19 @@ void clearChoise(List<CatRow> choiseClear) {
 String catChoised = AppStrings
     .noChoise; //переменная обозначающая выбранную категорию для передачи в предыдущий экран, по-умолчанию выбор пуст
 
-bool isButtonDisabled = true; // если true главная кнопка не активна
+//bool isButtonDisabled = true; // если true главная кнопка не активна
 
 class ChooseCategories extends StatefulWidget {
-  const ChooseCategories({Key? key, List<CatRow>? cats}) : super(key: key);
+  final bool buttonStatus; // если true главная кнопка не активна
+  ChooseCategories({Key? key, List<CatRow>? cats, required this.buttonStatus})
+      : super(key: key);
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
-  bool isButtonDisabled = true;
+  //bool isButtonDisabled = widget.buttonStatus;
 
   //String catChoised = AppStrings.noChoise;
 
@@ -170,8 +174,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        myButtonColor(isButtonDisabled))),
-                onPressed: isButtonDisabled
+                        myButtonColor(widget.buttonStatus))),
+                onPressed: widget.buttonStatus
                     ? null
                     : () {
                         Navigator.pop(context, catChoised);
