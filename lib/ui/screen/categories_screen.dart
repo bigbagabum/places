@@ -61,7 +61,7 @@ class _SetCategoryState extends State<SetCategory> {
 
               setState(
                 () {
-                  clearChoise(cats);
+                  clearChoise();
                   widget.cat._catChoised = !checkStatus;
                   isButtonDisabled =
                       checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
@@ -97,9 +97,10 @@ class _SetCategoryState extends State<SetCategory> {
   }
 }
 
-void clearChoise(List<CatRow> choiseClear) {
-  for (var n in choiseClear) {
-    n._catChoised = false;
+void clearChoise() {
+  int n;
+  for (n = 0; n < cats.length; n++) {
+    cats[n]._catChoised = false;
   }
 }
 
@@ -185,7 +186,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                     ? null
                     : () {
                         Navigator.pop(context, widget.catChoised);
-                        clearChoise(cats);
+                        clearChoise();
                       },
                 child: const Text(
                   AppStrings.savePlace,
