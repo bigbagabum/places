@@ -19,13 +19,19 @@ class CatRow {
   CatRow(this._catName, this._catChoised);
 }
 
-class ShowMarker extends StatelessWidget {
+class ShowMarker extends StatefulWidget {
   final bool flag;
-  const ShowMarker({super.key, required this.flag});
+  final VoidCallback? stateUpdate;
+  const ShowMarker({super.key, required this.flag, this.stateUpdate});
 
   @override
+  State<ShowMarker> createState() => _ShowMarkerState();
+}
+
+class _ShowMarkerState extends State<ShowMarker> {
+  @override
   Widget build(BuildContext context) {
-    if (flag) {
+    if (widget.flag) {
       return Image(
           image: const AssetImage(AppAssets.iconFilterItem),
           color: Theme.of(context).selectedRowColor);
@@ -62,6 +68,7 @@ class _SetCategoryState extends State<SetCategory> {
               setState(
                 () {
                   clearChoise();
+                  widget.stateUpdate?.call();
                   widget.cat._catChoised = !checkStatus;
                   isButtonDisabled =
                       checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
@@ -82,8 +89,10 @@ class _SetCategoryState extends State<SetCategory> {
                   ),
                 ),
                 const Spacer(),
-                ShowMarker(flag: widget.cat._catChoised)
-                //Text(cat.catChoised.toString())
+                ShowMarker(
+                  flag: widget.cat._catChoised,
+                  stateUpdate: () => setState(() {}),
+                )
               ],
             ),
           ),
@@ -104,35 +113,44 @@ void clearChoise() {
   }
 }
 
-//String catChoised = AppStrings.noChoise; //переменная обозначающая выбранную категорию для передачи в предыдущий экран, по-умолчанию выбор пуст
-
-//late bool isButtonDisabled; // если true главная кнопка не активна
-
 class ChooseCategories extends StatefulWidget {
   final bool isButtonDisabled; // если true главная кнопка не активна
   final String catChoised;
 
-  ChooseCategories(
+  const ChooseCategories(
       {Key? key,
       List<CatRow>? cats,
       required this.isButtonDisabled,
       required this.catChoised})
-      : super(key: key) {
-    //isButtonDisabled = buttonStatus;
-  }
+      : super(key: key);
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
-  Color myButtonColor(bool isGrey) {
-    return isGrey ? Colors.grey : Theme.of(context).selectedRowColor;
+  late bool _isButtonDisabled;
+
+  @override
+  void initState() {
+    super.initState();
+    _isButtonDisabled = widget.isButtonDisabled;
+  }
+
+  @override
+  void didUpdateWidget(covariant ChooseCategories oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isButtonDisabled != widget.isButtonDisabled) {
+      setState(() {
+        _isButtonDisabled = widget.isButtonDisabled;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    _isButtonDisabled = widget.isButtonDisabled;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -180,9 +198,11 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
             width: double.infinity,
             child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        myButtonColor(widget.isButtonDisabled))),
-                onPressed: widget.isButtonDisabled
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    _isButtonDisabled ? Colors.grey : theme.selectedRowColor,
+                  ),
+                ),
+                onPressed: _isButtonDisabled
                     ? null
                     : () {
                         Navigator.pop(context, widget.catChoised);
