@@ -41,19 +41,18 @@ class _ShowMarkerState extends State<ShowMarker> {
   }
 }
 
-class SetCategory extends StatefulWidget {
-  final VoidCallback? stateUpdate;
+class SetCategoryItem extends StatefulWidget {
+  final Function(bool) stateUpdateItem;
   final CatRow cat;
-  const SetCategory({super.key, required this.cat, this.stateUpdate});
+
+  const SetCategoryItem(
+      {super.key, required this.cat, required this.stateUpdateItem});
 
   @override
-  State<SetCategory> createState() => _SetCategoryState();
+  State<SetCategoryItem> createState() => _SetCategoryItemState();
 }
 
-class _SetCategoryState extends State<SetCategory> {
-  String catChoised = AppStrings.noChoise;
-  bool isButtonDisabled = true;
-
+class _SetCategoryItemState extends State<SetCategoryItem> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -68,17 +67,13 @@ class _SetCategoryState extends State<SetCategory> {
               setState(
                 () {
                   clearChoise();
-                  widget.stateUpdate?.call();
+                  widget.stateUpdateItem.call(checkStatus);
                   widget.cat._catChoised = !checkStatus;
-                  isButtonDisabled =
-                      checkStatus; //Если категория была выбрана то по клику она становится НЕ выбрана и кнопка Disabled
-                  isButtonDisabled ? null : catChoised = widget.cat._catName;
-                  ChooseCategories(
-                    isButtonDisabled: isButtonDisabled,
-                    catChoised: catChoised,
-                  );
                 },
               );
+
+              catChoised = widget.cat
+                  ._catName; //Сохраняем выбор для передачи в родительский экран
             }),
             child: Row(
               children: [
@@ -113,16 +108,18 @@ void clearChoise() {
   }
 }
 
+String catChoised = AppStrings.noChoise;
+
 class ChooseCategories extends StatefulWidget {
   final bool isButtonDisabled; // если true главная кнопка не активна
-  final String catChoised;
 
-  const ChooseCategories(
-      {Key? key,
-      List<CatRow>? cats,
-      required this.isButtonDisabled,
-      required this.catChoised})
-      : super(key: key);
+  const ChooseCategories({
+    Key? key,
+    List<CatRow>? cats,
+    required this.isButtonDisabled,
+
+    ///required this.catChoised
+  }) : super(key: key);
 
   @override
   State<ChooseCategories> createState() => _ChooseCategoriesState();
@@ -138,20 +135,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
   }
 
   @override
-  void didUpdateWidget(covariant ChooseCategories oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.isButtonDisabled != widget.isButtonDisabled) {
-      setState(() {
-        _isButtonDisabled = widget.isButtonDisabled;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    _isButtonDisabled = widget.isButtonDisabled;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.primaryColorDark,
@@ -187,9 +172,11 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
           const SizedBox(height: 24),
           Column(
               children: cats
-                  .map((item) => SetCategory(
+                  .map((item) => SetCategoryItem(
                         cat: item,
-                        stateUpdate: () => setState(() {}),
+                        stateUpdateItem: (selected) => setState(() {
+                          _isButtonDisabled = selected;
+                        }),
                       ))
                   .toList()),
           const Spacer(),
@@ -205,7 +192,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                 onPressed: _isButtonDisabled
                     ? null
                     : () {
-                        Navigator.pop(context, widget.catChoised);
+                        Navigator.pop(context, catChoised);
                         clearChoise();
                       },
                 child: const Text(
