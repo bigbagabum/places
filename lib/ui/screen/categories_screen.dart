@@ -42,11 +42,11 @@ class _ShowMarkerState extends State<ShowMarker> {
 }
 
 class SetCategoryItem extends StatefulWidget {
-  final Function(bool) stateUpdateItem;
+  final Function(bool) onSelectCategory;
   final CatRow cat;
 
   const SetCategoryItem(
-      {super.key, required this.cat, required this.stateUpdateItem});
+      {super.key, required this.cat, required this.onSelectCategory});
 
   @override
   State<SetCategoryItem> createState() => _SetCategoryItemState();
@@ -67,7 +67,7 @@ class _SetCategoryItemState extends State<SetCategoryItem> {
               setState(
                 () {
                   clearChoise();
-                  widget.stateUpdateItem.call(checkStatus);
+                  widget.onSelectCategory.call(checkStatus);
                   widget.cat._catChoised = !checkStatus;
                 },
               );
@@ -151,8 +151,8 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
                 onPressed: () {
                   Navigator.pop(context, AppStrings.noChoise);
                 },
-                child: SvgPicture.asset(
-                  AppAssets.iconBackScreen,
+                child: Image(
+                  image: const AssetImage(AppAssets.iconBack),
                   color: theme.primaryColorLight,
                 ),
               ),
@@ -174,7 +174,7 @@ class _ChooseCategoriesState extends State<ChooseCategories> {
               children: cats
                   .map((item) => SetCategoryItem(
                         cat: item,
-                        stateUpdateItem: (selected) => setState(() {
+                        onSelectCategory: (selected) => setState(() {
                           _isButtonDisabled = selected;
                         }),
                       ))
