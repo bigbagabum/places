@@ -15,11 +15,13 @@ class SightSearchScreen extends StatefulWidget {
   }
 
   // List<Sight> sightList;
-  late final List<Sight> sightList;
+  // late final List<Sight> sightList;
 
   @override
   State<SightSearchScreen> createState() => _SightSearchScreenState();
 }
+
+List<Sight> sightList = [];
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
   IconButton _suffixIcon(bool searchIsEmpty) {
@@ -30,7 +32,9 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
             List<Sight> customList = await Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const FiltersScreen()));
 
-            widget.sightList = customList;
+            sightList = customList;
+
+            for (int i = 0; i < customList.length; i++) {}
           },
           icon: const Image(
             image: AssetImage(AppAssets.iconFilter),
@@ -131,7 +135,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
 //экран пустого результата поиска
   Widget emptySearchResult() {
-    return const Column(children: [
+    return Column(children: const [
       Image(
         image: AssetImage(AppAssets.iconEmptySearch),
       )
@@ -326,7 +330,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                 if (textSearchFieldController.text.isNotEmpty) {
                   setState(() {
                     filteredSightsList = filteredListOfItems(
-                        textSearchFieldController.text, widget.sightList);
+                        textSearchFieldController.text, sightList);
                   });
                 } else {
                   filteredSightsList = [];
@@ -350,7 +354,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                 .toLowerCase()
                                 .substring(0,
                                     textSearchFieldController.text.length - 1),
-                            widget.sightList);
+                            sightList);
 
                         // print('new search ');
                         // print(widget.sightList.map((e) => e.name));

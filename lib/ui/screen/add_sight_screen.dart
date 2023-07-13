@@ -60,9 +60,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
       child: Dismissible(
         direction: DismissDirection.up,
         key: ValueKey(listK),
-        background: const Column(
+        background: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Image(image: AssetImage(AppAssets.dismissUp))],
+          children: const [Image(image: AssetImage(AppAssets.dismissUp))],
         ),
         onDismissed: (_) => deleteFromImageList(listK),
         child: Container(

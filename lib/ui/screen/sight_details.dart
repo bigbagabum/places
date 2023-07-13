@@ -181,9 +181,9 @@ class _SightDetailsState extends State<SightDetails> {
                               //width: 164,
                               height: 40,
                               alignment: Alignment.center,
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Image(
                                       image: AssetImage(AppAssets.iconCalendar),
                                       color: AppColors.darkIcon),
@@ -206,9 +206,9 @@ class _SightDetailsState extends State<SightDetails> {
                               //width: 164,
                               height: 40,
                               alignment: Alignment.center,
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Image(
                                       image: AssetImage(AppAssets.iconHeart),
                                       color: AppColors.darkIcon),
