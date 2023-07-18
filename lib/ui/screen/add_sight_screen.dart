@@ -46,8 +46,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
   void deleteFromImageList(imgID) {
     setState(() {
-      //   imageList.removeAt(imageList
-      //       .indexOf(imageList.firstWhere((element) => element.imgId == imgID)));
       imageList
           .removeAt(imageList.indexWhere((element) => element.imgId == imgID));
     });

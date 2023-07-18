@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/map_screen.dart';
+import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/settings_screen.dart';
@@ -63,7 +65,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<Widget> _screenSelected = <Widget>[
-    SightListScreen(),
+    MainList(listOfSights: mocks),
+    //SightListScreen(),
     const MapScreen(),
     const VisitingScreen(),
     const SettingsScreen(),

@@ -10,7 +10,7 @@ import 'package:places/ui/res/app_strings.dart';
 //import 'package:places/ui/screen/categories_screen.dart';
 
 import 'package:places/ui/screen/add_sight_screen.dart';
-import 'package:places/ui/screen/sight_search_screen.dart';
+import 'package:places/ui/screen/sight_search/sight_search_screen.dart';
 
 // класс AppBar наследник от PrefferedSizeWidget
 

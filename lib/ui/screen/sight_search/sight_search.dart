@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/ui/screen/filters_screen.dart';
+import 'package:places/ui/screen/sight_search/filters_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
 import 'package:places/domain/sight.dart';
@@ -8,9 +8,8 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
-class SightSearchScreen extends StatefulWidget {
-  SightSearchScreen({Key? key, required List<Sight> listOfSights})
-      : super(key: key) {
+class MainList extends StatefulWidget {
+  MainList({Key? key, required List<Sight> listOfSights}) : super(key: key) {
     sightList = listOfSights;
   }
 
@@ -18,12 +17,12 @@ class SightSearchScreen extends StatefulWidget {
   // late final List<Sight> sightList;
 
   @override
-  State<SightSearchScreen> createState() => _SightSearchScreenState();
+  State<MainList> createState() => _MainList();
 }
 
 List<Sight> sightList = [];
 
-class _SightSearchScreenState extends State<SightSearchScreen> {
+class _MainList extends State<MainList> {
   IconButton _suffixIcon(bool searchIsEmpty) {
     if (searchIsEmpty) {
       return IconButton(
@@ -103,7 +102,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     return stringWithStyle;
   }
 
-  late List<Sight> filteredSightsList = [];
+  List<Sight> filteredSightsList = [];
   List<String> searchHistory = []; //Список итемов истории поиска
 
   Widget searchHistoryItem(String itemName, int itemIndex) {
@@ -301,9 +300,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: AppSize.toolBarSize,
-        //elevation: 0,
         centerTitle: true,
-        //backgroundColor: Colors.white,
         title: Text(
           AppStrings.appTitle,
           textAlign: TextAlign.center,
@@ -355,9 +352,6 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                                 .substring(0,
                                     textSearchFieldController.text.length - 1),
                             sightList);
-
-                        // print('new search ');
-                        // print(widget.sightList.map((e) => e.name));
                       }
                     },
                   );
