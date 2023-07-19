@@ -8,6 +8,32 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
+final Location redSquare = Location(55.754840, 37.620881);
+
+final haversineDistance = HaversineDistance();
+
+bool isPlaceNear(Location checkPlace, Location centerPlace, kmMin, kmMax) {
+  double distanceInMeter =
+      haversineDistance.haversine(checkPlace, centerPlace, Unit.METER);
+  return (_FiltersScreenState.currentRangeValues.start <= distanceInMeter) &&
+      (distanceInMeter <= _FiltersScreenState.currentRangeValues.end);
+}
+
+List<Sight> fillListItems(List<Sight> value) {
+  //Наполняем изначальными данными список мест
+  List<Sight> filledList = [];
+  for (var n in value) {
+    if (isPlaceNear(
+        redSquare,
+        Location(n.lat, n.lan),
+        _FiltersScreenState.currentRangeValues.start,
+        _FiltersScreenState.currentRangeValues.end)) {
+      filledList.add(n);
+    }
+  }
+  return filledList;
+}
+
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
 
@@ -20,36 +46,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
     Navigator.pop(context, filteredMockList);
   }
 
-  late int filteredListLength = fillListItems(mocks).length;
+  int filteredListLength = fillListItems(mocks).length;
 
-  late List<Sight> filteredMockList =
+  List<Sight> filteredMockList =
       fillListItems(mocks); //наполняем первично лист с учетом удаленности
-
-  List<Sight> fillListItems(List<Sight> value) {
-    //Наполняем изначальными данными список мест
-    List<Sight> filledList = [];
-    for (var n in value) {
-      if (isPlaceNear(
-          redSquare,
-          Location(n.lat, n.lan),
-          _FiltersScreenState.currentRangeValues.start,
-          _FiltersScreenState.currentRangeValues.end)) {
-        filledList.add(n);
-      }
-    }
-    return filledList;
-  }
-
-  final Location redSquare = Location(55.754840, 37.620881);
-
-  final haversineDistance = HaversineDistance();
-
-  bool isPlaceNear(Location checkPlace, Location centerPlace, kmMin, kmMax) {
-    double distanceInMeter =
-        haversineDistance.haversine(checkPlace, centerPlace, Unit.METER);
-    return (_FiltersScreenState.currentRangeValues.start <= distanceInMeter) &&
-        (distanceInMeter <= _FiltersScreenState.currentRangeValues.end);
-  }
 
   void filterOfItems() {
     List<Sight> filteredPlaces = [];

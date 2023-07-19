@@ -47,9 +47,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SightSearchScreen(
-                              listOfSights: mocks,
-                            )));
+                        builder: (context) => SightSearchScreen()));
               },
               readOnly: true,
               textAlignVertical: TextAlignVertical.center,

@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:places/ui/screen/sight_search/filters_screen.dart';
-import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/mocks.dart';
+import 'package:places/ui/screen/add_sight_screen.dart';
 
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/sight_search/sight_search_model.dart';
+
+import '../sight_card.dart';
+
+List<Sight> sightList = mocks; //входной поток данных
+List<Sight> filteredSightsList =
+    []; // поток данных после примененных фильтров и ввода строки поиска
+List<String> searchHistory = []; //Список итемов истории поиска
 
 class MainList extends StatefulWidget {
-  MainList({Key? key, required List<Sight> listOfSights}) : super(key: key) {
-    sightList = listOfSights;
-  }
-
-  // List<Sight> sightList;
-  // late final List<Sight> sightList;
+  const MainList({Key? key}) : super(key: key);
 
   @override
   State<MainList> createState() => _MainList();
 }
 
-List<Sight> sightList = [];
-
 class _MainList extends State<MainList> {
-  IconButton _suffixIcon(bool searchIsEmpty) {
-    if (searchIsEmpty) {
-      return IconButton(
-          onPressed: () async {
-            //клик на иконку фильтра
-            List<Sight> customList = await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const FiltersScreen()));
+  // IconButton _suffixIcon(bool searchIsEmpty) {
+  //   if (searchIsEmpty) {
+  //     return IconButton(
+  //         onPressed: () async {
+  //           //клик на иконку фильтра
+  //           List<Sight> customList = await Navigator.push(context,
+  //               MaterialPageRoute(builder: (context) => const FiltersScreen()));
 
-            sightList = customList;
+  //           sightList = customList;
 
-            for (int i = 0; i < customList.length; i++) {}
-          },
-          icon: const Image(
-            image: AssetImage(AppAssets.iconFilter),
-          ));
-    }
-    {
-      return IconButton(
-        icon: const Image(image: AssetImage(AppAssets.iconCancel)),
-        onPressed: () {
-          textSearchFieldController.clear();
-          setState(() {
-            filteredSightsList = [];
-          });
-        },
-      );
-    }
-  }
+  //           for (int i = 0; i < customList.length; i++) {}
+  //         },
+  //         icon: const Image(
+  //           image: AssetImage(AppAssets.iconFilter),
+  //         ));
+  //   }
+  //   {
+  //     return IconButton(
+  //       icon: const Image(image: AssetImage(AppAssets.iconCancel)),
+  //       onPressed: () {
+  //         textSearchFieldController.clear();
+  //         setState(() {
+  //           filteredSightsList = [];
+  //         });
+  //       },
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -69,167 +69,7 @@ class _MainList extends State<MainList> {
         : textSearchFieldController.text;
   }
 
-  List<TextSpan> nameOfSight(String inputMask, String originalName) {
-    List<TextSpan> stringWithStyle = [];
-
-    int index = originalName.toLowerCase().indexOf(inputMask.toLowerCase());
-    if (index >= 0) {
-      String beforeMask = originalName.substring(0, index);
-      String mask = originalName.substring(index, index + inputMask.length);
-      String afterMask = originalName.substring(index + inputMask.length);
-
-      stringWithStyle.add(TextSpan(
-        text: beforeMask,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ));
-
-      stringWithStyle.add(TextSpan(
-        text: mask,
-        style: Theme.of(context).textTheme.titleLarge,
-      ));
-
-      stringWithStyle.add(TextSpan(
-        text: afterMask,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ));
-    } else {
-      stringWithStyle.add(TextSpan(
-        text: originalName,
-        style: Theme.of(context).textTheme.headlineSmall,
-      ));
-    }
-
-    return stringWithStyle;
-  }
-
-  List<Sight> filteredSightsList = [];
-  List<String> searchHistory = []; //Список итемов истории поиска
-
-  Widget searchHistoryItem(String itemName, int itemIndex) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-      child: Column(children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Text(
-            itemName,
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          const Spacer(),
-          GestureDetector(
-              onTap: () {
-                searchHistory.removeAt(itemIndex);
-                setState(() {});
-              },
-              child: SvgPicture.asset(AppAssets.iconCancel))
-        ]),
-        Container(
-          height: 1,
-          margin: const EdgeInsets.only(top: 10),
-          width: double.infinity,
-          color: Theme.of(context).secondaryHeaderColor,
-        ),
-      ]),
-    );
-  }
-
-//экран пустого результата поиска
-  Widget emptySearchResult() {
-    return Column(children: const [
-      Image(
-        image: AssetImage(AppAssets.iconEmptySearch),
-      )
-    ]);
-  }
-
-  //получаем отфильттрованный по вхождению строки в название список мест
-  List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
-    List<Sight> nameIsSame = [];
-
-    for (Sight checkSight in listData) {
-      if (checkSight.name.toLowerCase().contains(inputMask)) {
-        nameIsSame.add(checkSight);
-      }
-    }
-    nameIsSame.isEmpty ? {} : searchHistory.add(inputMask);
-    return nameIsSame;
-  }
-
   var textSearchFieldController = TextEditingController();
-
-  Widget seightLine(Sight inputSight) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-      child: InkWell(
-        //клики на строчку поисковой выдаси
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SightDetails(detailSight: inputSight),
-            ),
-          );
-        },
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 16),
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  height: 56,
-                  width: 56,
-                  child: SizedBox(
-                    child: Image(
-                      image: AssetImage(inputSight.img),
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-
-                          //child
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          children: nameOfSight(
-                              textSearchFieldController.text, inputSight.name)),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(inputSight.type,
-                        style: Theme.of(context).textTheme.headlineMedium)
-                  ],
-                )
-              ],
-            ),
-            Container(
-              height: 1,
-              margin: const EdgeInsets.only(top: 10),
-              width: double.infinity,
-              color: Theme.of(context).secondaryHeaderColor,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget searchHistoryScreen() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -242,10 +82,8 @@ class _MainList extends State<MainList> {
             style: Theme.of(context).textTheme.headlineMedium),
       ),
       Column(
-          children: (searchHistory
-                  .asMap()
-                  .entries
-                  .map((item) => searchHistoryItem(item.value, item.key)))
+          children: (searchHistory.asMap().entries.map((item) =>
+                  HistorySearchItem(itemName: item.value, itemIndex: item.key)))
               .toList()),
       GestureDetector(
           onTap: () {
@@ -269,6 +107,9 @@ class _MainList extends State<MainList> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 30,
+              ),
               const Image(
                 image: AssetImage(AppAssets.iconEmptySearch),
               ),
@@ -286,13 +127,34 @@ class _MainList extends State<MainList> {
           ),
         );
       } else {
-        return Container();
+        return Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Column(
+            children: mocks
+                .map((mock) => SightCard(
+                      sight: mock,
+                      listIndex: SightListIndex.mainList,
+                      status: mock.status,
+                      listKey: ValueKey(mock.sightId),
+                    ))
+                .toList(),
+          ),
+        );
       }
     } else {
       return Column(
-        children: (filteredSightsList.map((item) => seightLine(item))).toList(),
+        children: (filteredSightsList.map((item) => SeightLine(
+            maskOfSearch: textSearchFieldController.text,
+            inputSight: item))).toList(),
       );
     }
+  }
+
+  void clearSearch() {
+    textSearchFieldController.clear();
+    setState(() {
+      filteredSightsList = [];
+    });
   }
 
   @override
@@ -370,18 +232,34 @@ class _MainList extends State<MainList> {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none),
                   hintText: AppStrings.searchBar,
-                  hintStyle: Theme.of(context).textTheme.headlineSmall,
+                  hintStyle: Theme.of(context).textTheme.displaySmall,
                   filled: true,
                   prefixIcon: const Image(
                     image: AssetImage(AppAssets.iconSearch),
                   ),
-                  suffixIcon: _suffixIcon(mask().isEmpty)),
+                  suffixIcon: SuffixIcon(
+                    searchIsEmpty: mask().isEmpty,
+                    clearTextController: clearSearch,
+                  )),
             ),
           ),
         ),
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(child: bodyContent()),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).selectedRowColor,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddSightScreen()));
+        },
+        label: const Text(
+          AppStrings.addPlace,
+          style: TextStyle(fontSize: 18),
+        ),
+        icon: const Icon(Icons.add),
+      ),
     );
   }
 }

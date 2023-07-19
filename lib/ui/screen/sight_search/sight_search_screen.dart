@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/mocks.dart';
 import 'package:places/ui/screen/sight_search/filters_screen.dart';
 import 'package:places/ui/screen/sight_details.dart';
 
@@ -7,19 +8,16 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/sight_search/sight_search_model.dart';
+//import 'package:places/ui/screen/sight_search/sight_search_model.dart';
 
 class SightSearchScreen extends StatefulWidget {
-  SightSearchScreen({Key? key, required List<Sight> listOfSights})
-      : super(key: key) {
-    sightList = listOfSights;
-  }
+  const SightSearchScreen({Key? key}) : super(key: key);
 
   @override
   State<SightSearchScreen> createState() => _SightSearchScreenState();
 }
 
-List<Sight> sightList = [];
+List<Sight> sightList = mocks;
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
   IconButton _suffixIcon(bool searchIsEmpty) {
@@ -131,14 +129,14 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     );
   }
 
-//экран пустого результата поиска
-  Widget emptySearchResult() {
-    return Column(children: const [
-      Image(
-        image: AssetImage(AppAssets.iconEmptySearch),
-      )
-    ]);
-  }
+// //экран пустого результата поиска
+//   Widget emptySearchResult() {
+//     return Column(children: const [
+//       Image(
+//         image: AssetImage(AppAssets.iconEmptySearch),
+//       )
+//     ]);
+//   }
 
   //получаем отфильттрованный по вхождению строки в название список мест
   List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
