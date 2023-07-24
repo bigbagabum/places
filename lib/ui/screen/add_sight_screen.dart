@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -14,8 +16,95 @@ class AddSightScreen extends StatefulWidget {
   State<AddSightScreen> createState() => _AddSightScreenState();
 }
 
+class CardItem {
+  final String img;
+  final int imgId;
+
+  const CardItem(this.img, this.imgId);
+}
+
 class _AddSightScreenState extends State<AddSightScreen> {
   bool isButtonDisabled = true;
+  int imgId = 0;
+  // кнопка добавления
+  Widget addNewImage() {
+    return GestureDetector(
+      onTap: () => setState(() {
+        imageList.add(CardItem(mockImages[Random().nextInt(2)], imgId));
+        imgId++;
+      }),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: Image(
+          image: AssetImage(AppAssets.iconAddImage),
+          width: 72,
+          height: 72,
+        ),
+      ),
+    );
+  }
+
+  void deleteFromImageList(imgID) {
+    setState(() {
+      imageList
+          .removeAt(imageList.indexWhere((element) => element.imgId == imgID));
+    });
+  }
+
+// одна отдельная карточка картинки
+  Widget imageListItem(String img, listK) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Dismissible(
+        direction: DismissDirection.up,
+        key: ValueKey(listK),
+        background: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [Image(image: AssetImage(AppAssets.dismissUp))],
+        ),
+        onDismissed: (_) => deleteFromImageList(listK),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          width: 72,
+          height: 72,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Stack(children: [
+              Positioned.fill(
+                child: Image(
+                  image: AssetImage(img),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Row(children: [
+                const Spacer(),
+                Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: GestureDetector(
+                      onTap: () => deleteFromImageList(listK),
+                      child: Image(
+                        image: const AssetImage(AppAssets.iconCancel),
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                    )),
+              ])
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<CardItem> imageList = [];
+
+  Widget listOfImages() {
+    return Row(
+        children: imageList
+            .map((item) => imageListItem(item.img, item.imgId))
+            .toList());
+  }
 
   String choisedCat = AppStrings.noChoise;
 
@@ -28,20 +117,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode focusLat = FocusNode();
   final FocusNode focusLon = FocusNode();
 
-  //late final FocusNode focusNode;
-
-  //var _coordinateFieldValidator(TextInputConfiguration)
-
   @override
   void initState() {
-    // focusName = FocusNode();
-    // focusLat = FocusNode();
-    // focusLon = FocusNode();
-
-    // focusName.addListener(() => setState(() {}));
-    // focusLat.addListener(() => setState(() {}));
-    // focusLon.addListener(() => setState(() {}));
-
     super.initState();
   }
 
@@ -96,12 +173,6 @@ class _AddSightScreenState extends State<AddSightScreen> {
     textFieldLonController.dispose();
     textFieldDescriptionController.dispose();
 
-    //focusNode.dispose();
-
-    // focusName.dispose();
-    // focusLat.dispose();
-    // focusLon.dispose();
-
     super.dispose();
   }
 
@@ -112,7 +183,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: double.infinity,
@@ -147,9 +218,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24, bottom: 24),
-              child: const Row(children: [
-                Image(image: AssetImage(AppAssets.iconAddImage)),
-              ]),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(children: [
+                  addNewImage(),
+                  listOfImages(),
+                ]),
+              ),
             ),
             const SizedBox(
               width: 24,
@@ -170,7 +245,11 @@ class _AddSightScreenState extends State<AddSightScreen> {
               onPressed: () async {
                 String received = await Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChooseCategories()),
+                  MaterialPageRoute(
+                      builder: (context) => const ChooseCategories(
+                            isButtonDisabled: true,
+                            // catChoised: choisedCat,
+                          )),
                 );
 
                 setState(() {
@@ -331,7 +410,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   onPressed: () {},
                   child: Text(
                     AppStrings.showOnMap,
-                    style: TextStyle(color: Theme.of(context).selectedRowColor),
+                    style: TextStyle(color: Theme.of(context).cardColor),
                   ),
                 ),
               ],

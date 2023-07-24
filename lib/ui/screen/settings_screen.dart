@@ -89,11 +89,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ],
               )),
-          Container(
-              height: 1,
-              width: double.infinity,
-              color: const Color.fromRGBO(124, 126, 146, 0.3),
-              margin: const EdgeInsets.only(left: 16, right: 16)),
+          Divider(
+            height: 1,
+            //width: double.infinity,
+            color: Theme.of(context).secondaryHeaderColor,
+            // Color.fromRGBO(124, 126, 146, 0.3),
+            //margin: const EdgeInsets.only(left: 16, right: 16)
+          ),
         ],
       ),
     );

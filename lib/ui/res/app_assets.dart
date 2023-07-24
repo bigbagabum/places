@@ -5,7 +5,7 @@ class AppAssets {
   static const iconMap = 'lib/ui/res/icons/map.png';
   static const iconSettings = 'lib/ui/res/icons/settings.png';
   static const iconTickChoice = 'lib/ui/res/icons/tick_choice.png';
-  static const iconBackScreen = 'lib/ui/res/icons/back.png';
+  static const iconBackScreen = 'lib/ui/res/icons/backScreen.png';
   static const buttonHotel = 'lib/ui/res/icons/Hotel.png';
   static const buttonPark = 'lib/ui/res/icons/Park.png';
   static const buttonRestaurant = 'lib/ui/res/icons/Restourant.png';
@@ -25,4 +25,6 @@ class AppAssets {
   static const iconWay = 'lib/ui/res/icons/way.png';
   static const iconBack = 'lib/ui/res/icons/back.png';
   static const iconAddImage = 'lib/ui/res/icons/addNewImage.png';
+  static const dismissUp = 'lib/ui/res/icons/dismissUp.png';
+  static const deletefromList = 'lib/ui/res/icons/deletefromList.png';
 }

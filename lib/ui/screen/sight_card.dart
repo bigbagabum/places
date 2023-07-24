@@ -149,111 +149,117 @@ class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
-      child: AspectRatio(
-        aspectRatio: 3 / 2,
-        child: Container(
-          margin: const EdgeInsets.all(15),
-          clipBehavior: Clip.hardEdge,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-          ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Flexible(
-                child: Container(
-                  width: double.infinity,
-                  alignment: Alignment.topCenter,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Image(
-                          image: AssetImage(widget.sight.img),
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Row(
+        onTap: () {},
+        child: AspectRatio(
+          aspectRatio: 3 / 2,
+          child: Dismissible(
+            direction: widget.listIndex == SightListIndex.mainList
+                ? DismissDirection.none
+                : DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              child: const Image(image: AssetImage(AppAssets.deletefromList)),
+            ),
+            key: ValueKey(widget.sight.sightId),
+            onDismissed: (_) => widget.onDelete?.call(),
+            child: Container(
+              margin: const EdgeInsets.all(15),
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Flexible(
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.topCenter,
+                      child: Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              widget.sight.type,
-                              style: const TextStyle(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Image(
+                              image: AssetImage(widget.sight.img),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                          const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            alignment: Alignment.topRight,
-                            child: Row(
-                              children: [
-                                _topIconRow(),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  widget.sight.type,
+                                  style: const TextStyle(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                alignment: Alignment.topRight,
+                                child: Row(
+                                  children: [
+                                    _topIconRow(),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  width: double.infinity,
-                  color: Theme.of(context).primaryColorDark,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 25,
-                        width: double.infinity,
-                        child: Text(
-                          widget.sight.name,
-                          style: TextStyle(
-                            fontSize: 16,
-                            overflow: TextOverflow.clip,
-                            fontFamily: 'Roboto',
-                            color: Theme.of(context).primaryColorLight,
-                            fontWeight: FontWeight.bold,
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      width: double.infinity,
+                      color: Theme.of(context).primaryColorDark,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 25,
+                            width: double.infinity,
+                            child: Text(
+                              widget.sight.name,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: _bottomColumnData(context),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: _bottomColumnData(context),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
