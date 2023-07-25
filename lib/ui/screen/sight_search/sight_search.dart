@@ -128,6 +128,7 @@ class _MainList extends State<MainList> {
         );
       } else {
         return Padding(
+          //вывод без фильтра все подряд
           padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: mocks
@@ -142,7 +143,15 @@ class _MainList extends State<MainList> {
         );
       }
     } else {
-      return Column(
+      return
+
+          // ListView.builder(
+          //     itemCount: mocks.length,
+          //     itemBuilder: (context, index) {
+          //       return SightLine(inputSight: mocks[index]);
+          //     });
+
+          Column(
         children: (filteredSightsList.map((item) => SeightLine(
             maskOfSearch: textSearchFieldController.text,
             inputSight: item))).toList(),
