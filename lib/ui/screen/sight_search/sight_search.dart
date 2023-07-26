@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/add_sight_screen.dart';
-
+import 'dart:io';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
-
-import '../sight_card.dart';
+import 'package:places/ui/screen/sight_card.dart';
 
 List<Sight> sightList = mocks; //входной поток данных
 List<Sight> filteredSightsList =
@@ -23,35 +22,6 @@ class MainList extends StatefulWidget {
 }
 
 class _MainList extends State<MainList> {
-  // IconButton _suffixIcon(bool searchIsEmpty) {
-  //   if (searchIsEmpty) {
-  //     return IconButton(
-  //         onPressed: () async {
-  //           //клик на иконку фильтра
-  //           List<Sight> customList = await Navigator.push(context,
-  //               MaterialPageRoute(builder: (context) => const FiltersScreen()));
-
-  //           sightList = customList;
-
-  //           for (int i = 0; i < customList.length; i++) {}
-  //         },
-  //         icon: const Image(
-  //           image: AssetImage(AppAssets.iconFilter),
-  //         ));
-  //   }
-  //   {
-  //     return IconButton(
-  //       icon: const Image(image: AssetImage(AppAssets.iconCancel)),
-  //       onPressed: () {
-  //         textSearchFieldController.clear();
-  //         setState(() {
-  //           filteredSightsList = [];
-  //         });
-  //       },
-  //     );
-  //   }
-  // }
-
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
@@ -103,7 +73,9 @@ class _MainList extends State<MainList> {
   Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
       if (textSearchFieldController.text.isNotEmpty) {
-        return Center(
+        return
+            //вывод пустого результата поиска
+            Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -129,33 +101,37 @@ class _MainList extends State<MainList> {
       } else {
         return Padding(
           //вывод без фильтра все подряд
+
           padding: const EdgeInsets.only(top: 15),
-          child: Column(
-            children: mocks
-                .map((mock) => SightCard(
-                      sight: mock,
-                      listIndex: SightListIndex.mainList,
-                      status: mock.status,
-                      listKey: ValueKey(mock.sightId),
-                    ))
-                .toList(),
-          ),
+          child: ListView.builder(
+              cacheExtent: 10,
+              physics: Platform.isAndroid
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
+              itemCount: mocks.length,
+              itemBuilder: (context, index) {
+                return SightCard(
+                    sight: mocks[index],
+                    listIndex: SightListIndex.mainList,
+                    status: mocks[index].status,
+                    listKey: ValueKey(mocks[index].sightId));
+              }),
         );
       }
     } else {
-      return
-
-          // ListView.builder(
-          //     itemCount: mocks.length,
-          //     itemBuilder: (context, index) {
-          //       return SightLine(inputSight: mocks[index]);
-          //     });
-
-          Column(
-        children: (filteredSightsList.map((item) => SeightLine(
-            maskOfSearch: textSearchFieldController.text,
-            inputSight: item))).toList(),
-      );
+      //отфильтрованый список
+      return ListView.builder(
+          //physics:  isAndroid? => const ClampingScrollPhysics():BouncingScrollPhysics(),
+          cacheExtent: 20,
+          physics: Platform.isAndroid
+              ? const ClampingScrollPhysics()
+              : const BouncingScrollPhysics(),
+          itemCount: filteredSightsList.length,
+          itemBuilder: (context, index) {
+            return SeightLine(
+                inputSight: filteredSightsList[index],
+                maskOfSearch: textSearchFieldController.text);
+          });
     }
   }
 
@@ -255,7 +231,7 @@ class _MainList extends State<MainList> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(child: bodyContent()),
+      body: bodyContent(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).selectedRowColor,
