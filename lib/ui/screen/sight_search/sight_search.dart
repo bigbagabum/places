@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screen/add_sight_screen.dart';
+import 'package:places/ui/screen/add_sight/add_sight_screen.dart';
 import 'dart:io';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -41,34 +41,34 @@ class _MainList extends State<MainList> {
 
   var textSearchFieldController = TextEditingController();
 
-  Widget searchHistoryScreen() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.only(
-          left: 16,
-          top: 38,
-        ),
-        child: Text(AppStrings.searchHistory,
-            style: Theme.of(context).textTheme.headlineMedium),
-      ),
-      Column(
-          children: (searchHistory.asMap().entries.map((item) =>
-                  HistorySearchItem(itemName: item.value, itemIndex: item.key)))
-              .toList()),
-      GestureDetector(
-          onTap: () {
-            setState(() {
-              searchHistory = [];
-            });
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(left: 16, top: 28),
-            child: Text(AppStrings.clearHistory,
-                style: TextStyle(
-                    fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
-          ))
-    ]);
-  }
+  // Widget searchHistoryScreen() {
+  //   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //     Padding(
+  //       padding: const EdgeInsets.only(
+  //         left: 16,
+  //         top: 38,
+  //       ),
+  //       child: Text(AppStrings.searchHistory,
+  //           style: Theme.of(context).textTheme.headlineMedium),
+  //     ),
+  //     Column(
+  //         children: (searchHistory.asMap().entries.map((item) =>
+  //                 HistorySearchItem(itemName: item.value, itemIndex: item.key)))
+  //             .toList()),
+  //     GestureDetector(
+  //         onTap: () {
+  //           setState(() {
+  //             searchHistory = [];
+  //           });
+  //         },
+  //         child: const Padding(
+  //           padding: EdgeInsets.only(left: 16, top: 28),
+  //           child: Text(AppStrings.clearHistory,
+  //               style: TextStyle(
+  //                   fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
+  //         ))
+  //   ]);
+  // }
 
   Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
