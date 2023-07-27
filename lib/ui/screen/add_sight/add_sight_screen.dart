@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -218,6 +219,10 @@ class _AddSightScreenState extends State<AddSightScreen> {
             SizedBox(
               height: 100,
               child: ListView.builder(
+                  cacheExtent: 10,
+                  physics: Platform.isAndroid
+                      ? const ClampingScrollPhysics()
+                      : const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: imageList.length + 1,
                   itemBuilder: (context, index) {
