@@ -5,11 +5,12 @@ import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 class SightDetails extends StatefulWidget {
-  SightDetails({Key? key, required Sight detailSight}) : super(key: key) {
-    sight = detailSight;
+  final Sight detailSight;
+  SightDetails({Key? key, required this.detailSight}) : super(key: key) {
+    // sight = detailSight;
   }
 
-  late final Sight sight;
+  // late final Sight sight;
 
   @override
   State<SightDetails> createState() => _SightDetailsState();
@@ -30,7 +31,7 @@ class _SightDetailsState extends State<SightDetails> {
                   SizedBox(
                     height: double.infinity,
                     child: Image(
-                      image: AssetImage(widget.sight.img),
+                      image: AssetImage(widget.detailSight.img),
                       fit: BoxFit.fitHeight,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
@@ -86,7 +87,7 @@ class _SightDetailsState extends State<SightDetails> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        widget.sight.name,
+                        widget.detailSight.name,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Roboto',
@@ -98,7 +99,7 @@ class _SightDetailsState extends State<SightDetails> {
                     Row(
                       children: [
                         Text(
-                          widget.sight.type,
+                          widget.detailSight.type,
                           style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).primaryColorLight,
@@ -122,7 +123,7 @@ class _SightDetailsState extends State<SightDetails> {
                       margin: const EdgeInsets.only(top: 24.0, bottom: 24),
                       child: SingleChildScrollView(
                         child: Text(
-                          widget.sight.details,
+                          widget.detailSight.details,
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 14,
