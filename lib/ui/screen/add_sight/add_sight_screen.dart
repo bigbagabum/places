@@ -43,6 +43,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
+//
   void deleteFromImageList(imgID) {
     setState(() {
       imageList
@@ -474,7 +475,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               'hotel',
                               double.parse(textFieldLatController.text),
                               double.parse(textFieldLonController.text),
-                              'lib/ui/res/images/jazz.jpg',
+                              [mockImages[2]],
                               SightStatus.sightToVisit,
                               mocks.last.sightId + 1);
 
