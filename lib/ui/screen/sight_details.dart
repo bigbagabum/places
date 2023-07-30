@@ -31,29 +31,32 @@ class _SightDetailsState extends State<SightDetails> {
                   SizedBox(
                       height: double.infinity,
                       //Gallery of Images
-                      child: PageView()
+                      child: PageView.builder(
+                        itemCount: widget.detailSight.img.length,
+                        itemBuilder: (context, index) {
+                          return Image(
+                            fit: BoxFit.fitHeight,
+                            image: AssetImage(widget.detailSight.img[index]),
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
 
-                      // Image(
-                      //   image: AssetImage(widget.detailSight.img),
-                      //   fit: BoxFit.fitHeight,
-                      //   loadingBuilder: (BuildContext context, Widget child,
-                      //       ImageChunkEvent? loadingProgress) {
-                      //     if (loadingProgress == null) {
-                      //       return child;
-                      //     }
-                      //     return Center(
-                      //       child: CircularProgressIndicator(
-                      //         value: loadingProgress.expectedTotalBytes != null
-                      //             ? loadingProgress.cumulativeBytesLoaded /
-                      //                 loadingProgress.expectedTotalBytes!
-                      //             : null,
-                      //       ),
-
-                      //       //child
-                      //     );
-                      //   },
-                      // ),
-                      ),
+                                //child
+                              );
+                            },
+                          );
+                        },
+                      )),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);

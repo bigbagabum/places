@@ -187,38 +187,29 @@ class _SightCardState extends State<SightCard> {
                         clipBehavior: Clip.none,
                         children: [
                           SizedBox(
-                              width: 250,
-                              child: PageView.builder(
-                                  itemCount: widget.sight.img.length,
-                                  itemBuilder: (context, index) {
-                                    return Image(
-                                      image:
-                                          AssetImage(widget.sight.img[index]),
-                                    );
-                                  })
-
-                              // Image(
-                              //   image: AssetImage(widget.sight.img),
-                              //   fit: BoxFit.cover,
-                              //   loadingBuilder: (BuildContext context,
-                              //       Widget child,
-                              //       ImageChunkEvent? loadingProgress) {
-                              //     if (loadingProgress == null) {
-                              //       return child;
-                              //     }
-                              //     return Center(
-                              //       child: CircularProgressIndicator(
-                              //         value: loadingProgress.expectedTotalBytes !=
-                              //                 null
-                              //             ? loadingProgress
-                              //                     .cumulativeBytesLoaded /
-                              //                 loadingProgress.expectedTotalBytes!
-                              //             : null,
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
-                              ),
+                            width: double.infinity,
+                            child: Image(
+                              image: AssetImage(widget.sight.img[0]),
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                           Row(
                             children: [
                               Container(

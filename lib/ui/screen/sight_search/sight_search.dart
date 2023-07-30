@@ -70,69 +70,69 @@ class _MainList extends State<MainList> {
   //   ]);
   // }
 
-  // Widget bodyContent() {
-  //   if (filteredSightsList.isEmpty) {
-  //     if (textSearchFieldController.text.isNotEmpty) {
-  //       return
-  //           //вывод пустого результата поиска
-  //           Center(
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             const SizedBox(
-  //               height: 30,
-  //             ),
-  //             const Image(
-  //               image: AssetImage(AppAssets.iconEmptySearch),
-  //             ),
-  //             const SizedBox(height: 16.0),
-  //             Text(
-  //               AppStrings.emptySearchResult,
-  //               style: Theme.of(context).textTheme.titleMedium,
-  //             ),
-  //             const SizedBox(height: 8.0),
-  //             Text(
-  //               AppStrings.tryToChangeParametersForSearch,
-  //               style: Theme.of(context).textTheme.titleSmall,
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     } else {
-  //       return Padding(
-  //         //вывод без фильтра все подряд
+  Widget bodyContent() {
+    if (filteredSightsList.isEmpty) {
+      if (textSearchFieldController.text.isNotEmpty) {
+        return
+            //вывод пустого результата поиска
+            Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              const Image(
+                image: AssetImage(AppAssets.iconEmptySearch),
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                AppStrings.emptySearchResult,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                AppStrings.tryToChangeParametersForSearch,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ],
+          ),
+        );
+      } else {
+        return Padding(
+          //вывод без фильтра все подряд
 
-  //         padding: const EdgeInsets.only(top: 15),
-  //         child: ListView.builder(
-  //             cacheExtent: 10,
-  //             physics: Platform.isAndroid
-  //                 ? const ClampingScrollPhysics()
-  //                 : const BouncingScrollPhysics(),
-  //             itemCount: mocks.length,
-  //             itemBuilder: (context, index) {
-  //               return SightCard(
-  //                   sight: mocks[index],
-  //                   listIndex: SightListIndex.mainList,
-  //                   status: mocks[index].status,
-  //                   listKey: ValueKey(mocks[index].sightId));
-  //             }),
-  //       );
-  //     }
-  //   } else {
-  //     //отфильтрованый список
-  //     return ListView.builder(
-  //         cacheExtent: 20,
-  //         physics: Platform.isAndroid
-  //             ? const ClampingScrollPhysics()
-  //             : const BouncingScrollPhysics(),
-  //         itemCount: filteredSightsList.length,
-  //         itemBuilder: (context, index) {
-  //           return SeightLine(
-  //               inputSight: filteredSightsList[index],
-  //               maskOfSearch: textSearchFieldController.text);
-  //         });
-  //   }
-  // }
+          padding: const EdgeInsets.only(top: 15),
+          child: ListView.builder(
+              cacheExtent: 10,
+              physics: Platform.isAndroid
+                  ? const ClampingScrollPhysics()
+                  : const BouncingScrollPhysics(),
+              itemCount: mocks.length,
+              itemBuilder: (context, index) {
+                return SightCard(
+                    sight: mocks[index],
+                    listIndex: SightListIndex.mainList,
+                    status: mocks[index].status,
+                    listKey: ValueKey(mocks[index].sightId));
+              }),
+        );
+      }
+    } else {
+      //отфильтрованый список
+      return ListView.builder(
+          cacheExtent: 20,
+          physics: Platform.isAndroid
+              ? const ClampingScrollPhysics()
+              : const BouncingScrollPhysics(),
+          itemCount: filteredSightsList.length,
+          itemBuilder: (context, index) {
+            return SeightLine(
+                inputSight: filteredSightsList[index],
+                maskOfSearch: textSearchFieldController.text);
+          });
+    }
+  }
 
   void clearSearch() {
     textSearchFieldController.clear();
@@ -230,8 +230,8 @@ class _MainList extends State<MainList> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      body: const BodyMainList(),
-      //bodyContent(),
+      body: //const BodyMainList(),
+          bodyContent(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).selectedRowColor,

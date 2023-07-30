@@ -244,87 +244,87 @@ class _HistorySearchItem extends State<HistorySearchItem> {
 }
 
 //строчка поисковой выдачи
-// class SeightLine extends StatefulWidget {
-//   final String maskOfSearch;
-//   final Sight inputSight;
-//   const SeightLine(
-//       {super.key, required this.maskOfSearch, required this.inputSight});
+class SeightLine extends StatefulWidget {
+  final String maskOfSearch;
+  final Sight inputSight;
+  const SeightLine(
+      {super.key, required this.maskOfSearch, required this.inputSight});
 
-//   @override
-//   State<SeightLine> createState() => _SeightLineState();
-// }
+  @override
+  State<SeightLine> createState() => _SeightLineState();
+}
 
-// class _SeightLineState extends State<SeightLine> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-//       child: InkWell(
-//         //клики на строчку поисковой выдаси
-//         onTap: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//               builder: (context) =>
-//                   SightDetails(detailSight: widget.inputSight),
-//             ),
-//           );
-//         },
-//         child: Column(
-//           children: [
-//             Row(
-//               children: [
-//                 Container(
-//                   margin: const EdgeInsets.only(right: 16),
-//                   clipBehavior: Clip.hardEdge,
-//                   decoration: const BoxDecoration(
-//                     borderRadius: BorderRadius.all(Radius.circular(10)),
-//                   ),
-//                   height: 56,
-//                   width: 56,
-//                   child: SizedBox(
-//                     child: Image(
-//                       image: AssetImage(widget.inputSight.img),
-//                       fit: BoxFit.cover,
-//                       loadingBuilder: (BuildContext context, Widget child,
-//                           ImageChunkEvent? loadingProgress) {
-//                         if (loadingProgress == null) {
-//                           return child;
-//                         }
-//                         return Center(
-//                           child: CircularProgressIndicator(
-//                             value: loadingProgress.expectedTotalBytes != null
-//                                 ? loadingProgress.cumulativeBytesLoaded /
-//                                     loadingProgress.expectedTotalBytes!
-//                                 : null,
-//                           ),
+class _SeightLineState extends State<SeightLine> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+      child: InkWell(
+        //клики на строчку поисковой выдаси
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  SightDetails(detailSight: widget.inputSight),
+            ),
+          );
+        },
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 16),
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  height: 56,
+                  width: 56,
+                  child: SizedBox(
+                    child: Image(
+                      image: AssetImage(widget.inputSight.img[0]),
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
 
-//                           //child
-//                         );
-//                       },
-//                     ),
-//                   ),
-//                 ),
-//                 Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     NameSightInSearch(
-//                         inputMask: widget.maskOfSearch,
-//                         originalName: widget.inputSight.name),
-//                     const SizedBox(height: 8),
-//                     Text(widget.inputSight.type,
-//                         style: Theme.of(context).textTheme.headlineMedium)
-//                   ],
-//                 )
-//               ],
-//             ),
-//            const Divider(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+                          //child
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NameSightInSearch(
+                        inputMask: widget.maskOfSearch,
+                        originalName: widget.inputSight.name),
+                    const SizedBox(height: 8),
+                    Text(widget.inputSight.type,
+                        style: Theme.of(context).textTheme.headlineMedium)
+                  ],
+                )
+              ],
+            ),
+            const Divider(),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 //метод возвращает список мест отфильтрованных по маске ввода
 List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
