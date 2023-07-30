@@ -8,7 +8,7 @@ final mocks = [
       'отель',
       55.66,
       37.62,
-      [mockImages[2], mockImages[0]],
+      [mockImages[2], mockImages[0], mockImages[1]],
       SightStatus.sightToVisit,
       1),
   Sight(

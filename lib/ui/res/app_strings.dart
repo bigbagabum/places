@@ -44,4 +44,5 @@ class AppStrings {
       'Попробуйте изменить параметры поиска';
   static const getPlan = 'Запланировать';
   static const inFavorite = 'В избранное';
+  static const open24 = 'открыто 24 часа';
 }
