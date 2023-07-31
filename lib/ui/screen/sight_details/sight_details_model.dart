@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_view_indicators/linear_progress_page_indicator.dart';
 
 class ImageGallery extends StatefulWidget {
   final List<String> imgList;

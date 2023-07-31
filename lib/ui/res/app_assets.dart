@@ -28,4 +28,7 @@ class AppAssets {
   static const dismissUp = 'lib/ui/res/icons/dismissUp.png';
   static const deletefromList = 'lib/ui/res/icons/deletefromList.png';
   static const wayToSight = 'lib/ui/res/icons/way.png';
+  static const tutorialIcon1 = 'lib/ui/res/icons/tutorial_1_frame.png';
+  static const tutorialIcon2 = 'lib/ui/res/icons/tutorial_2_frame.png';
+  static const tutorialIcon3 = 'lib/ui/res/icons/tutorial_3_frame.png';
 }

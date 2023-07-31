@@ -45,4 +45,15 @@ class AppStrings {
   static const getPlan = 'Запланировать';
   static const inFavorite = 'В избранное';
   static const open24 = 'открыто 24 часа';
+  static const skip = 'Пропустить';
+  static const tutorialTextTitle1 = 'Добро пожаловать в Путиводитель';
+  static const tutorialTextSubtitle1 =
+      'Ищи новые локации и сохраняй самые любимые.';
+  static const tutorialTextTitle2 = 'Построй маршрут и отправляйся в путь';
+  static const tutorialTextSubtitle2 =
+      'Достигай цели максимально быстро и комфортно.';
+  static const tutorialTextTitle3 = 'Добавляй места которые нашел сам';
+  static const tutorialTextSubtitle3 =
+      'Делись самыми интересными и помоги нам стать лучше.';
+  static const tutorialTextButton3 = 'НА СТАРТ';
 }

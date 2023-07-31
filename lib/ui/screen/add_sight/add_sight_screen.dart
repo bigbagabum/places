@@ -43,6 +43,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
     );
   }
 
+  List<String> imgList(List<CardItem> listOfImgCardItem) {
+    List<String> img = [];
+    for (int i = 0; i < listOfImgCardItem.length; i++) {
+      img.add(listOfImgCardItem[i].img);
+    }
+
+    return img;
+  }
+
 //
   void deleteFromImageList(imgID) {
     setState(() {
@@ -150,7 +159,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
         textFieldLatController.text == '' ||
         textFieldLonController.text == '' ||
         textFieldNameController.text == '' ||
-        choisedCat == AppStrings.noChoise) {
+        choisedCat == AppStrings.noChoise ||
+        imageList == []) {
       setState(() {
         isButtonDisabled = true;
       });
@@ -475,7 +485,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                               'hotel',
                               double.parse(textFieldLatController.text),
                               double.parse(textFieldLonController.text),
-                              [mockImages[2]],
+                              imgList(imageList),
                               SightStatus.sightToVisit,
                               mocks.last.sightId + 1);
 
