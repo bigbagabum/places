@@ -3,6 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -149,7 +150,14 @@ class _SightCardState extends State<SightCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SightDetails(detailSight: widget.sight),
+            ),
+          );
+        },
         child: AspectRatio(
           aspectRatio: 3 / 2,
           child: Dismissible(

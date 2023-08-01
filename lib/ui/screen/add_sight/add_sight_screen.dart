@@ -1,11 +1,10 @@
+import 'dart:io';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/categories_screen.dart';
-
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 
@@ -98,12 +97,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   List<CardItem> imageList = [];
-
+  //top row with list of images for new sight
   Widget listOfImages() {
-    return Row(
-        children: imageList
-            .map((item) => imageListItem(item.img, item.imgId))
-            .toList());
+    return ListView.builder(
+        itemCount: imageList.length,
+        itemBuilder: (context, index) {
+          return imageListItem(imageList[index].img, imageList[index].imgId);
+        });
   }
 
   String choisedCat = AppStrings.noChoise;
@@ -216,15 +216,25 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24, bottom: 24),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  addNewImage(),
-                  listOfImages(),
-                ]),
-              ),
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                  cacheExtent: 10,
+                  physics: Platform.isAndroid
+                      ? const ClampingScrollPhysics()
+                      : const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: imageList.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return addNewImage();
+                    } else {
+                      return imageListItem(
+                        imageList[index - 1].img,
+                        imageList[index - 1].imgId,
+                      );
+                    }
+                  }),
             ),
             const SizedBox(
               width: 24,
