@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_theme.dart';
 
 final darkTheme = ThemeData(
-  //useMaterial3: true,
+  useMaterial3: true,
   selectedRowColor: AppColors.rowSelectedColorGreen,
   scaffoldBackgroundColor: AppColors.dmBackground,
   primaryColorDark: AppColors.dmCardBackground, //фон карточек и инпутов
@@ -14,8 +14,8 @@ final darkTheme = ThemeData(
   ),
   // ignore: prefer_const_constructors
   textTheme: TextTheme(
-    // headlineSmall:
-    //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
+    bodyText1: const TextStyle(
+        fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1: const TextStyle(
         fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     // ignore: prefer_const_constructors
@@ -91,8 +91,8 @@ final lightTheme = ThemeData(
     backgroundColor: AppColors.dmPrimaryLightColor,
   ),
   textTheme: const TextTheme(
-    // headlineSmall:
-    //     TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
+    bodyText1:
+        TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1:
         TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     headline2: TextStyle(

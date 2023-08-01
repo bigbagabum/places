@@ -1,5 +1,6 @@
 class Sight {
-  final String name, url, details, type, img;
+  final String name, url, details, type;
+  List<String> img;
   final double lat, lan;
   SightStatus status;
   int sightId; // статус :никакой, хочу посетить, посетил

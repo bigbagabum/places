@@ -3,6 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/sight_details/sight_details_model.dart';
 
 class SightDetails extends StatefulWidget {
   final Sight detailSight;
@@ -28,29 +29,7 @@ class _SightDetailsState extends State<SightDetails> {
               aspectRatio: 1 / 1,
               child: Stack(
                 children: [
-                  SizedBox(
-                    height: double.infinity,
-                    child: Image(
-                      image: AssetImage(widget.detailSight.img),
-                      fit: BoxFit.fitHeight,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-
-                          //child
-                        );
-                      },
-                    ),
-                  ),
+                  ImageGallery(imgList: widget.detailSight.img),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -70,10 +49,6 @@ class _SightDetailsState extends State<SightDetails> {
                 ],
               ),
             ),
-            // const SizedBox(
-            //   height: 0,
-            //   width: double.infinity,
-            // ),
             Expanded(
               child: Container(
                 //height: 388,
@@ -108,7 +83,7 @@ class _SightDetailsState extends State<SightDetails> {
                         Container(
                           margin: const EdgeInsets.only(left: 16.0),
                           child: const Text(
-                            'открыто 24 часа',
+                            AppStrings.open24,
                             style: TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: 14,
@@ -153,7 +128,7 @@ class _SightDetailsState extends State<SightDetails> {
                               Container(
                                 margin: const EdgeInsets.only(right: 10),
                                 child: const Image(
-                                  image: AssetImage('lib/ui/res/icons/way.png'),
+                                  image: AssetImage(AppAssets.wayToSight),
                                 ),
                               ),
                               Text(

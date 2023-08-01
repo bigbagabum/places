@@ -3,7 +3,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/ui/screen/sight_details/sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -189,7 +189,7 @@ class _SightCardState extends State<SightCard> {
                           SizedBox(
                             width: double.infinity,
                             child: Image(
-                              image: AssetImage(widget.sight.img),
+                              image: AssetImage(widget.sight.img[0]),
                               fit: BoxFit.cover,
                               loadingBuilder: (BuildContext context,
                                   Widget child,

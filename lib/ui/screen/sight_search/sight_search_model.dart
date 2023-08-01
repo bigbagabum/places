@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/sight_details.dart';
+import 'package:places/ui/screen/sight_details/sight_details.dart';
 
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -94,7 +94,7 @@ class _SightLineState extends State<SightLine> {
                   width: 56,
                   child: SizedBox(
                     child: Image(
-                      image: AssetImage(widget.inputSight.img),
+                      image: AssetImage(widget.inputSight.img[0]),
                       fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
@@ -284,7 +284,7 @@ class _SeightLineState extends State<SeightLine> {
                   width: 56,
                   child: SizedBox(
                     child: Image(
-                      image: AssetImage(widget.inputSight.img),
+                      image: AssetImage(widget.inputSight.img[0]),
                       fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
@@ -318,12 +318,7 @@ class _SeightLineState extends State<SeightLine> {
                 )
               ],
             ),
-            Container(
-              height: 1,
-              margin: const EdgeInsets.only(top: 10),
-              width: double.infinity,
-              color: Theme.of(context).secondaryHeaderColor,
-            )
+            const Divider(),
           ],
         ),
       ),

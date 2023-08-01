@@ -121,7 +121,6 @@ class _MainList extends State<MainList> {
     } else {
       //отфильтрованый список
       return ListView.builder(
-          //physics:  isAndroid? => const ClampingScrollPhysics():BouncingScrollPhysics(),
           cacheExtent: 20,
           physics: Platform.isAndroid
               ? const ClampingScrollPhysics()
@@ -231,7 +230,8 @@ class _MainList extends State<MainList> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      body: bodyContent(),
+      body: //const BodyMainList(),
+          bodyContent(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).selectedRowColor,

@@ -8,7 +8,7 @@ final mocks = [
       'отель',
       55.66,
       37.62,
-      'lib/ui/res/images/jazz.jpg',
+      [mockImages[2], mockImages[0], mockImages[1]],
       SightStatus.sightToVisit,
       1),
   Sight(
@@ -18,7 +18,7 @@ final mocks = [
       'отель',
       55.68,
       37.57,
-      'lib/ui/res/images/kristal.jpg',
+      [mockImages[3], mockImages[0]],
       SightStatus.sightToVisit,
       2),
   Sight(
@@ -29,7 +29,7 @@ final mocks = [
       'отель',
       55.75,
       37.62,
-      'lib/ui/res/images/metropol.jpg',
+      [mockImages[4], mockImages[0]],
       SightStatus.sightVisited,
       3),
   Sight(
@@ -41,7 +41,7 @@ final mocks = [
       'музей',
       55.75,
       37.62,
-      'lib/ui/res/images/historical_museum.jpg',
+      [mockImages[5], mockImages[0]],
       SightStatus.sightNoPlans,
       4)
 ];
@@ -49,4 +49,8 @@ final mocks = [
 List<String> mockImages = [
   'lib/ui/res/images/marina_alimos.jpg',
   'lib/ui/res/images/marina_palma.jpg',
+  'lib/ui/res/images/jazz.jpg',
+  'lib/ui/res/images/kristal.jpg',
+  'lib/ui/res/images/metropol.jpg',
+  'lib/ui/res/images/historical_museum.jpg',
 ];
