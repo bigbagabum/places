@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/screen/onboarding_screens/onboarding_main.dart';
 
 List<OnBoardingPageModel> onBoardingScreens = [
   OnBoardingPageModel(AppAssets.tutorialIcon1, AppStrings.tutorialTextTitle1,

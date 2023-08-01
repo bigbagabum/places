@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/map_screen.dart';
-import 'package:places/ui/screen/onboarding_screens/onboarding_main.dart';
+import 'package:places/ui/screen/onboarding_screens/onboarding.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
