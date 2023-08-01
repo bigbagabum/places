@@ -14,6 +14,8 @@ final darkTheme = ThemeData(
   ),
   // ignore: prefer_const_constructors
   textTheme: TextTheme(
+    button: const TextStyle(
+        fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     bodyText1: const TextStyle(
         fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1: const TextStyle(
@@ -91,6 +93,7 @@ final lightTheme = ThemeData(
     backgroundColor: AppColors.dmPrimaryLightColor,
   ),
   textTheme: const TextTheme(
+    button: TextStyle(fontSize: 14, fontFamily: 'Roboto', color: Colors.white),
     bodyText1:
         TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.green),
     headline1:

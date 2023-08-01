@@ -239,9 +239,9 @@ class _MainList extends State<MainList> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddSightScreen()));
         },
-        label: const Text(
+        label: Text(
           AppStrings.addPlace,
-          style: TextStyle(fontSize: 18),
+          style: Theme.of(context).textTheme.button,
         ),
         icon: const Icon(Icons.add),
       ),

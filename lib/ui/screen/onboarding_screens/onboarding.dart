@@ -63,7 +63,7 @@ class _OnboaardingScreenState extends State<OnboaardingScreen> {
                   child: Center(
                     child: Text(
                       AppStrings.tutorialTextButton3,
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.button,
                     ),
                   ),
                 ))

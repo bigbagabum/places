@@ -493,9 +493,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           // print(newPlace.name);
                           Navigator.pop(context);
                         },
-                  child: const Text(
+                  child: Text(
                     AppStrings.createPlace,
-                    style: TextStyle(fontSize: 14),
+                    style: Theme.of(context).textTheme.button,
                   )),
             )
           ],
