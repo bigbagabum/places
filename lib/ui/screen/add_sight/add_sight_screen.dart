@@ -44,12 +44,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
   }
 
   List<String> imgList(List<CardItem> listOfImgCardItem) {
-    List<String> img = [];
+    List<String> imgList = [];
     for (int i = 0; i < listOfImgCardItem.length; i++) {
-      img.add(listOfImgCardItem[i].img);
+      imgList.add(listOfImgCardItem[i].img);
     }
 
-    return img;
+    return imgList;
   }
 
 //
