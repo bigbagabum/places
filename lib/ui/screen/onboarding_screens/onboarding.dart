@@ -13,26 +13,13 @@ class OnboaardingScreen extends StatefulWidget {
 class _OnboaardingScreenState extends State<OnboaardingScreen> {
   final PageController controller = PageController(initialPage: 0);
 
-  double currentPage = 0; // Переменная для хранения текущей страницы
-
-  @override
-  void initState() {
-    super.initState();
-    // Используем addListener, чтобы получать актуальное значение текущей страницы
-    controller.addListener(() {
-      setState(() {
-        currentPage = controller.page ?? 0;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
           SizedBox(
-            height: 600,
+            height: double.infinity,
             child: PageView.builder(
               controller: controller,
               itemCount: onBoardingScreens.length,
@@ -44,30 +31,16 @@ class _OnboaardingScreenState extends State<OnboaardingScreen> {
               },
             ),
           ),
-          SmoothPageIndicator(
-              controller: controller,
-              count: onBoardingScreens.length,
-              effect: const ExpandingDotsEffect(
-                activeDotColor: Colors.green,
-              )),
-          const Spacer(),
-          (currentPage == (onBoardingScreens.length - 1))
-              ? GestureDetector(
-                  child: Container(
-                  margin: const EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).selectedRowColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  height: 48,
-                  width: 328,
-                  child: Center(
-                    child: Text(
-                      AppStrings.tutorialTextButton3,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ),
-                ))
-              : Container()
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.75,
+            left: MediaQuery.of(context).size.width * 0.5 - 40,
+            child: SmoothPageIndicator(
+                controller: controller,
+                count: onBoardingScreens.length,
+                effect: const ExpandingDotsEffect(
+                  activeDotColor: Colors.green,
+                )),
+          ),
         ],
       ),
     );

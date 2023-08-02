@@ -67,6 +67,25 @@ class _OnBoardingPageItemState extends State<OnBoardingPageItem> {
           style: const TextStyle(fontSize: 14),
         ),
       ),
+      const Spacer(),
+      ((widget.currentPage + 1) == onBoardingScreens.length)
+          ? GestureDetector(
+              child: Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).selectedRowColor,
+                    borderRadius: BorderRadius.circular(10)),
+                height: 48,
+                width: 328,
+                child: Center(
+                  child: Text(
+                    AppStrings.tutorialTextButton3,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+              ),
+            )
+          : Container()
     ]);
   }
 }
