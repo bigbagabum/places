@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/onboarding_screens/onboarding_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
