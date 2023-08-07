@@ -95,12 +95,15 @@ class _SightDetailsState extends State<SightDetails> {
           ),
 
           //Описание места
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, bottom: 16), // Добавляем отступы
+          SliverPersistentHeader(
+            pinned: true, // Чтобы заголовок оставался при прокрутке
+            delegate: _TextHeaderDelegate(
+              minHeight: 72,
+              maxHeight:
+                  200, // Максимальную высоту вы можете определить самостоятельно или вычислить
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     widget.detailSight.details,
                     style: TextStyle(
@@ -109,9 +112,8 @@ class _SightDetailsState extends State<SightDetails> {
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
-                );
-              },
-              childCount: 1, // Так как у нас только один Text
+                ),
+              ),
             ),
           ),
 
@@ -219,5 +221,36 @@ class _SightDetailsState extends State<SightDetails> {
         ],
       ),
     );
+  }
+}
+
+class _TextHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  _TextHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  bool shouldRebuild(_TextHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
