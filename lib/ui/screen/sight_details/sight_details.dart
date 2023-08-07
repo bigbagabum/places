@@ -98,20 +98,15 @@ class _SightDetailsState extends State<SightDetails> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minHeight: 72, // Базовая минимальная высота
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, bottom: 16), // Добавляем отступы
-                    child: Text(
-                      widget.detailSight.details,
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 14,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, bottom: 16), // Добавляем отступы
+                  child: Text(
+                    widget.detailSight.details,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 14,
+                      color: Theme.of(context).primaryColorLight,
                     ),
                   ),
                 );
