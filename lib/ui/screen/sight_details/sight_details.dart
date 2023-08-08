@@ -17,240 +17,214 @@ class _SightDetailsState extends State<SightDetails> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: CustomScrollView(
-        slivers: [
-          //сворачиваемая часть
+      child: Stack(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height - 150,
+            child: CustomScrollView(
+              slivers: [
+                //сворачиваемая часть
 
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 300,
-            //MediaQuery.of(context).size.height * 0.4,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                children: [
-                  ImageGallery(imgList: widget.detailSight.img),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
-                        margin: const EdgeInsets.only(left: 16, top: 36),
-                        child: Image(
-                            color: Theme.of(context).primaryColorLight,
-                            image: const AssetImage(AppAssets.iconBack))),
+                SliverAppBar(
+                  pinned: false,
+                  automaticallyImplyLeading: false,
+                  expandedHeight: 300,
+                  //MediaQuery.of(context).size.height * 0.4,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Stack(
+                      children: [
+                        ImageGallery(imgList: widget.detailSight.img),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10))),
+                              margin: const EdgeInsets.only(left: 16, top: 36),
+                              child: Image(
+                                  color: Theme.of(context).primaryColorLight,
+                                  image: const AssetImage(AppAssets.iconBack))),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          // прокручиваемая часть
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-              color: Theme.of(context).scaffoldBackgroundColor,
-              width: double.infinity,
-              child: Text(
-                widget.detailSight.name,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  color: Theme.of(context).primaryColorLight,
-                  fontSize: 24,
                 ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Text(
-                    widget.detailSight.type,
-                    style: TextStyle(
-                        fontSize: 14,
+                // прокручиваемая часть
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 16, right: 16),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    width: double.infinity,
+                    child: Text(
+                      widget.detailSight.name,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
                         color: Theme.of(context).primaryColorLight,
-                        fontFamily: 'Roboto'),
+                        fontSize: 24,
+                      ),
+                    ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 16.0),
-                    child: const Text(
-                      AppStrings.open24,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.detailSight.type,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).primaryColorLight,
+                              fontFamily: 'Roboto'),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 16.0),
+                          child: const Text(
+                            AppStrings.open24,
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 124, 126, 146),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        right: 16, top: 16, left: 16, bottom: 30),
+                    width: double.infinity,
+                    child: Text(
+                      widget.detailSight.details,
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 14,
-                        color: Color.fromARGB(255, 124, 126, 146),
+                        color: Theme.of(context).primaryColorLight,
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-
-          //Описание места
-          SliverPersistentHeader(
-            pinned: true, // Чтобы заголовок оставался при прокрутке
-            delegate: _TextHeaderDelegate(
-              minHeight: 72,
-              maxHeight:
-                  200, // Максимальную высоту вы можете определить самостоятельно или вычислить
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    widget.detailSight.details,
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 14,
-                      color: Theme.of(context).primaryColorLight,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
-
-          SliverToBoxAdapter(
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Container(
-                height: 48,
-                width: 328,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: Colors.green),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green),
+          //to top level of stack
+          Positioned(
+            right: 16,
+            bottom: 16,
+            left: 16,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: Container(
+                    height: 48,
+                    width: 328,
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        color: Colors.green),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green),
+                      ),
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: const Image(
+                              image: AssetImage(AppAssets.wayToSight),
+                            ),
+                          ),
+                          Text(
+                            AppStrings.builtRoute,
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Image(
-                          image: AssetImage(AppAssets.wayToSight),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 328,
+                    height: 1,
+                    color: const Color.fromRGBO(124, 126, 146, 0.56),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          //width: 164,
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Image(
+                                  image: AssetImage(AppAssets.iconCalendar),
+                                  color: AppColors.darkIcon),
+                              Text(
+                                AppStrings.getPlan,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 58, 63, 91)),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      Text(
-                        AppStrings.builtRoute,
-                        style: Theme.of(context).textTheme.displayLarge,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              alignment: Alignment.center,
-              child: Container(
-                width: 328,
-                height: 1,
-                color: const Color.fromRGBO(124, 126, 146, 0.56),
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: Row(
-              children: [
-                Flexible(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      //width: 164,
-                      height: 40,
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Image(
-                              image: AssetImage(AppAssets.iconCalendar),
-                              color: AppColors.darkIcon),
-                          Text(
-                            AppStrings.getPlan,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 58, 63, 91)),
-                          )
-                        ],
-                      ),
                     ),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 40,
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Image(
-                              image: AssetImage(AppAssets.iconHeart),
-                              color: AppColors.darkIcon),
-                          Text(
-                            AppStrings.inFavorite,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color.fromARGB(255, 58, 63, 91),
-                            ),
-                          )
-                        ],
+                    Flexible(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Image(
+                                  image: AssetImage(AppAssets.iconHeart),
+                                  color: AppColors.darkIcon),
+                              Text(
+                                AppStrings.inFavorite,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 58, 63, 91),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                )
+                    )
+                  ],
+                ),
               ],
             ),
           ),
         ],
       ),
     );
-  }
-}
-
-class _TextHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
-  _TextHeaderDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(_TextHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
   }
 }
