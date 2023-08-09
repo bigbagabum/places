@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/sight_details/sight_details_model.dart';
 
 class SightDetails extends StatefulWidget {
@@ -74,7 +73,8 @@ class _SightDetailsState extends State<SightDetails> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
+                  child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
@@ -87,12 +87,12 @@ class _SightDetailsState extends State<SightDetails> {
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 16.0),
-                          child: const Text(
+                          child: Text(
                             AppStrings.open24,
                             style: TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: 14,
-                              color: Color.fromARGB(255, 124, 126, 146),
+                              color: Theme.of(context).primaryColorLight,
                             ),
                           ),
                         )
@@ -103,6 +103,7 @@ class _SightDetailsState extends State<SightDetails> {
 
                 SliverToBoxAdapter(
                   child: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     padding: const EdgeInsets.only(
                         right: 16, top: 16, left: 16, bottom: 30),
                     width: double.infinity,
@@ -121,106 +122,112 @@ class _SightDetailsState extends State<SightDetails> {
           ),
           //to top level of stack
           Positioned(
-            right: 16,
-            bottom: 16,
-            left: 16,
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: Container(
-                    height: 48,
-                    width: 328,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        color: Colors.green),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
-                      ),
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 10),
-                            child: const Image(
-                              image: AssetImage(AppAssets.wayToSight),
+            right: 0,
+            bottom: 0,
+            left: 0,
+            child: Container(
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, top: 21, bottom: 16),
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                children: [
+                  Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: Container(
+                      height: 48,
+                      width: 328,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          color: Colors.green),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: const Image(
+                                image: AssetImage(AppAssets.wayToSight),
+                              ),
                             ),
-                          ),
-                          Text(
-                            AppStrings.builtRoute,
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                        ],
+                            Text(
+                              AppStrings.builtRoute,
+                              style: Theme.of(context).textTheme.displayLarge,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Container(
+                  Container(
                     width: 328,
                     height: 1,
                     color: const Color.fromRGBO(124, 126, 146, 0.56),
                   ),
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          //width: 164,
-                          height: 40,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                  image: AssetImage(AppAssets.iconCalendar),
-                                  color: AppColors.darkIcon),
-                              Text(
-                                AppStrings.getPlan,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 58, 63, 91)),
-                              )
-                            ],
+                  Row(
+                    children: [
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            //width: 164,
+                            height: 40,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(
+                                    image: const AssetImage(
+                                        AppAssets.iconCalendar),
+                                    color: Theme.of(context).primaryColorLight),
+                                Text(
+                                  AppStrings.getPlan,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          height: 40,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                  image: AssetImage(AppAssets.iconHeart),
-                                  color: AppColors.darkIcon),
-                              Text(
-                                AppStrings.inFavorite,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 58, 63, 91),
-                                ),
-                              )
-                            ],
+                      Flexible(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: 40,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(
+                                    image:
+                                        const AssetImage(AppAssets.iconHeart),
+                                    color: Theme.of(context).primaryColorLight),
+                                Text(
+                                  AppStrings.inFavorite,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
