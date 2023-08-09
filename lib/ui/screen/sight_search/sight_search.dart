@@ -125,70 +125,6 @@ class _MainList extends State<MainList> {
     }
   }
 
-  // Widget bodyContent() {
-  //   if (filteredSightsList.isEmpty) {
-  //     if (textSearchFieldController.text.isNotEmpty) {
-  //       return
-  //           //вывод пустого результата поиска
-  //           Center(
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             const SizedBox(
-  //               height: 30,
-  //             ),
-  //             const Image(
-  //               image: AssetImage(AppAssets.iconEmptySearch),
-  //             ),
-  //             const SizedBox(height: 16.0),
-  //             Text(
-  //               AppStrings.emptySearchResult,
-  //               style: Theme.of(context).textTheme.titleMedium,
-  //             ),
-  //             const SizedBox(height: 8.0),
-  //             Text(
-  //               AppStrings.tryToChangeParametersForSearch,
-  //               style: Theme.of(context).textTheme.titleSmall,
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     } else {
-  //       return Padding(
-  //         //вывод без фильтра все подряд
-
-  //         padding: const EdgeInsets.only(top: 15),
-  //         child: ListView.builder(
-  //             cacheExtent: 10,
-  //             physics: Platform.isAndroid
-  //                 ? const ClampingScrollPhysics()
-  //                 : const BouncingScrollPhysics(),
-  //             itemCount: mocks.length,
-  //             itemBuilder: (context, index) {
-  //               return SightCard(
-  //                   sight: mocks[index],
-  //                   listIndex: SightListIndex.mainList,
-  //                   status: mocks[index].status,
-  //                   listKey: ValueKey(mocks[index].sightId));
-  //             }),
-  //       );
-  //     }
-  //   } else {
-  //     //отфильтрованый список
-  //     return ListView.builder(
-  //         cacheExtent: 20,
-  //         physics: Platform.isAndroid
-  //             ? const ClampingScrollPhysics()
-  //             : const BouncingScrollPhysics(),
-  //         itemCount: filteredSightsList.length,
-  //         itemBuilder: (context, index) {
-  //           return SeightLine(
-  //               inputSight: filteredSightsList[index],
-  //               maskOfSearch: textSearchFieldController.text);
-  //         });
-  //   }
-  // }
-
   void clearSearch() {
     textSearchFieldController.clear();
     setState(() {
@@ -207,16 +143,7 @@ class _MainList extends State<MainList> {
             floating: false,
             expandedHeight: AppSize.toolBarSize + 52,
             centerTitle: true,
-            title: Text(
-              AppStrings.appTitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 22.0,
-                  color: Theme.of(context).primaryColorLight,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.bold,
-                  height: 1),
-            ),
+            title: const AppBarTextTitle(),
             flexibleSpace: FlexibleSpaceBar(
               background: Align(
                 alignment: Alignment.bottomCenter,

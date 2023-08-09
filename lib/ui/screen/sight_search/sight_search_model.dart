@@ -381,3 +381,32 @@ class _SuffixIconState extends State<SuffixIcon> {
     }
   }
 }
+
+class AppBarTextTitle extends StatefulWidget {
+  const AppBarTextTitle({super.key});
+
+  @override
+  State<AppBarTextTitle> createState() => _AppBarTextTitleState();
+}
+
+class _AppBarTextTitleState extends State<AppBarTextTitle> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      //height: 60,
+      child: Text(
+        AppStrings.appTitle,
+        textAlign: TextAlign.center,
+        softWrap: true,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+            fontSize: 22.0,
+            color: Theme.of(context).primaryColorLight,
+            fontFamily: "Roboto",
+            fontWeight: FontWeight.bold,
+            height: 1),
+      ),
+    );
+  }
+}
