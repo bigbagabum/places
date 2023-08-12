@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/map_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
+import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
 import 'package:places/ui/screen/settings_screen.dart';
@@ -47,7 +48,8 @@ class _MyAppState extends State<MyApp> {
         //home: SightCard(sight: mocks[1], listIndex: 0, status: 1));
         // home: SightDetails(sight: mocks[0]));
 
-        home: const HomePage());
+        home: const SplashScreen());
+    // const HomePage());
     //home: const OnboaardingScreen());
 
     //home: const FiltersScreen());
