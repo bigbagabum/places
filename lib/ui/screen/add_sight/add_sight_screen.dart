@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/screen/categories_screen.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -67,9 +67,9 @@ class _AddSightScreenState extends State<AddSightScreen> {
       child: Dismissible(
         direction: DismissDirection.up,
         key: ValueKey(listK),
-        background: Column(
+        background: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [Image(image: AssetImage(AppAssets.dismissUp))],
+          children: [Image(image: AssetImage(AppAssets.dismissUp))],
         ),
         onDismissed: (_) => deleteFromImageList(listK),
         child: Container(
@@ -116,7 +116,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
         });
   }
 
-  String choisedCat = AppStrings.noChoise;
+  String? choisedCat = AppStrings.noChoise;
 
   final textFieldNameController = TextEditingController();
   final textFieldLatController = TextEditingController();
@@ -264,23 +264,26 @@ class _AddSightScreenState extends State<AddSightScreen> {
             ),
             TextButton(
               onPressed: () async {
-                String received = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ChooseCategories(
-                            isButtonDisabled: true,
-                            // catChoised: choisedCat,
-                          )),
-                );
+                var received =
+                    await Navigator.pushNamed(context, Routes.setTypeSight);
 
-                setState(() {
-                  choisedCat = received;
-                  _isAllFieldsFilled();
-                });
+                // String received = await Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const ChooseCategories(),
+                //   ),
+                // );
+
+                if (received is String) {
+                  setState(() {
+                    choisedCat = received;
+                    _isAllFieldsFilled();
+                  });
+                }
               },
               child: Row(children: [
                 Text(
-                  choisedCat,
+                  choisedCat!,
                   style: TextStyle(
                       fontSize: 16, color: Theme.of(context).primaryColorLight),
                 ),

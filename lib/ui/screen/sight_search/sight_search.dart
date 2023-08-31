@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screen/add_sight/add_sight_screen.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
 import 'package:places/ui/screen/sight_card.dart';
 
@@ -101,10 +101,9 @@ class _MainList extends State<MainList> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return SightCard(
-                  sight: mocks[index],
-                  listIndex: SightListIndex.mainList,
-                  status: mocks[index].status,
-                  listKey: ValueKey(mocks[index].sightId));
+                sight: mocks[index],
+                listIndex: SightListIndex.mainList,
+              );
             },
             childCount: mocks.length,
           ),
@@ -225,10 +224,7 @@ class _MainList extends State<MainList> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).selectedRowColor,
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddSightScreen()));
-        },
+        onPressed: () => {Navigator.pushNamed(context, Routes.addSight)},
         label: Text(
           AppStrings.addPlace,
           style: Theme.of(context).textTheme.button,

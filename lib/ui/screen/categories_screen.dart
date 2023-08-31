@@ -110,12 +110,12 @@ void clearChoise() {
 String catChoised = AppStrings.noChoise;
 
 class ChooseCategories extends StatefulWidget {
-  final bool isButtonDisabled; // если true главная кнопка не активна
+  // final bool isButtonDisabled; // если true главная кнопка не активна
 
   const ChooseCategories({
     Key? key,
     List<CatRow>? cats,
-    required this.isButtonDisabled,
+    // required this.isButtonDisabled,
 
     ///required this.catChoised
   }) : super(key: key);
@@ -125,13 +125,13 @@ class ChooseCategories extends StatefulWidget {
 }
 
 class _ChooseCategoriesState extends State<ChooseCategories> {
-  late bool _isButtonDisabled;
+  late bool _isButtonDisabled = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _isButtonDisabled = widget.isButtonDisabled;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _isButtonDisabled = widget.isButtonDisabled;
+  // }
 
   @override
   Widget build(BuildContext context) {

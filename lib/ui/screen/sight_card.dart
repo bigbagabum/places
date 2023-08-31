@@ -3,20 +3,17 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/sight_details/sight_details.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
-  final dynamic listIndex, status;
-  final ValueKey listKey;
+  final dynamic listIndex;
   final VoidCallback? onDelete;
 
   const SightCard({
     Key? key,
     required this.sight,
     required this.listIndex,
-    required this.status,
-    required this.listKey,
     this.onDelete,
   }) : super(key: key);
 
@@ -48,7 +45,7 @@ class _SightCardState extends State<SightCard> {
           ),
         );
       case SightListIndex.planList:
-        switch (widget.status) {
+        switch (widget.sight.status) {
           case SightStatus.sightNoPlans:
             break;
 
@@ -107,7 +104,7 @@ class _SightCardState extends State<SightCard> {
           ),
         );
       case SightListIndex.planList:
-        switch (widget.status) {
+        switch (widget.sight.status) {
           case SightStatus.sightToVisit:
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +139,8 @@ class _SightCardState extends State<SightCard> {
                 ),
               ],
             );
+          case SightStatus.sightNoPlans:
+            break;
         }
     }
     throw '';
@@ -151,12 +150,14 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SightDetails(detailSight: widget.sight),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.detailedPlace,
+              arguments: {"detailSight": widget.sight});
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => SightDetails(detailSight: widget.sight),
+          //   ),
+          // );
         },
         child: AspectRatio(
           aspectRatio: 3 / 2,

@@ -35,7 +35,10 @@ class _SightDetailsState extends State<SightDetails> {
                         ImageGallery(imgList: widget.detailSight.img),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pop(
+                                context,
+                                (route) =>
+                                    route.settings.name == 'home_tab_screen');
                           },
                           child: Container(
                               height: 32,
