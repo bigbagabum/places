@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/router/route_names.dart';
+import 'package:places/ui/screen/sight_details/sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -150,8 +152,19 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Navigator.pushNamed(context, Routes.detailedPlace,
-              arguments: {"detailSight": widget.sight});
+          showBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15)),
+                  child: SightDetails(detailSight: widget.sight));
+            },
+          );
+
+          // Navigator.pushNamed(context, Routes.detailedPlace,
+          //     arguments: {"detailSight": widget.sight});
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(
