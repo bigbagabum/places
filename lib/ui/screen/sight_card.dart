@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/router/route_names.dart';
 import 'package:places/ui/screen/sight_details/sight_details.dart';
 
 class SightCard extends StatefulWidget {
@@ -152,8 +150,16 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          showBottomSheet(
+          showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
+            ),
+            backgroundColor: Colors.transparent.withOpacity(0.5),
             context: context,
+            isScrollControlled: true,
             builder: (BuildContext context) {
               return ClipRRect(
                   borderRadius: const BorderRadius.only(

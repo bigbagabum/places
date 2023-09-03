@@ -228,8 +228,13 @@ class _MainList extends State<MainList> {
           bottom: 16.0,
           child: ElevatedButton(
             style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
               backgroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).selectedRowColor), // Цвет фона кнопки
+                  Theme.of(context).selectedRowColor),
             ),
             onPressed: () => {Navigator.pushNamed(context, Routes.addSight)},
             child: Row(
