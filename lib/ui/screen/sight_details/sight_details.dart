@@ -28,7 +28,6 @@ class _SightDetailsState extends State<SightDetails> {
                   pinned: false,
                   automaticallyImplyLeading: false,
                   expandedHeight: 300,
-                  //MediaQuery.of(context).size.height * 0.4,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
                       children: [
