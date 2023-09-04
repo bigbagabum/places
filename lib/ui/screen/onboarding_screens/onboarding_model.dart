@@ -42,7 +42,9 @@ class _OnBoardingPageItemState extends State<OnBoardingPageItem> {
               : Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.homeTabScreen);
+                      },
                       child: Text(AppStrings.skip,
                           style: Theme.of(context).textTheme.bodyText1)),
                 ),

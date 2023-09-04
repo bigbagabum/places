@@ -32,4 +32,7 @@ class AppAssets {
   static const tutorialIcon2 = 'lib/ui/res/icons/tutorial_2_frame.png';
   static const tutorialIcon3 = 'lib/ui/res/icons/tutorial_3_frame.png';
   static const cancel = 'lib/ui/res/icons/cancel.png';
+  static const file = 'lib/ui/res/icons/dialog_file.png';
+  static const photo = 'lib/ui/res/icons/photo.png';
+  static const camera = 'lib/ui/res/icons/dialog_camera.png';
 }
