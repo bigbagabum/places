@@ -26,8 +26,22 @@ class _SightCardState extends State<SightCard> {
     return '';
   }
 
-  String _calendarIconClick() {
-    return '';
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _calendarIconClick(BuildContext context) async {
+    final DateTime? selectDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2024),
+    );
+
+    if (selectDate != null) {
+      setState(() {
+        selectedDate = selectDate;
+      });
+    }
+    print('calendar click');
   }
 
   String _routeIconClick() {
@@ -53,7 +67,7 @@ class _SightCardState extends State<SightCard> {
             return Row(
               children: [
                 GestureDetector(
-                  onTap: _calendarIconClick,
+                  onTap: () => _calendarIconClick(context),
                   child: const Image(
                     image: AssetImage(AppAssets.iconCalendar),
                     color: AppColors.lightGrey,
