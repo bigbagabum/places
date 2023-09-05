@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,8 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNext() {
-    print("Переход на следующий экран");
-    // После изучения навигации добавьте логику перехода
+    Navigator.pushNamed(context, Routes.onBoarding);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 
 List<OnBoardingPageModel> onBoardingScreens = [
   OnBoardingPageModel(AppAssets.tutorialIcon1, AppStrings.tutorialTextTitle1,
@@ -41,7 +42,9 @@ class _OnBoardingPageItemState extends State<OnBoardingPageItem> {
               : Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.homeTabScreen);
+                      },
                       child: Text(AppStrings.skip,
                           style: Theme.of(context).textTheme.bodyText1)),
                 ),
@@ -70,6 +73,7 @@ class _OnBoardingPageItemState extends State<OnBoardingPageItem> {
       const Spacer(),
       ((widget.currentPage + 1) == onBoardingScreens.length)
           ? GestureDetector(
+              onTap: () => {Navigator.pushNamed(context, Routes.homeTabScreen)},
               child: Container(
                 margin: const EdgeInsets.only(top: 10, bottom: 10),
                 decoration: BoxDecoration(

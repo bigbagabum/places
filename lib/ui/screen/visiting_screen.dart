@@ -34,8 +34,8 @@ class _VisitingScreenState extends State<VisitingScreen>
           key: ValueKey(listSights[i].sightId),
           sight: listSights[i],
           listIndex: SightListIndex.planList,
-          status: statusSight,
-          listKey: ValueKey(listSights[i].sightId),
+          // status: statusSight,
+          //listKey: ValueKey(listSights[i].sightId),
           onDelete: () => cancelIconClick(listSights[i].sightId),
         ));
       }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/sight_details/sight_details.dart';
+import 'package:places/ui/screen/router/route_names.dart';
 
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/ui/screen/sight_search/filters_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 
 List<Sight> filteredSightsList = []; //отфильтрованный список мест
@@ -70,15 +69,10 @@ class _SightLineState extends State<SightLine> {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
       child: InkWell(
-        //клики на строчку поисковой выдаси
+        //клики на строчку поисковой выдачи
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  SightDetails(detailSight: widget.inputSight),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.detailedPlace,
+              arguments: {"detailSight": widget.inputSight});
         },
         child: Column(
           children: [
@@ -262,13 +256,8 @@ class _SeightLineState extends State<SeightLine> {
       child: InkWell(
         //клики на строчку поисковой выдаси
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  SightDetails(detailSight: widget.inputSight),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.detailedPlace,
+              arguments: {"detailSight": widget.inputSight});
         },
         child: Column(
           children: [
@@ -359,12 +348,21 @@ class _SuffixIconState extends State<SuffixIcon> {
       return IconButton(
           onPressed: () async {
             //клик на иконку фильтра
-            List<Sight> customList = await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const FiltersScreen()));
 
-            sightList = customList;
+            var customList =
+                await Navigator.pushNamed(context, Routes.setFilterSights);
 
-            for (int i = 0; i < customList.length; i++) {}
+            // List<Sight> customList = await Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const FiltersScreen(),
+            //   ),
+            // );
+            if (customList is List<Sight>) {
+              sightList = customList;
+            }
+
+            // for (int i = 0; i < customList.length; i++) {}
           },
           icon: const Image(
             image: AssetImage(AppAssets.iconFilter),

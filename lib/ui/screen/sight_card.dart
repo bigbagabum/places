@@ -7,16 +7,13 @@ import 'package:places/ui/screen/sight_details/sight_details.dart';
 
 class SightCard extends StatefulWidget {
   final Sight sight;
-  final dynamic listIndex, status;
-  final ValueKey listKey;
+  final dynamic listIndex;
   final VoidCallback? onDelete;
 
   const SightCard({
     Key? key,
     required this.sight,
     required this.listIndex,
-    required this.status,
-    required this.listKey,
     this.onDelete,
   }) : super(key: key);
 
@@ -29,8 +26,22 @@ class _SightCardState extends State<SightCard> {
     return '';
   }
 
-  String _calendarIconClick() {
-    return '';
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _calendarIconClick(BuildContext context) async {
+    final DateTime? selectDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2024),
+    );
+
+    if (selectDate != null) {
+      setState(() {
+        selectedDate = selectDate;
+      });
+    }
+    print('calendar click');
   }
 
   String _routeIconClick() {
@@ -48,7 +59,7 @@ class _SightCardState extends State<SightCard> {
           ),
         );
       case SightListIndex.planList:
-        switch (widget.status) {
+        switch (widget.sight.status) {
           case SightStatus.sightNoPlans:
             break;
 
@@ -56,7 +67,7 @@ class _SightCardState extends State<SightCard> {
             return Row(
               children: [
                 GestureDetector(
-                  onTap: _calendarIconClick,
+                  onTap: () => _calendarIconClick(context),
                   child: const Image(
                     image: AssetImage(AppAssets.iconCalendar),
                     color: AppColors.lightGrey,
@@ -107,7 +118,7 @@ class _SightCardState extends State<SightCard> {
           ),
         );
       case SightListIndex.planList:
-        switch (widget.status) {
+        switch (widget.sight.status) {
           case SightStatus.sightToVisit:
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +153,8 @@ class _SightCardState extends State<SightCard> {
                 ),
               ],
             );
+          case SightStatus.sightNoPlans:
+            break;
         }
     }
     throw '';
@@ -151,12 +164,33 @@ class _SightCardState extends State<SightCard> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SightDetails(detailSight: widget.sight),
+          showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
             ),
+            backgroundColor: Colors.transparent.withOpacity(0.5),
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15)),
+                  child: SightDetails(detailSight: widget.sight));
+            },
           );
+
+          // Navigator.pushNamed(context, Routes.detailedPlace,
+          //     arguments: {"detailSight": widget.sight});
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => SightDetails(detailSight: widget.sight),
+          //   ),
+          // );
         },
         child: AspectRatio(
           aspectRatio: 3 / 2,

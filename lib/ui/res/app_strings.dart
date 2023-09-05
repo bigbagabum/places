@@ -56,4 +56,7 @@ class AppStrings {
   static const tutorialTextSubtitle3 =
       'Делись самыми интересными и помоги нам стать лучше.';
   static const tutorialTextButton3 = 'НА СТАРТ';
+  static const dialogCamera = 'Камера';
+  static const dialogPhoto = 'Фотография';
+  static const dialogFile = 'Файл';
 }

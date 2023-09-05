@@ -28,27 +28,40 @@ class _SightDetailsState extends State<SightDetails> {
                   pinned: false,
                   automaticallyImplyLeading: false,
                   expandedHeight: 300,
-                  //MediaQuery.of(context).size.height * 0.4,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
                       children: [
                         ImageGallery(imgList: widget.detailSight.img),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pop(
+                                context,
+                                (route) =>
+                                    route.settings.name == 'home_tab_screen');
                           },
-                          child: Container(
-                              height: 32,
-                              width: 32,
-                              decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10))),
-                              margin: const EdgeInsets.only(left: 16, top: 36),
-                              child: Image(
-                                  color: Theme.of(context).primaryColorLight,
-                                  image: const AssetImage(AppAssets.iconBack))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16.0),
+                                child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(25))),
+                                    margin: const EdgeInsets.only(
+                                        left: 16, top: 36),
+                                    child: Image(
+                                        color:
+                                            Theme.of(context).primaryColorLight,
+                                        image: const AssetImage(
+                                            AppAssets.cancel))),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
