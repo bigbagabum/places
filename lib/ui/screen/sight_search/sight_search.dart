@@ -66,7 +66,7 @@ class _MainList extends State<MainList> {
   //   ]);
   // }
 
-  Widget bodyContent() {
+  Widget bodyContentPortrait() {
     if (filteredSightsList.isEmpty) {
       if (textSearchFieldController.text.isNotEmpty) {
         // вывод пустого результата поиска
@@ -97,7 +97,10 @@ class _MainList extends State<MainList> {
         );
       } else {
         // вывод без фильтра все подряд
-        return SliverList(
+        return SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+          ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return SightCard(
@@ -122,6 +125,79 @@ class _MainList extends State<MainList> {
         ),
       );
     }
+  }
+
+  Widget bodyContentLandscape() {
+    if (filteredSightsList.isEmpty) {
+      if (textSearchFieldController.text.isNotEmpty) {
+        // вывод пустого результата поиска
+        return SliverFillRemaining(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                const Image(
+                  image: AssetImage(AppAssets.iconEmptySearch),
+                ),
+                const SizedBox(height: 16.0),
+                Text(
+                  AppStrings.emptySearchResult,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  AppStrings.tryToChangeParametersForSearch,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ],
+            ),
+          ),
+        );
+      } else {
+        // вывод без фильтра все подряд
+        return SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return SightCard(
+                sight: mocks[index],
+                listIndex: SightListIndex.mainList,
+              );
+            },
+            childCount: mocks.length,
+          ),
+        );
+      }
+    } else {
+      // отфильтрованный список
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return SeightLine(
+                inputSight: filteredSightsList[index],
+                maskOfSearch: textSearchFieldController.text);
+          },
+          childCount: filteredSightsList.length,
+        ),
+      );
+    }
+  }
+
+  Widget bodyContent() {
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return bodyContentPortrait();
+        } else {
+          return bodyContentLandscape();
+        }
+      },
+    );
   }
 
   void clearSearch() {

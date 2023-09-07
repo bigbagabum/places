@@ -41,7 +41,6 @@ class _SightCardState extends State<SightCard> {
         selectedDate = selectDate;
       });
     }
-    print('calendar click');
   }
 
   String _routeIconClick() {
@@ -112,6 +111,7 @@ class _SightCardState extends State<SightCard> {
         return Text(
           widget.sight.details,
           overflow: TextOverflow.ellipsis,
+          maxLines: 7,
           style: TextStyle(
             fontSize: 14,
             color: Theme.of(context).primaryColorLight,
@@ -182,15 +182,6 @@ class _SightCardState extends State<SightCard> {
                   child: SightDetails(detailSight: widget.sight));
             },
           );
-
-          // Navigator.pushNamed(context, Routes.detailedPlace,
-          //     arguments: {"detailSight": widget.sight});
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => SightDetails(detailSight: widget.sight),
-          //   ),
-          // );
         },
         child: AspectRatio(
           aspectRatio: 3 / 2,
@@ -218,7 +209,7 @@ class _SightCardState extends State<SightCard> {
                       width: double.infinity,
                       alignment: Alignment.topCenter,
                       child: Stack(
-                        clipBehavior: Clip.none,
+                        clipBehavior: Clip.hardEdge,
                         children: [
                           SizedBox(
                             width: double.infinity,

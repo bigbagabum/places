@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:places/ui/screen/router/app_router.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screen/res/themes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
+
   runApp(
     ChangeNotifierProvider<MyTheme>(
         create: (context) => MyTheme(), child: const MyApp()),
