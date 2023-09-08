@@ -32,38 +32,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: _screenSelected.elementAt(_selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          elevation: 1.0,
-          unselectedItemColor: Theme.of(context).secondaryHeaderColor,
-          selectedItemColor: Theme.of(context).primaryColorLight,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage(AppAssets.iconList),
+    return OrientationBuilder(builder: (context, orientation) {
+      return Scaffold(
+          body: _screenSelected.elementAt(_selectedIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            elevation: 1.0,
+            unselectedItemColor: Theme.of(context).secondaryHeaderColor,
+            selectedItemColor: Theme.of(context).primaryColorLight,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(AppAssets.iconList),
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(AppAssets.iconMap)),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage(AppAssets.iconHeartFull),
+              BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage(AppAssets.iconMap)),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(AppAssets.iconSettings)),
-              label: '',
-            )
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ));
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(AppAssets.iconHeartFull),
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage(AppAssets.iconSettings)),
+                label: '',
+              )
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ));
+    });
   }
 }
