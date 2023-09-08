@@ -111,7 +111,7 @@ class _SightCardState extends State<SightCard> {
         return Text(
           widget.sight.details,
           overflow: TextOverflow.ellipsis,
-          maxLines: 7,
+          maxLines: 3,
           style: TextStyle(
             fontSize: 14,
             color: Theme.of(context).primaryColorLight,

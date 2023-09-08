@@ -14,6 +14,7 @@ List<Sight> filteredSightsList =
 List<String> searchHistory = []; //Список итемов истории поиска
 
 class MainList extends StatefulWidget {
+  //final Orientation orientation;
   const MainList({Key? key}) : super(key: key);
 
   @override
@@ -97,10 +98,7 @@ class _MainList extends State<MainList> {
         );
       } else {
         // вывод без фильтра все подряд
-        return SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-          ),
+        return SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return SightCard(
@@ -188,16 +186,12 @@ class _MainList extends State<MainList> {
     }
   }
 
-  Widget bodyContent() {
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        if (orientation == Orientation.portrait) {
-          return bodyContentPortrait();
-        } else {
-          return bodyContentLandscape();
-        }
-      },
-    );
+  Widget bodyContent(orientation) {
+    if (orientation == Orientation.portrait) {
+      return bodyContentPortrait();
+    } else {
+      return bodyContentLandscape();
+    }
   }
 
   void clearSearch() {
@@ -210,121 +204,121 @@ class _MainList extends State<MainList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: true,
-              floating: false,
-              expandedHeight: AppSize.toolBarSize + 52,
-              centerTitle: true,
-              title: const AppBarTextTitle(),
-              flexibleSpace: FlexibleSpaceBar(
-                background: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin:
-                        const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                    height: 40,
-                    width: double.infinity,
-                    child: TextField(
-                      controller: textSearchFieldController,
-                      textAlignVertical: TextAlignVertical.center,
-                      onSubmitted: (_) {
-                        //обрабатываем ввод в строке поиска
+        resizeToAvoidBottomInset: false,
+        body: Stack(children: [
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                pinned: true,
+                floating: false,
+                expandedHeight: AppSize.toolBarSize + 52,
+                centerTitle: true,
+                title: const AppBarTextTitle(),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin:
+                          const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      height: 40,
+                      width: double.infinity,
+                      child: TextField(
+                        controller: textSearchFieldController,
+                        textAlignVertical: TextAlignVertical.center,
+                        onSubmitted: (_) {
+                          //обрабатываем ввод в строке поиска
 
-                        if (textSearchFieldController.text.isNotEmpty) {
-                          setState(() {
-                            filteredSightsList = filteredListOfItems(
-                                textSearchFieldController.text, sightList);
-                          });
-                        } else {
-                          filteredSightsList = [];
-                        }
-                      },
-                      onChanged: (_) {
-                        //обрабатываем ввод в строке поиска
-                        if (textSearchFieldController.text
-                            .toLowerCase()
-                            .endsWith(' ')) {
-                          setState(
-                            () {
-                              if (textSearchFieldController.text
-                                      .toLowerCase()
-                                      .endsWith(' ') &&
-                                  !textSearchFieldController.text
-                                      .toLowerCase()
-                                      .startsWith(' ')) {
-                                filteredSightsList = filteredListOfItems(
-                                    textSearchFieldController.text
-                                        .toLowerCase()
-                                        .substring(
-                                            0,
-                                            textSearchFieldController
-                                                    .text.length -
-                                                1),
-                                    sightList);
-                              }
-                            },
-                          );
-                        } else if (textSearchFieldController.text.isEmpty) {
-                          setState(() {
+                          if (textSearchFieldController.text.isNotEmpty) {
+                            setState(() {
+                              filteredSightsList = filteredListOfItems(
+                                  textSearchFieldController.text, sightList);
+                            });
+                          } else {
                             filteredSightsList = [];
-                          });
-                        } else {
-                          setState(() {});
-                        }
-                      },
-                      decoration: InputDecoration(
-                          fillColor: Theme.of(context).primaryColorDark,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none),
-                          hintText: AppStrings.searchBar,
-                          hintStyle: Theme.of(context).textTheme.displaySmall,
-                          filled: true,
-                          prefixIcon: const Image(
-                            image: AssetImage(AppAssets.iconSearch),
-                          ),
-                          suffixIcon: SuffixIcon(
-                            searchIsEmpty: mask().isEmpty,
-                            clearTextController: clearSearch,
-                          )),
+                          }
+                        },
+                        onChanged: (_) {
+                          //обрабатываем ввод в строке поиска
+                          if (textSearchFieldController.text
+                              .toLowerCase()
+                              .endsWith(' ')) {
+                            setState(
+                              () {
+                                if (textSearchFieldController.text
+                                        .toLowerCase()
+                                        .endsWith(' ') &&
+                                    !textSearchFieldController.text
+                                        .toLowerCase()
+                                        .startsWith(' ')) {
+                                  filteredSightsList = filteredListOfItems(
+                                      textSearchFieldController.text
+                                          .toLowerCase()
+                                          .substring(
+                                              0,
+                                              textSearchFieldController
+                                                      .text.length -
+                                                  1),
+                                      sightList);
+                                }
+                              },
+                            );
+                          } else if (textSearchFieldController.text.isEmpty) {
+                            setState(() {
+                              filteredSightsList = [];
+                            });
+                          } else {
+                            setState(() {});
+                          }
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Theme.of(context).primaryColorDark,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none),
+                            hintText: AppStrings.searchBar,
+                            hintStyle: Theme.of(context).textTheme.displaySmall,
+                            filled: true,
+                            prefixIcon: const Image(
+                              image: AssetImage(AppAssets.iconSearch),
+                            ),
+                            suffixIcon: SuffixIcon(
+                              searchIsEmpty: mask().isEmpty,
+                              clearTextController: clearSearch,
+                            )),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            bodyContent(),
-          ],
-        ),
-        Positioned(
-          right: MediaQuery.of(context).size.width / 2 - 70,
-          bottom: 16.0,
-          child: ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
-                ),
-              ),
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).selectedRowColor),
-            ),
-            onPressed: () => {Navigator.pushNamed(context, Routes.addSight)},
-            child: Row(
-              children: [
-                const Icon(Icons.add),
-                Text(
-                  AppStrings.addPlace,
-                  style: Theme.of(context).textTheme.button,
-                ),
-              ],
-            ),
+              //bodyContentPortrait(),
+              bodyContentLandscape(),
+            ],
           ),
-        )
-      ]),
-    );
+          Positioned(
+            right: MediaQuery.of(context).size.width / 2 - 70,
+            bottom: 16.0,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).selectedRowColor),
+              ),
+              onPressed: () => {Navigator.pushNamed(context, Routes.addSight)},
+              child: Row(
+                children: [
+                  const Icon(Icons.add),
+                  Text(
+                    AppStrings.addPlace,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ],
+              ),
+            ),
+          )
+        ]));
   }
 }

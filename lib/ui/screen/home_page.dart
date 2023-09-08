@@ -6,6 +6,8 @@ import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class HomePage extends StatefulWidget {
+  //final Orientation orientationDevice;
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -14,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   final List<Widget> _screenSelected = <Widget>[
     const MainList(),
     const MapScreen(),
