@@ -17,13 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screenSelected = <Widget>[
-    const MainList(),
-    const MapScreen(),
-    const VisitingScreen(),
-    const SettingsScreen(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,9 +25,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // _orientation = MediaQuery.of(context).orientation; // Получение ориентации
+
+    final List<Widget> screenSelected = <Widget>[
+      MainList(orientation: MediaQuery.of(context).orientation),
+      const MapScreen(),
+      const VisitingScreen(),
+      const SettingsScreen(),
+    ];
+
     return OrientationBuilder(builder: (context, orientation) {
       return Scaffold(
-          body: _screenSelected.elementAt(_selectedIndex),
+          body: screenSelected.elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             elevation: 1.0,

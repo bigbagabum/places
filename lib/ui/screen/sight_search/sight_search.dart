@@ -14,8 +14,8 @@ List<Sight> filteredSightsList =
 List<String> searchHistory = []; //Список итемов истории поиска
 
 class MainList extends StatefulWidget {
-  //final Orientation orientation;
-  const MainList({Key? key}) : super(key: key);
+  final Orientation orientation;
+  const MainList({Key? key, required this.orientation}) : super(key: key);
 
   @override
   State<MainList> createState() => _MainList();
@@ -67,65 +67,7 @@ class _MainList extends State<MainList> {
   //   ]);
   // }
 
-  Widget bodyContentPortrait() {
-    if (filteredSightsList.isEmpty) {
-      if (textSearchFieldController.text.isNotEmpty) {
-        // вывод пустого результата поиска
-        return SliverFillRemaining(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Image(
-                  image: AssetImage(AppAssets.iconEmptySearch),
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  AppStrings.emptySearchResult,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  AppStrings.tryToChangeParametersForSearch,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
-            ),
-          ),
-        );
-      } else {
-        // вывод без фильтра все подряд
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return SightCard(
-                sight: mocks[index],
-                listIndex: SightListIndex.mainList,
-              );
-            },
-            childCount: mocks.length,
-          ),
-        );
-      }
-    } else {
-      // отфильтрованный список
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            return SeightLine(
-                inputSight: filteredSightsList[index],
-                maskOfSearch: textSearchFieldController.text);
-          },
-          childCount: filteredSightsList.length,
-        ),
-      );
-    }
-  }
-
-  Widget bodyContentLandscape() {
+  Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
       if (textSearchFieldController.text.isNotEmpty) {
         // вывод пустого результата поиска
@@ -157,8 +99,10 @@ class _MainList extends State<MainList> {
       } else {
         // вывод без фильтра все подряд
         return SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:
+                (widget.orientation == Orientation.portrait) ? 1 : 2,
+            childAspectRatio: 3 / 2,
           ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
@@ -173,7 +117,11 @@ class _MainList extends State<MainList> {
       }
     } else {
       // отфильтрованный список
-      return SliverList(
+      return SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: (widget.orientation == Orientation.portrait) ? 1 : 2,
+          childAspectRatio: 3 / 2,
+        ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return SeightLine(
@@ -183,14 +131,6 @@ class _MainList extends State<MainList> {
           childCount: filteredSightsList.length,
         ),
       );
-    }
-  }
-
-  Widget bodyContent(orientation) {
-    if (orientation == Orientation.portrait) {
-      return bodyContentPortrait();
-    } else {
-      return bodyContentLandscape();
     }
   }
 
@@ -290,8 +230,7 @@ class _MainList extends State<MainList> {
                   ),
                 ),
               ),
-              //bodyContentPortrait(),
-              bodyContentLandscape(),
+              bodyContent(),
             ],
           ),
           Positioned(
