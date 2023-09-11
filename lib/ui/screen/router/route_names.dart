@@ -10,4 +10,5 @@ class Routes {
   static const String settingsScreen = 'settings_screen';
   static const String setTypeSight = 'set_type_sight';
   static const String setFilterSights = 'set_filter_sights';
+  static const String setFilterOnSmallScreen = 'set_filter_on_small_screen';
 }

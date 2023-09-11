@@ -31,6 +31,10 @@ class AppRouter {
       case Routes.setFilterSights:
         return MaterialPageRoute(builder: (_) => const FiltersScreen());
 
+      case Routes.setFilterOnSmallScreen:
+        return MaterialPageRoute(
+            builder: (_) => const FilteresScreenSmallScreens());
+
       case Routes.setTypeSight:
         return MaterialPageRoute(
           builder: (_) => const ChooseCategories(),
