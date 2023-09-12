@@ -349,15 +349,17 @@ class _SuffixIconState extends State<SuffixIcon> {
           onPressed: () async {
             //клик на иконку фильтра
 
-            var customList =
-                await Navigator.pushNamed(context, Routes.setFilterSights);
+            double widthScreen = MediaQuery.of(context).size.width;
+            var customList;
 
-            // List<Sight> customList = await Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const FiltersScreen(),
-            //   ),
-            // );
+            if (widthScreen < 390) {
+              customList = await Navigator.pushNamed(
+                  context, Routes.setFilterOnSmallScreen);
+            } else {
+              customList =
+                  await Navigator.pushNamed(context, Routes.setFilterSights);
+            }
+
             if (customList is List<Sight>) {
               sightList = customList;
             }

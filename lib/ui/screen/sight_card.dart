@@ -4,6 +4,8 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/sight_details/sight_details.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 class SightCard extends StatefulWidget {
   final Sight sight;
@@ -28,20 +30,58 @@ class _SightCardState extends State<SightCard> {
 
   DateTime selectedDate = DateTime.now();
 
-  Future<void> _calendarIconClick(BuildContext context) async {
-    final DateTime? selectDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2024),
-    );
+  // Future<void> _calendarIconClick(BuildContext context) async {
+  //   final DateTime? selectDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2022),
+  //     lastDate: DateTime(2024),
+  //   );
 
-    if (selectDate != null) {
+  //   if (selectDate != null) {
+  //     setState(() {
+  //       selectedDate = selectDate;
+  //     });
+  //   }
+  // }
+
+  Future<void> calendarIconClick(BuildContext context) async {
+    DateTime? newDate;
+
+    if (Platform.isIOS) {
+      newDate = await showCupertinoModalPopup<DateTime>(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+                height: 200,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColorDark,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: selectedDate,
+                    onDateTimeChanged: (DateTime newDate) {
+                      setState(() {
+                        selectedDate = newDate;
+                      });
+                    }));
+          });
+    } else if (Platform.isAndroid) {
+      newDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2022),
+        lastDate: DateTime(2024),
+      );
+    }
+
+    if (newDate != null) {
       setState(() {
-        selectedDate = selectDate;
+        selectedDate = newDate!;
       });
     }
-    print('calendar click');
   }
 
   String _routeIconClick() {
@@ -67,7 +107,7 @@ class _SightCardState extends State<SightCard> {
             return Row(
               children: [
                 GestureDetector(
-                  onTap: () => _calendarIconClick(context),
+                  onTap: () => calendarIconClick(context),
                   child: const Image(
                     image: AssetImage(AppAssets.iconCalendar),
                     color: AppColors.lightGrey,
@@ -112,6 +152,9 @@ class _SightCardState extends State<SightCard> {
         return Text(
           widget.sight.details,
           overflow: TextOverflow.ellipsis,
+          maxLines: (MediaQuery.of(context).orientation == Orientation.portrait)
+              ? 3
+              : 2,
           style: TextStyle(
             fontSize: 14,
             color: Theme.of(context).primaryColorLight,
@@ -182,15 +225,6 @@ class _SightCardState extends State<SightCard> {
                   child: SightDetails(detailSight: widget.sight));
             },
           );
-
-          // Navigator.pushNamed(context, Routes.detailedPlace,
-          //     arguments: {"detailSight": widget.sight});
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => SightDetails(detailSight: widget.sight),
-          //   ),
-          // );
         },
         child: AspectRatio(
           aspectRatio: 3 / 2,
@@ -198,10 +232,8 @@ class _SightCardState extends State<SightCard> {
             direction: widget.listIndex == SightListIndex.mainList
                 ? DismissDirection.none
                 : DismissDirection.endToStart,
-            background: Container(
-              color: Colors.red,
-              child: const Image(image: AssetImage(AppAssets.deletefromList)),
-            ),
+            background:
+                const Image(image: AssetImage(AppAssets.deletefromList)),
             key: ValueKey(widget.sight.sightId),
             onDismissed: (_) => widget.onDelete?.call(),
             child: Container(
@@ -218,7 +250,7 @@ class _SightCardState extends State<SightCard> {
                       width: double.infinity,
                       alignment: Alignment.topCenter,
                       child: Stack(
-                        clipBehavior: Clip.none,
+                        clipBehavior: Clip.hardEdge,
                         children: [
                           SizedBox(
                             width: double.infinity,

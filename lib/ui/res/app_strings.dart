@@ -59,4 +59,5 @@ class AppStrings {
   static const dialogCamera = 'Камера';
   static const dialogPhoto = 'Фотография';
   static const dialogFile = 'Файл';
+  static const showFilteredList = 'Показать';
 }

@@ -6,6 +6,8 @@ import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
 class HomePage extends StatefulWidget {
+  //final Orientation orientationDevice;
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -14,12 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  final List<Widget> _screenSelected = <Widget>[
-    const MainList(),
-    const MapScreen(),
-    const VisitingScreen(),
-    const SettingsScreen(),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,38 +25,49 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: _screenSelected.elementAt(_selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          elevation: 1.0,
-          unselectedItemColor: Theme.of(context).secondaryHeaderColor,
-          selectedItemColor: Theme.of(context).primaryColorLight,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage(AppAssets.iconList),
+    // _orientation = MediaQuery.of(context).orientation; // Получение ориентации
+
+    final List<Widget> screenSelected = <Widget>[
+      MainList(orientation: MediaQuery.of(context).orientation),
+      const MapScreen(),
+      const VisitingScreen(),
+      const SettingsScreen(),
+    ];
+
+    return OrientationBuilder(builder: (context, orientation) {
+      return Scaffold(
+          body: screenSelected.elementAt(_selectedIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            elevation: 1.0,
+            unselectedItemColor: Theme.of(context).secondaryHeaderColor,
+            selectedItemColor: Theme.of(context).primaryColorLight,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(AppAssets.iconList),
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(AppAssets.iconMap)),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage(AppAssets.iconHeartFull),
+              BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage(AppAssets.iconMap)),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(AppAssets.iconSettings)),
-              label: '',
-            )
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ));
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(AppAssets.iconHeartFull),
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage(AppAssets.iconSettings)),
+                label: '',
+              )
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ));
+    });
   }
 }

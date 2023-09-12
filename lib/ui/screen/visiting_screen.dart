@@ -34,8 +34,6 @@ class _VisitingScreenState extends State<VisitingScreen>
           key: ValueKey(listSights[i].sightId),
           sight: listSights[i],
           listIndex: SightListIndex.planList,
-          // status: statusSight,
-          //listKey: ValueKey(listSights[i].sightId),
           onDelete: () => cancelIconClick(listSights[i].sightId),
         ));
       }
@@ -86,13 +84,10 @@ class _VisitingScreenState extends State<VisitingScreen>
                 labelColor: Theme.of(context).primaryColorDark,
                 indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(45),
-                    color: Theme.of(context).primaryColorLight
-                    //color: AppColors.darkButton
-                    ),
+                    color: Theme.of(context).primaryColorLight),
                 tabs: [
                   Container(
                       decoration: BoxDecoration(
-                          // color: AppColors.darkButton,
                           borderRadius: BorderRadius.circular(45)),
                       child: const Center(
                           child: Text(
