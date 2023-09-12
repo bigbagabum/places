@@ -29,6 +29,11 @@ class _MainList extends State<MainList> {
     super.dispose();
   }
 
+  void updateFilteredListOfItems() {
+    setState(() {});
+    print(sightList.length);
+  }
+
   String mask() {
     return textSearchFieldController.text.toLowerCase().endsWith(' ')
         ? textSearchFieldController.text
@@ -107,11 +112,11 @@ class _MainList extends State<MainList> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return SightCard(
-                sight: mocks[index],
+                sight: sightList[index],
                 listIndex: SightListIndex.mainList,
               );
             },
-            childCount: mocks.length,
+            childCount: sightList.length,
           ),
         );
       }
@@ -222,9 +227,9 @@ class _MainList extends State<MainList> {
                               image: AssetImage(AppAssets.iconSearch),
                             ),
                             suffixIcon: SuffixIcon(
-                              searchIsEmpty: mask().isEmpty,
-                              clearTextController: clearSearch,
-                            )),
+                                searchIsEmpty: mask().isEmpty,
+                                clearTextController: clearSearch,
+                                callBack: updateFilteredListOfItems)),
                       ),
                     ),
                   ),

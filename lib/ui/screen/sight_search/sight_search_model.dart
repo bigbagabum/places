@@ -6,54 +6,54 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 
-List<Sight> filteredSightsList = []; //отфильтрованный список мест
+//List<Sight> filteredSightsList = []; //отфильтрованный список мест
 List<String> searchHistory = []; //Список итемов истории поиска
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
 
-class BodyMainList extends StatefulWidget {
-  const BodyMainList({super.key});
+// class BodyMainList extends StatefulWidget {
+//   const BodyMainList({super.key});
 
-  @override
-  State<BodyMainList> createState() => _BodyMainListState();
-}
+//   @override
+//   State<BodyMainList> createState() => _BodyMainListState();
+// }
 
-class _BodyMainListState extends State<BodyMainList> {
-  @override
-  Widget build(BuildContext context) {
-    if (filteredSightsList.isEmpty) {
-      if (textSearchFieldController.text.isNotEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(
-                image: AssetImage(AppAssets.iconEmptySearch),
-              ),
-              const SizedBox(height: 16.0),
-              Text(
-                AppStrings.emptySearchResult,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                AppStrings.tryToChangeParametersForSearch,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ],
-          ),
-        );
-      } else {
-        return Container();
-      }
-    } else {
-      return Column(
-        children: (filteredSightsList
-            .map((item) => SightLine(inputSight: item))).toList(),
-      );
-    }
-  }
-}
+// class _BodyMainListState extends State<BodyMainList> {
+//   @override
+//   Widget build(BuildContext context) {
+//     if (filteredSightsList.isEmpty) {
+//       if (textSearchFieldController.text.isNotEmpty) {
+//         return Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               const Image(
+//                 image: AssetImage(AppAssets.iconEmptySearch),
+//               ),
+//               const SizedBox(height: 16.0),
+//               Text(
+//                 AppStrings.emptySearchResult,
+//                 style: Theme.of(context).textTheme.titleMedium,
+//               ),
+//               const SizedBox(height: 8.0),
+//               Text(
+//                 AppStrings.tryToChangeParametersForSearch,
+//                 style: Theme.of(context).textTheme.titleSmall,
+//               ),
+//             ],
+//           ),
+//         );
+//       } else {
+//         return Container();
+//       }
+//     } else {
+//       return Column(
+//         children: (filteredSightsList
+//             .map((item) => SightLine(inputSight: item))).toList(),
+//       );
+//     }
+//   }
+// }
 
 class SightLine extends StatefulWidget {
   final Sight inputSight;
@@ -330,12 +330,14 @@ List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
 
 //иконка в конце строки ввода
 class SuffixIcon extends StatefulWidget {
+  final VoidCallback callBack;
   final bool searchIsEmpty;
   final Function clearTextController;
   const SuffixIcon(
       {super.key,
       required this.searchIsEmpty,
-      required this.clearTextController});
+      required this.clearTextController,
+      required this.callBack()});
 
   @override
   State<SuffixIcon> createState() => _SuffixIconState();
@@ -360,8 +362,9 @@ class _SuffixIconState extends State<SuffixIcon> {
                   await Navigator.pushNamed(context, Routes.setFilterSights);
             }
 
-            if (customList is List<Sight>) {
+            if (customList != null) {
               sightList = customList;
+              widget.callBack();
             }
 
             // for (int i = 0; i < customList.length; i++) {}
