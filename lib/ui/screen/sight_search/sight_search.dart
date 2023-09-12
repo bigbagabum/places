@@ -31,7 +31,6 @@ class _MainList extends State<MainList> {
 
   void updateFilteredListOfItems() {
     setState(() {});
-    print(sightList.length);
   }
 
   String mask() {
