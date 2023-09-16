@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/dio_client.dart';
 import 'package:places/ui/screen/router/route_names.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,9 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initializeApp() async {
     //инициализация приложения.....
-    final apiClient = ApiClient();
-    await apiClient.fetchData();
-    //await Future.delayed(const Duration(seconds: 2));
+
+    await Future.delayed(const Duration(seconds: 2));
 
     _navigateToNext();
   }

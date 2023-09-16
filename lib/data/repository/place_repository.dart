@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
-class ApiClient {
+class PlaceRepository {
   final Dio _dio = Dio();
 
-  ApiClient() {
-    _dio.options.baseUrl = 'https://jsonplaceholder.typicode.com/';
+  PlaceRepository() {
+    _dio.options.baseUrl = 'https://test-backend-flutter.surfstudio.ru/';
     _dio.options.connectTimeout = const Duration(milliseconds: 5000);
     _dio.options.receiveTimeout = const Duration(milliseconds: 5000);
     _dio.options.sendTimeout = const Duration(milliseconds: 5000);
@@ -37,9 +39,13 @@ class ApiClient {
     );
   }
 
-  Future<void> fetchData() async {
+// запросы
+  Future<void> filteredPlaces(Map<String, dynamic> data) async {
     try {
-      final response = await _dio.get('/users');
+      final uri = Uri.parse('/filtered_places');
+      final response = await _dio.postUri(uri,
+          data: jsonEncode(data),
+          options: Options(contentType: Headers.jsonContentType));
 
       if (response.statusCode == 200) {
         // Если статус ответа успешный (200 OK)
