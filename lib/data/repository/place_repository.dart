@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/data/model/place_dto.dart';
 
 class PlaceRepository {
   final Dio _dio = Dio();
@@ -41,7 +42,7 @@ class PlaceRepository {
   }
 
 // получить список мест по фильтру
-  Future<List<Place>> filteredPlaces(Map<String, dynamic> data) async {
+  Future<List<PlaceDto>> filteredPlaces(Map<String, dynamic> data) async {
     try {
       final response = await _dio.request('/filtered_places',
           data: jsonEncode(data),
@@ -51,8 +52,8 @@ class PlaceRepository {
       if (response.statusCode == 200) {
         // Если статус ответа успешный (200 OK)
         final List<dynamic> data = response.data;
-        final List<Place> places =
-            data.map((json) => Place.fromJson(json)).toList();
+        final List<PlaceDto> places =
+            data.map((json) => PlaceDto.fromJson(json)).toList();
         return places;
       } else {
         throw Exception('Failed to fetch filtered places');
