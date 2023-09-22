@@ -1,7 +1,8 @@
 class PlaceDto {
-  final String id, name, placeType, description;
+  final String name, placeType, description;
   final double lat, lon, distance;
   final List<String> urls;
+  final int id;
 
   PlaceDto({
     required this.id,

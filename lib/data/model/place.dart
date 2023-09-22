@@ -1,7 +1,14 @@
 class Place {
-  final String id, name, placeType, description;
-  final double lat, lon;
+  final String name, placeType, description;
+  final double lat, lng;
   final List<String> urls;
+  final int id;
+
+//  final String name, url, details, type;
+//   List<String> img;
+//   final double lat, lan;
+//   SightStatus status;
+//   int sightId;
 
   Place(
       {required this.id,
@@ -9,7 +16,7 @@ class Place {
       required this.placeType,
       required this.description,
       required this.lat,
-      required this.lon,
+      required this.lng,
       required this.urls});
 
   factory Place.fromJson(Map<String, dynamic> json) {
@@ -19,7 +26,7 @@ class Place {
       placeType: json['placeType'],
       description: json['description'],
       lat: json['lat'].toDouble(),
-      lon: json['lng'].toDouble(),
+      lng: json['lng'].toDouble(),
       urls: List<String>.from(json['urls']),
     );
   }
@@ -31,7 +38,7 @@ class Place {
       'placeType': placeType,
       'description': description,
       'lat': lat,
-      'lon': lon,
+      'lng': lng,
       'urls': urls,
     };
   }

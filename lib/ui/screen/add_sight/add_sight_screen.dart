@@ -2,11 +2,32 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
-import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screen/router/route_names.dart';
+
+String typePlaceConverter(String inRusNameType) {
+  switch (inRusNameType) {
+    case AppStrings.typeCafe:
+      return AppStrings.typeCafeApi;
+    case AppStrings.typeMuseum:
+      return AppStrings.typeMuseumApi;
+    case AppStrings.typePark:
+      return AppStrings.typeParkApi;
+    case AppStrings.typeHotel:
+      return AppStrings.typeHotelApi;
+    case AppStrings.typePartikularPlace:
+      return AppStrings.typePartikularPlaceApi;
+    case AppStrings.typeRestourant:
+      return AppStrings.typeRestourantApi;
+    default:
+      return 'other';
+  }
+}
 
 class AddSightScreen extends StatefulWidget {
   const AddSightScreen({Key? key}) : super(key: key);
@@ -180,9 +201,14 @@ class _AddSightScreenState extends State<AddSightScreen> {
   final FocusNode focusLat = FocusNode();
   final FocusNode focusLon = FocusNode();
 
+  late PlaceRepository _placeRepository;
+  late PlaceInteractor _placeInteractor;
+
   @override
   void initState() {
     super.initState();
+    _placeRepository = PlaceRepository();
+    _placeInteractor = PlaceInteractor(_placeRepository);
   }
 
   Widget _suffixClearButton(
@@ -320,14 +346,8 @@ class _AddSightScreenState extends State<AddSightScreen> {
                 var received =
                     await Navigator.pushNamed(context, Routes.setTypeSight);
 
-                // String received = await Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const ChooseCategories(),
-                //   ),
-                // );
-
                 if (received is String) {
+                  print(received);
                   setState(() {
                     choisedCat = received;
                     _isAllFieldsFilled();
@@ -534,18 +554,43 @@ class _AddSightScreenState extends State<AddSightScreen> {
                   onPressed: isButtonDisabled
                       ? null
                       : () {
-                          Sight newPlace = Sight(
-                              textFieldNameController.text,
-                              'www',
-                              textFieldDescriptionController.text,
-                              'hotel',
-                              double.parse(textFieldLatController.text),
-                              double.parse(textFieldLonController.text),
-                              imgList(imageList),
-                              SightStatus.sightToVisit,
-                              mocks.last.sightId + 1);
+                          final newPlace = Place(
+                            id: Random().nextInt(9999999),
+                            name: textFieldNameController.text,
+                            placeType: typePlaceConverter(choisedCat!),
+                            description: textFieldDescriptionController.text,
+                            lat: double.parse(textFieldLatController.text),
+                            lng: double.parse(textFieldLonController.text),
+                            urls: [],
+                          );
 
-                          mocks.add(newPlace);
+                          _placeInteractor.addNewPlace(newPlace).then((_) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Место успешно добавлено'),
+                              ),
+                            );
+                          }).catchError((error) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text('Ошибка при добавлении места: $error'),
+                              ),
+                            );
+                          });
+
+                          // Sight newPlace = Sight(
+                          //     textFieldNameController.text,
+                          //     'www',
+                          //     textFieldDescriptionController.text,
+                          //     'hotel',
+                          //     double.parse(textFieldLatController.text),
+                          //     double.parse(textFieldLonController.text),
+                          //     imgList(imageList),
+                          //     SightStatus.sightToVisit,
+                          //     mocks.last.sightId + 1);
+
+                          // mocks.add(newPlace);
                           Navigator.pop(context);
                         },
                   child: const Text(
