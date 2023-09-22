@@ -1,26 +1,18 @@
-import 'package:places/data/model/place.dart';
-
-class PlaceDto extends Place {
-  final double distance;
+class PlaceDto {
+  final String id, name, placeType, description;
+  final double lat, lon, distance;
+  final List<String> urls;
 
   PlaceDto({
-    required String id,
-    required String name,
-    required String placeType,
-    required String description,
-    required double lat,
-    required double lon,
-    required List<String> urls,
+    required this.id,
+    required this.name,
+    required this.placeType,
+    required this.description,
+    required this.lat,
+    required this.lon,
+    required this.urls,
     required this.distance, // Дополнительное поле distance
-  }) : super(
-          id: id,
-          name: name,
-          placeType: placeType,
-          description: description,
-          lat: lat,
-          lon: lon,
-          urls: urls,
-        );
+  });
 
   // Метод toJson() для сериализации в JSON
   Map<String, dynamic> toJson() {
