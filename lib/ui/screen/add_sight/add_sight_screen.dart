@@ -75,8 +75,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         const Text(AppStrings.dialogCamera),
                       ],
                     ),
-
-                    const Divider(), // Разделитель
+                    const Divider(),
                     Row(
                       children: [
                         Image.asset(
@@ -88,7 +87,7 @@ class _AddSightScreenState extends State<AddSightScreen> {
                         const Text(AppStrings.dialogPhoto),
                       ],
                     ),
-                    const Divider(), // Разделитель
+                    const Divider(),
                     Row(
                       children: [
                         Image.asset(
@@ -567,14 +566,15 @@ class _AddSightScreenState extends State<AddSightScreen> {
                           _placeInteractor.addNewPlace(newPlace).then((_) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Место успешно добавлено'),
+                                content:
+                                    Text(AppStrings.dialogApiNewPlaceAdded),
                               ),
                             );
                           }).catchError((error) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content:
-                                    Text('Ошибка при добавлении места: $error'),
+                                content: Text(
+                                    '${AppStrings.dialogApiErrorWhenPlaceNotAdded} $error'),
                               ),
                             );
                           });

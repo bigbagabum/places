@@ -11,12 +11,12 @@ class PlaceInteractor {
   PlaceInteractor(this._placeRepository);
 
 //Получаем список мест отфильтрованных по расстоянию и отсортированных по удаленности
-  Future<List<PlaceDto>> getFilteredPlaces(double lat, double lan,
+  Future<List<PlaceDto>> getFilteredPlaces(double lat, double lng,
       double radius, List<String> typeFilter, String nameFilter) async {
     try {
       final places = await _placeRepository.filteredPlaces({
         "lat": lat,
-        "lng": lan,
+        "lng": lng,
         "radius": radius,
         "typeFilter": typeFilter,
         "nameFilter": nameFilter

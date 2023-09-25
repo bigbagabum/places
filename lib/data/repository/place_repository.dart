@@ -47,7 +47,7 @@ class PlaceRepository {
       final response = await _dio.request('/filtered_places',
           data: jsonEncode(data),
           options:
-              Options(contentType: Headers.jsonContentType, method: 'GET'));
+              Options(contentType: Headers.jsonContentType, method: 'POST'));
 
       if (response.statusCode == 200) {
         // Если статус ответа успешный (200 OK)

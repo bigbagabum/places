@@ -1,11 +1,11 @@
 class Sight {
   final String name, url, details, type;
   List<String> img;
-  final double lat, lan;
+  final double lat, lng;
   SightStatus status;
   int sightId; // статус :никакой, хочу посетить, посетил
 
-  Sight(this.name, this.url, this.details, this.type, this.lat, this.lan,
+  Sight(this.name, this.url, this.details, this.type, this.lat, this.lng,
       this.img, this.status, this.sightId);
 }
 

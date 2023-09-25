@@ -67,4 +67,7 @@ class AppStrings {
   static const typeMuseumApi = 'museum';
   static const typePartikularPlaceApi = 'other';
   static const typeCafeApi = 'cafe';
+
+  static const dialogApiNewPlaceAdded = 'Место успешно добавлено';
+  static const dialogApiErrorWhenPlaceNotAdded = 'Ошибка при добавлении места:';
 }

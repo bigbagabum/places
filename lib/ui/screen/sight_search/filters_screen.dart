@@ -25,7 +25,7 @@ List<Sight> fillListItems(List<Sight> value) {
   for (var n in value) {
     if (isPlaceNear(
         redSquare,
-        Location(n.lat, n.lan),
+        Location(n.lat, n.lng),
         _FiltersScreenState.currentRangeValues.start,
         _FiltersScreenState.currentRangeValues.end)) {
       filledList.add(n);
@@ -65,7 +65,7 @@ class _FilteresScreenSmallScreensState
               (mocks[e].type == 'кафе' && isCafe)) &&
           isPlaceNear(
               redSquare,
-              Location(mocks[e].lat, mocks[e].lan),
+              Location(mocks[e].lat, mocks[e].lng),
               _FiltersScreenState.currentRangeValues.start,
               _FiltersScreenState.currentRangeValues.end)) {
         filteredPlaces.add(mocks[e]);
@@ -388,7 +388,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               (mocks[e].type == 'кафе' && isCafe)) &&
           isPlaceNear(
               redSquare,
-              Location(mocks[e].lat, mocks[e].lan),
+              Location(mocks[e].lat, mocks[e].lng),
               _FiltersScreenState.currentRangeValues.start,
               _FiltersScreenState.currentRangeValues.end)) {
         filteredPlaces.add(mocks[e]);
