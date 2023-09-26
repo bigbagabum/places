@@ -1,14 +1,26 @@
+import 'package:places/domain/sight.dart';
+
+Sight? placeToString(Place place) {
+  Sight? sight;
+
+  // tempData[placeItem] = SightStatus.sightNoPlans;
+  sight?.sightId = place.id;
+  sight?.name = place.name;
+  sight?.details = place.description;
+  sight?.lat = place.lat;
+  sight?.lng = place.lng;
+  sight?.img = place.urls;
+  sight?.type = place.placeType;
+  sight?.status = SightStatus.sightNoPlans;
+
+  return sight;
+}
+
 class Place {
   final String name, placeType, description;
   final double lat, lng;
   final List<String> urls;
   final int id;
-
-//  final String name, url, details, type;
-//   List<String> img;
-//   final double lat, lan;
-//   SightStatus status;
-//   int sightId;
 
   Place(
       {required this.id,

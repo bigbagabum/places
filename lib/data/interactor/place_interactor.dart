@@ -1,9 +1,9 @@
 import 'package:places/data/model/place.dart';
-import 'package:places/data/model/place_dto.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
 
-Map<PlaceDto, SightStatus> tempData = {};
+//Map<PlaceDto, SightStatus> tempData = {};
+List<Sight> tempData = [];
 
 class PlaceInteractor {
   final PlaceRepository _placeRepository;
@@ -11,8 +11,8 @@ class PlaceInteractor {
   PlaceInteractor(this._placeRepository);
 
 //Получаем список мест отфильтрованных по расстоянию и отсортированных по удаленности
-  Future<List<PlaceDto>> getFilteredPlaces(double lat, double lng,
-      double radius, List<String> typeFilter, String nameFilter) async {
+  Future<List<Sight>> getFilteredPlaces(double lat, double lng, double radius,
+      List<String> typeFilter, String nameFilter) async {
     try {
       final places = await _placeRepository.filteredPlaces({
         "lat": lat,
@@ -24,18 +24,30 @@ class PlaceInteractor {
 
       places.sort((a, b) => a.distance.compareTo(b.distance));
 
+      final List<Sight> sights = [];
       for (var placeItem in places) {
-        tempData[placeItem] = SightStatus.sightNoPlans;
+        Sight newPlace = Sight(
+            name: placeItem.name,
+            details: placeItem.description,
+            type: placeItem.placeType,
+            lat: placeItem.lat,
+            lng: placeItem.lng,
+            img: placeItem.urls,
+            status: SightStatus.sightNoPlans,
+            sightId: placeItem.id);
+        // tempData[placeItem] = SightStatus.sightNoPlans;
+        sights.add(newPlace);
       }
+      //sights.map((e) => print('${e.name} Место ${e.name}'));
 
-      return places;
+      return sights;
     } catch (error) {
       rethrow;
     }
   }
 
 //Получаем детали места по id
-  Future<Place> getPlaceDetails(String id) async {
+  Future<Sight> getPlaceDetails(String id) async {
     try {
       final places = await _placeRepository.getPlaceById(id);
 
@@ -46,46 +58,61 @@ class PlaceInteractor {
   }
 
 //получаем список со статусами SightStatus.
-  List<PlaceDto> getFavoritePlaces() {
-    final List<PlaceDto> favoritePlaces = [];
+  List<Sight> getFavoritePlaces() {
+    final List<Sight> favoritePlaces = [];
 
-    tempData.forEach((placeDto, status) {
-      if (status == SightStatus.sightToVisit) {
-        favoritePlaces.add(placeDto);
+    for (Sight sight in tempData) {
+      if (sight.status == SightStatus.sightToVisit) {
+        favoritePlaces.add(sight);
       }
-    });
+    }
 
     return favoritePlaces;
   }
 
 // добавим существующее место в выборку "избранное"
-  void addToFavorites(PlaceDto placeDto) {
-    tempData[placeDto] = SightStatus.sightToVisit;
+  void addToFavorites(int sightId) {
+    for (int i = 0; tempData[i].sightId != i; i++) {
+      if (tempData[i].sightId == i) {
+        tempData[i].status = SightStatus.sightToVisit;
+      }
+    }
+    //tempData[sightId] = SightStatus.sightToVisit;
   }
 
 // удалим место из избранного
-  void removeFromFavorites(PlaceDto placeDto) {
-    tempData[placeDto] = SightStatus.sightNoPlans;
+  void removeFromFavorites(int sightId) {
+    // tempData[placeDto] = SightStatus.sightNoPlans;
+    for (int i = 0; tempData[i].sightId != i; i++) {
+      if (tempData[i].sightId == i) {
+        tempData[i].status = SightStatus.sightNoPlans;
+      }
+    }
   }
 
 // получаем список мест запланированных к посещению
 
-  List<PlaceDto> getVisitPlaces() {
-    final List<PlaceDto> favoritePlaces = [];
+  List<Sight> getVisitPlaces() {
+    final List<Sight> favoritePlaces = [];
 
-    tempData.forEach((placeDto, status) {
-      if (status == SightStatus.sightVisited) {
-        favoritePlaces.add(placeDto);
+    for (Sight sight in tempData) {
+      if (sight.status == SightStatus.sightToVisit) {
+        favoritePlaces.add(sight);
       }
-    });
+    }
 
     return favoritePlaces;
   }
 
 // добавляем место в "посещенные"
 
-  void addToVisitedPlaces(PlaceDto placeDto) {
-    tempData[placeDto] = SightStatus.sightVisited;
+  void addToVisitedPlaces(int sightId) {
+    //tempData[placeDto] = SightStatus.sightVisited;
+    for (int i = 0; tempData[i].sightId != i; i++) {
+      if (tempData[i].sightId == i) {
+        tempData[i].status = SightStatus.sightVisited;
+      }
+    }
   }
 
 // добавляем новое место

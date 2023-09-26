@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/model/place_dto.dart';
+import 'package:places/domain/sight.dart';
 
 class PlaceRepository {
   final Dio _dio = Dio();
@@ -107,14 +108,14 @@ class PlaceRepository {
   }
 
   //получаем объект по id
-  Future<Place> getPlaceById(String id) async {
+  Future<Sight> getPlaceById(String id) async {
     try {
       final uri = Uri.parse('/place/$id');
       final response = await _dio.getUri(uri);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = response.data;
-        return Place.fromJson(data);
+        return Sight.fromJson(data);
       } else if (response.statusCode == 404) {
         print('Object not found');
         throw Exception('Object not found');

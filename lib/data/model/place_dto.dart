@@ -1,6 +1,6 @@
 class PlaceDto {
   final String name, placeType, description;
-  final double lat, lon, distance;
+  final double lat, lng, distance;
   final List<String> urls;
   final int id;
 
@@ -10,7 +10,7 @@ class PlaceDto {
     required this.placeType,
     required this.description,
     required this.lat,
-    required this.lon,
+    required this.lng,
     required this.urls,
     required this.distance, // Дополнительное поле distance
   });
@@ -23,7 +23,7 @@ class PlaceDto {
       'placeType': placeType,
       'description': description,
       'lat': lat,
-      'lon': lon,
+      'lng': lng,
       'urls': urls,
       'distance': distance, // Включаем distance в JSON
     };
@@ -37,7 +37,7 @@ class PlaceDto {
       placeType: json['placeType'],
       description: json['description'],
       lat: json['lat'],
-      lon: json['lon'],
+      lng: json['lng'],
       urls: List<String>.from(json['urls']),
       distance: json['distance'], // Извлекаем значение distance из JSON
     );
