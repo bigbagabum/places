@@ -96,7 +96,7 @@ class PlaceInteractor {
   List<Sight> getVisitPlaces() {
     final List<Sight> favoritePlaces = [];
 
-    for (Sight sight in tempData) {
+    for (Sight sight in mocks) {
       if (sight.status == SightStatus.sightToVisit) {
         favoritePlaces.add(sight);
       }
