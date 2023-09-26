@@ -24,9 +24,9 @@ class _ImageGalleryState extends State<ImageGallery> {
             });
           },
           itemBuilder: (context, index) {
-            return Image(
+            return Image.network(
+              widget.imgList[index],
               fit: BoxFit.fitHeight,
-              image: AssetImage(widget.imgList[index]),
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {

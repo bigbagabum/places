@@ -1,6 +1,7 @@
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
 
 //Map<PlaceDto, SightStatus> tempData = {};
 List<Sight> tempData = [];
@@ -72,9 +73,9 @@ class PlaceInteractor {
 
 // добавим существующее место в выборку "избранное"
   void addToFavorites(int sightId) {
-    for (int i = 0; tempData[i].sightId != i; i++) {
-      if (tempData[i].sightId == i) {
-        tempData[i].status = SightStatus.sightToVisit;
+    for (Sight item in mocks) {
+      if (item.sightId == sightId) {
+        item.status = SightStatus.sightToVisit;
       }
     }
     //tempData[sightId] = SightStatus.sightToVisit;
@@ -83,9 +84,9 @@ class PlaceInteractor {
 // удалим место из избранного
   void removeFromFavorites(int sightId) {
     // tempData[placeDto] = SightStatus.sightNoPlans;
-    for (int i = 0; tempData[i].sightId != i; i++) {
-      if (tempData[i].sightId == i) {
-        tempData[i].status = SightStatus.sightNoPlans;
+    for (Sight item in mocks) {
+      if (item.sightId == sightId) {
+        item.status = SightStatus.sightNoPlans;
       }
     }
   }
