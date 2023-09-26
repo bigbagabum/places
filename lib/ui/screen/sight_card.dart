@@ -254,8 +254,9 @@ class _SightCardState extends State<SightCard> {
                         children: [
                           SizedBox(
                             width: double.infinity,
-                            child: Image(
-                              image: AssetImage(widget.sight.img[0]),
+                            child: Image.network(
+                              widget.sight.img[0],
+                              //image: AssetImage(widget.sight.img[0]),
                               fit: BoxFit.cover,
                               loadingBuilder: (BuildContext context,
                                   Widget child,
