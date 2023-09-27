@@ -214,7 +214,11 @@ class _SightDetailsState extends State<SightDetails> {
                       Flexible(
                         flex: 1,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            onHeartIconClick(() {
+                              setState(() {});
+                            }, widget.detailSight);
+                          },
                           child: Container(
                             height: 40,
                             alignment: Alignment.center,
@@ -222,8 +226,11 @@ class _SightDetailsState extends State<SightDetails> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image(
-                                    image:
-                                        const AssetImage(AppAssets.iconHeart),
+                                    image: AssetImage(
+                                        widget.detailSight.status ==
+                                                SightStatus.sightNoPlans
+                                            ? AppAssets.iconHeart
+                                            : AppAssets.iconHeartFull),
                                     color: Theme.of(context).primaryColorLight),
                                 Text(
                                   AppStrings.inFavorite,

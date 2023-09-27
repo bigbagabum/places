@@ -26,6 +26,8 @@ class SightCard extends StatefulWidget {
 }
 
 class _SightCardState extends State<SightCard> {
+  DateTime selectedDate = DateTime.now();
+
   void _heartIconClick() {
     final PlaceRepository placeRepository = PlaceRepository();
     final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
@@ -39,23 +41,6 @@ class _SightCardState extends State<SightCard> {
       print('Error during download data from server: $error');
     }
   }
-
-  DateTime selectedDate = DateTime.now();
-
-  // Future<void> _calendarIconClick(BuildContext context) async {
-  //   final DateTime? selectDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2022),
-  //     lastDate: DateTime(2024),
-  //   );
-
-  //   if (selectDate != null) {
-  //     setState(() {
-  //       selectedDate = selectDate;
-  //     });
-  //   }
-  // }
 
   Future<void> calendarIconClick(BuildContext context) async {
     DateTime? newDate;

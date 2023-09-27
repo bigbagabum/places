@@ -6,7 +6,7 @@ import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/router/route_names.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/sight_card/sight_card.dart';
 
 List<Sight> sightList = mocks; //входной поток данных
 List<Sight> filteredSightsList =
