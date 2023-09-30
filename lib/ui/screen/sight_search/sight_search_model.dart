@@ -6,143 +6,8 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 
-//List<Sight> filteredSightsList = []; //отфильтрованный список мест
-List<String> searchHistory = []; //Список итемов истории поиска
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
-
-// class BodyMainList extends StatefulWidget {
-//   const BodyMainList({super.key});
-
-//   @override
-//   State<BodyMainList> createState() => _BodyMainListState();
-// }
-
-// class _BodyMainListState extends State<BodyMainList> {
-//   @override
-//   Widget build(BuildContext context) {
-//     if (filteredSightsList.isEmpty) {
-//       if (textSearchFieldController.text.isNotEmpty) {
-//         return Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               const Image(
-//                 image: AssetImage(AppAssets.iconEmptySearch),
-//               ),
-//               const SizedBox(height: 16.0),
-//               Text(
-//                 AppStrings.emptySearchResult,
-//                 style: Theme.of(context).textTheme.titleMedium,
-//               ),
-//               const SizedBox(height: 8.0),
-//               Text(
-//                 AppStrings.tryToChangeParametersForSearch,
-//                 style: Theme.of(context).textTheme.titleSmall,
-//               ),
-//             ],
-//           ),
-//         );
-//       } else {
-//         return Container();
-//       }
-//     } else {
-//       return Column(
-//         children: (filteredSightsList
-//             .map((item) => SightLine(inputSight: item))).toList(),
-//       );
-//     }
-//   }
-// }
-
-class SightLine extends StatefulWidget {
-  final Sight inputSight;
-  const SightLine({super.key, required this.inputSight});
-
-  @override
-  State<SightLine> createState() => _SightLineState();
-}
-
-class _SightLineState extends State<SightLine> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-      child: InkWell(
-        //клики на строчку поисковой выдачи
-        onTap: () {
-          Navigator.pushNamed(context, Routes.detailedPlace,
-              arguments: {"detailSight": widget.inputSight});
-        },
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 16),
-                  clipBehavior: Clip.hardEdge,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  height: 56,
-                  width: 56,
-                  child: SizedBox(
-                    child: Image(
-                      image: AssetImage(widget.inputSight.img[0]),
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-
-                          //child
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    NameSightInSearch(
-                        inputMask: textSearchFieldController.text,
-                        originalName: widget.inputSight.name),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children:
-
-                    //         NameSightInSearch(
-                    //         inputMask: textSearchFieldController.text,
-                    //         originalName: widget.inputSight.name),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 8),
-                    Text(widget.inputSight.type,
-                        style: Theme.of(context).textTheme.headlineMedium)
-                  ],
-                )
-              ],
-            ),
-            Container(
-              height: 1,
-              margin: const EdgeInsets.only(top: 10),
-              width: double.infinity,
-              color: Theme.of(context).secondaryHeaderColor,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class NameSightInSearch extends StatefulWidget {
   final String inputMask;
@@ -191,16 +56,67 @@ class _NameSightInSearch extends State<NameSightInSearch> {
       ));
     }
 
-    return RichText(text: TextSpan(children: stringWithStyle));
+    return RichText(
+      text: TextSpan(children: stringWithStyle),
+      //softWrap: true,
+      //overflow: TextOverflow.clip,
+    );
   }
 }
 
-//возвращаем в body историю запросов поиска
+class SearchHistory extends StatefulWidget {
+  final VoidCallback updateScreen;
+  const SearchHistory({super.key, required this.updateScreen});
+
+  @override
+  State<SearchHistory> createState() => _SearchHistoryState();
+}
+
+class _SearchHistoryState extends State<SearchHistory> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 38,
+        ),
+        child: Text(AppStrings.searchHistory,
+            style: Theme.of(context).textTheme.headlineMedium),
+      ),
+      Column(
+          children: (searchHistory.asMap().entries.map((item) =>
+              HistorySearchItem(
+                  itemName: item.value,
+                  itemIndex: item.key,
+                  updateScreen: () => setState(() {})))).toList()),
+      GestureDetector(
+          onTap: () {
+            searchHistory = [];
+            print('История поиска очищена');
+            widget.updateScreen.call();
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(left: 16, top: 28),
+            child: Text(AppStrings.clearHistory,
+                style: TextStyle(
+                    fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
+          ))
+    ]);
+  }
+}
+
+//возвращаем в SearchHistory историю запросов поиска
 class HistorySearchItem extends StatefulWidget {
   final String itemName;
   final int itemIndex;
+  final VoidCallback updateScreen;
+
   const HistorySearchItem(
-      {super.key, required this.itemIndex, required this.itemName});
+      {super.key,
+      required this.itemIndex,
+      required this.itemName,
+      required this.updateScreen});
 
   @override
   State<HistorySearchItem> createState() => _HistorySearchItem();
@@ -221,17 +137,11 @@ class _HistorySearchItem extends State<HistorySearchItem> {
           GestureDetector(
               onTap: () {
                 searchHistory.removeAt(widget.itemIndex);
-                setState(() {});
+                widget.updateScreen();
               },
               child: const Image(image: AssetImage(AppAssets.iconCancel)))
         ]),
         const Divider()
-        // Container(
-        //   height: 1,
-        //   margin: const EdgeInsets.only(top: 10),
-        //   width: double.infinity,
-        //   color: Theme.of(context).secondaryHeaderColor,
-        // ),
       ]),
     );
   }
@@ -254,7 +164,7 @@ class _SeightLineState extends State<SeightLine> {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
       child: InkWell(
-        //клики на строчку поисковой выдаси
+        //клики на строчку поисковой выдачи
         onTap: () {
           Navigator.pushNamed(context, Routes.detailedPlace,
               arguments: {"detailSight": widget.inputSight});
@@ -272,8 +182,8 @@ class _SeightLineState extends State<SeightLine> {
                   height: 56,
                   width: 56,
                   child: SizedBox(
-                    child: Image(
-                      image: AssetImage(widget.inputSight.img[0]),
+                    child: Image.network(
+                      widget.inputSight.img[0],
                       fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
@@ -294,16 +204,18 @@ class _SeightLineState extends State<SeightLine> {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    NameSightInSearch(
-                        inputMask: widget.maskOfSearch,
-                        originalName: widget.inputSight.name),
-                    const SizedBox(height: 8),
-                    Text(widget.inputSight.type,
-                        style: Theme.of(context).textTheme.headlineMedium)
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      NameSightInSearch(
+                          inputMask: widget.maskOfSearch,
+                          originalName: widget.inputSight.name),
+                      const SizedBox(height: 8),
+                      Text(widget.inputSight.type,
+                          style: Theme.of(context).textTheme.headlineMedium)
+                    ],
+                  ),
                 )
               ],
             ),
@@ -315,7 +227,7 @@ class _SeightLineState extends State<SeightLine> {
   }
 }
 
-//метод возвращает список мест отфильтрованных по маске ввода
+// //метод возвращает список мест отфильтрованных по маске ввода и дополняет историю поиска
 List<Sight> filteredListOfItems(String inputMask, List<Sight> listData) {
   List<Sight> nameIsSame = [];
 

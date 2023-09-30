@@ -35,8 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initializeApp() async {
     //инициализация приложения.....
 
-    await Future.delayed(const Duration(seconds: 2));
-
     await initData();
 
     _navigateToNext();

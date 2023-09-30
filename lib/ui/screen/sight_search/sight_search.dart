@@ -42,66 +42,49 @@ class _MainList extends State<MainList> {
 
   var textSearchFieldController = TextEditingController();
 
-  // Widget searchHistoryScreen() {
-  //   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-  //     Padding(
-  //       padding: const EdgeInsets.only(
-  //         left: 16,
-  //         top: 38,
-  //       ),
-  //       child: Text(AppStrings.searchHistory,
-  //           style: Theme.of(context).textTheme.headlineMedium),
-  //     ),
-  //     Column(
-  //         children: (searchHistory.asMap().entries.map((item) =>
-  //                 HistorySearchItem(itemName: item.value, itemIndex: item.key)))
-  //             .toList()),
-  //     GestureDetector(
-  //         onTap: () {
-  //           setState(() {
-  //             searchHistory = [];
-  //           });
-  //         },
-  //         child: const Padding(
-  //           padding: EdgeInsets.only(left: 16, top: 28),
-  //           child: Text(AppStrings.clearHistory,
-  //               style: TextStyle(
-  //                   fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
-  //         ))
-  //   ]);
-  // }
-
   Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
+      //Если список отфильтрованных мест пуст
       if (textSearchFieldController.text.isNotEmpty) {
-        // вывод пустого результата поиска
-        return SliverFillRemaining(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Image(
-                  image: AssetImage(AppAssets.iconEmptySearch),
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  AppStrings.emptySearchResult,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  AppStrings.tryToChangeParametersForSearch,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
+        // при этом если текстовое поле ввода НЕ ПУСТОЕ
+        if (searchHistory.isEmpty) //При этом в истории поиска ничего нет
+
+        {
+          //показываем заглушку про пустой поиск
+          return SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Image(
+                    image: AssetImage(AppAssets.iconEmptySearch),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    AppStrings.emptySearchResult,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    AppStrings.tryToChangeParametersForSearch,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          //если при этом есть история поиска, тогда отображаем историю поиска
+          return SliverToBoxAdapter(
+              key: UniqueKey(),
+              child: SearchHistory(updateScreen: () => setState(() {})));
+        }
       } else {
-        // вывод без фильтра все подряд
+        // а если отфильтрованный список filteredSightsList пуст но при этом тестовое поле не пустое отображаем все подряд
+        // вывод без фильтра все подряд из mocks[]
         return SliverGrid(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
@@ -120,6 +103,7 @@ class _MainList extends State<MainList> {
         );
       }
     } else {
+      // но всетаки если filteredSightsList не пуст и есть совпадения тогда отображаем список из совпалений
       // отфильтрованный список
       return SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
