@@ -8,7 +8,7 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 
-final Location redSquare = Location(55.754840, 37.620881);
+final Location redSquare = Location(55.989198, 37.601605);
 
 final haversineDistance = HaversineDistance();
 
@@ -57,12 +57,12 @@ class _FilteresScreenSmallScreensState
     List<Sight> filteredPlaces = [];
 
     for (int e = 0; e < mocks.length; e++) {
-      if (((mocks[e].type == 'отель' && isHotel) ||
-              (mocks[e].type == 'парк' && isPark) ||
-              (mocks[e].type == 'ресторан' && isRestourant) ||
-              (mocks[e].type == 'особое место' && isParticularPlace) ||
-              (mocks[e].type == 'музей' && isMuseum) ||
-              (mocks[e].type == 'кафе' && isCafe)) &&
+      if (((mocks[e].type == 'hotel' && isHotel) ||
+              (mocks[e].type == 'park' && isPark) ||
+              (mocks[e].type == 'restaurant' && isRestourant) ||
+              (mocks[e].type == 'other' && isParticularPlace) ||
+              (mocks[e].type == 'museum' && isMuseum) ||
+              (mocks[e].type == 'cafe' && isCafe)) &&
           isPlaceNear(
               redSquare,
               Location(mocks[e].lat, mocks[e].lng),
@@ -380,12 +380,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
     List<Sight> filteredPlaces = [];
 
     for (int e = 0; e < mocks.length; e++) {
-      if (((mocks[e].type == 'отель' && isHotel) ||
-              (mocks[e].type == 'парк' && isPark) ||
-              (mocks[e].type == 'ресторан' && isRestourant) ||
-              (mocks[e].type == 'особое место' && isParticularPlace) ||
-              (mocks[e].type == 'музей' && isMuseum) ||
-              (mocks[e].type == 'кафе' && isCafe)) &&
+      if (((mocks[e].type == 'hotel' && isHotel) ||
+              (mocks[e].type == 'park' && isPark) ||
+              (mocks[e].type == 'restaurant' && isRestourant) ||
+              (mocks[e].type == 'other' && isParticularPlace) ||
+              (mocks[e].type == 'museum' && isMuseum) ||
+              (mocks[e].type == 'cafe' && isCafe)) &&
           isPlaceNear(
               redSquare,
               Location(mocks[e].lat, mocks[e].lng),
@@ -459,7 +459,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ],
           )),
       body: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.categories,
               style: TextStyle(
@@ -479,6 +478,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                //клик на иконку отеля
                                 setState(() {
                                   isHotel = !isHotel;
                                   filterOfItems();
@@ -503,6 +503,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     40), //добавляем разделитель между строками
                             InkWell(
                               onTap: () {
+                                //клик на иконку Парк
                                 setState(() {
                                   isPark = !isPark;
                                   filterOfItems();

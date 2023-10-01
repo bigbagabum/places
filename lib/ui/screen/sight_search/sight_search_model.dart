@@ -245,6 +245,7 @@ class SuffixIcon extends StatefulWidget {
   final VoidCallback callBack;
   final bool searchIsEmpty;
   final Function clearTextController;
+
   const SuffixIcon(
       {super.key,
       required this.searchIsEmpty,
