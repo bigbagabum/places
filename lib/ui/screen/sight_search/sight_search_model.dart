@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/screen/router/route_names.dart';
 
 import 'package:places/domain/sight.dart';
@@ -8,6 +10,19 @@ import 'package:places/ui/screen/sight_search/sight_search.dart';
 
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
+
+Future<void> searchPlace(double lat, double lng, double radius,
+    List<String> typePlaces, String name) async {
+  final PlaceRepository placeRepository = PlaceRepository();
+  final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+
+  try {
+    filteredSightsList =
+        await placeInteractor.searchPlaces(lat, lng, radius, typePlaces, name);
+  } catch (error) {
+    print('Error during download data from server: $error');
+  }
+}
 
 class NameSightInSearch extends StatefulWidget {
   final String inputMask;

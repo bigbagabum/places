@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/mocks.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
@@ -153,43 +154,64 @@ class _MainList extends State<MainList> {
                       child: TextField(
                         controller: textSearchFieldController,
                         textAlignVertical: TextAlignVertical.center,
-                        onSubmitted: (_) {
+                        onSubmitted: (_) async {
                           //обрабатываем ввод в строке поиска
 
                           if (textSearchFieldController.text.isNotEmpty) {
+                            await searchPlace(
+                                55.989198,
+                                37.601605,
+                                10000,
+                                [
+                                  "other",
+                                  "cafe",
+                                  "restaurant",
+                                  "park",
+                                  "museum",
+                                  "hotel"
+                                ],
+                                textSearchFieldController.text);
+
                             setState(() {
-                              filteredSightsList = filteredListOfItems(
-                                  textSearchFieldController.text, sightList);
+                              // filteredSightsList = filteredListOfItems(
+                              //     textSearchFieldController.text, sightList);
                             });
                           } else {
                             filteredSightsList = [];
                           }
                         },
-                        onChanged: (_) {
+                        onChanged: (_) async {
                           //обрабатываем ввод в строке поиска
                           if (textSearchFieldController.text
                               .toLowerCase()
                               .endsWith(' ')) {
-                            setState(
-                              () {
-                                if (textSearchFieldController.text
-                                        .toLowerCase()
-                                        .endsWith(' ') &&
-                                    !textSearchFieldController.text
-                                        .toLowerCase()
-                                        .startsWith(' ')) {
-                                  filteredSightsList = filteredListOfItems(
-                                      textSearchFieldController.text
-                                          .toLowerCase()
-                                          .substring(
-                                              0,
-                                              textSearchFieldController
-                                                      .text.length -
-                                                  1),
-                                      sightList);
-                                }
-                              },
-                            );
+                            if (textSearchFieldController.text
+                                    .toLowerCase()
+                                    .endsWith(' ') &&
+                                !textSearchFieldController.text
+                                    .toLowerCase()
+                                    .startsWith(' ')) {
+                              await searchPlace(
+                                55.989198,
+                                37.601605,
+                                10000,
+                                [
+                                  "other",
+                                  "cafe",
+                                  "restaurant",
+                                  "park",
+                                  "museum",
+                                  "hotel"
+                                ],
+                                textSearchFieldController.text
+                                    .toLowerCase()
+                                    .substring(
+                                        0,
+                                        textSearchFieldController.text.length -
+                                            1),
+                              );
+                              setState(() {});
+                            }
                           } else if (textSearchFieldController.text.isEmpty) {
                             setState(() {
                               filteredSightsList = [];

@@ -16,11 +16,16 @@ class PlaceInteractor {
   PlaceInteractor(this._placeRepository);
 
 //итерактор поиска по имени из репозтория filteredPlaces
-  Future<List<Sight>> searchPlaces(
-      double radius, List<String> typeFilter, String name) async {
+  Future<List<Sight>> searchPlaces(double lat, double lng, double radius,
+      List<String> typeFilter, String name) async {
     try {
-      final places = await _placeRepository.filteredPlaces(
-          {"radius": radius, "typeFilter": typeFilter, "nameFilter": name});
+      final places = await _placeRepository.filteredPlaces({
+        "lat": lat,
+        "lng": lng,
+        "radius": radius,
+        "typeFilter": typeFilter,
+        "nameFilter": name
+      });
 
       places.sort((a, b) => a.distance.compareTo(b.distance));
 
