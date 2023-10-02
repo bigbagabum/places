@@ -10,7 +10,11 @@ Future<void> initData() async {
 
   try {
     mocks = await placeInteractor.getFilteredPlaces(
-        55.989198, 37.601605, 10000.0, ["other"], "");
+        55.989198,
+        37.601605,
+        10000.0,
+        ["other", "cafe", "restaurant", "park", "museum", "hotel"],
+        "");
   } catch (error) {
     print('Error during download data from server: $error');
   }
