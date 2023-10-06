@@ -43,7 +43,7 @@ class PlaceInteractor {
         sights.add(newPlace);
       }
 
-      sights.isNotEmpty ? searchHistory.add(name) : '';
+      sights.isNotEmpty ? searchHistory.add(name) : null;
 
       return sights;
     } catch (error) {

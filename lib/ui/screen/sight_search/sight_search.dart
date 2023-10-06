@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/mocks.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/router/route_names.dart';
+import 'package:places/ui/screen/sight_search/filters_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
 import 'package:places/ui/screen/sight_card/sight_card.dart';
 
@@ -158,19 +158,8 @@ class _MainList extends State<MainList> {
                           //обрабатываем ввод в строке поиска
 
                           if (textSearchFieldController.text.isNotEmpty) {
-                            await searchPlace(
-                                55.989198,
-                                37.601605,
-                                10000,
-                                [
-                                  "other",
-                                  "cafe",
-                                  "restaurant",
-                                  "park",
-                                  "museum",
-                                  "hotel"
-                                ],
-                                textSearchFieldController.text);
+                            await searchPlace(55.989198, 37.601605, maxDistance,
+                                choosedTypes, textSearchFieldController.text);
 
                             setState(() {
                               // filteredSightsList = filteredListOfItems(
@@ -192,17 +181,10 @@ class _MainList extends State<MainList> {
                                     .toLowerCase()
                                     .startsWith(' ')) {
                               await searchPlace(
-                                55.989198,
-                                37.601605,
-                                10000,
-                                [
-                                  "other",
-                                  "cafe",
-                                  "restaurant",
-                                  "park",
-                                  "museum",
-                                  "hotel"
-                                ],
+                                redSquare.latitude,
+                                redSquare.longitude,
+                                maxDistance,
+                                choosedTypes,
                                 textSearchFieldController.text
                                     .toLowerCase()
                                     .substring(

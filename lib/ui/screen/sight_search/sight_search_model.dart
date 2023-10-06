@@ -8,6 +8,16 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 
+List<String> choosedTypes = [
+  "other",
+  "cafe",
+  "restaurant",
+  "park",
+  "museum",
+  "hotel"
+];
+double maxDistance = 10000;
+
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
 
@@ -279,23 +289,21 @@ class _SuffixIconState extends State<SuffixIcon> {
           onPressed: () async {
             //клик на иконку фильтра
 
-            double widthScreen = MediaQuery.of(context).size.width;
             var customList;
-
-            if (widthScreen < 390) {
-              customList = await Navigator.pushNamed(
-                  context, Routes.setFilterOnSmallScreen);
-            } else {
+            try {
               customList =
                   await Navigator.pushNamed(context, Routes.setFilterSights);
-            }
 
-            if (customList != null) {
-              sightList = customList;
-              widget.callBack();
+              if (customList != null) {
+                sightList = customList;
+                widget.callBack();
+                final List<dynamic> parameters = customList;
+                choosedTypes = parameters[0];
+                maxDistance = parameters[1];
+              }
+            } catch (error) {
+              print('Then filter clicked we get NULL from customList $error');
             }
-
-            // for (int i = 0; i < customList.length; i++) {}
           },
           icon: const Image(
             image: AssetImage(AppAssets.iconFilter),
