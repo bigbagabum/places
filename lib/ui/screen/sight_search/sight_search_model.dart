@@ -21,6 +21,19 @@ double maxDistance = 10000;
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
 
+Future<void> filterPlace(double lat, double lng, double radius,
+    List<String> typePlaces, String name) async {
+  final PlaceRepository placeRepository = PlaceRepository();
+  final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+
+  try {
+    sightList =
+        await placeInteractor.filterPlaces(lat, lng, radius, typePlaces, name);
+  } catch (error) {
+    print('Error during download data from server: $error');
+  }
+}
+
 Future<void> searchPlace(double lat, double lng, double radius,
     List<String> typePlaces, String name) async {
   final PlaceRepository placeRepository = PlaceRepository();
@@ -295,7 +308,7 @@ class _SuffixIconState extends State<SuffixIcon> {
                   await Navigator.pushNamed(context, Routes.setFilterSights);
 
               if (customList != null) {
-                sightList = customList;
+                //sightList = customList;
                 widget.callBack();
                 final List<dynamic> parameters = customList;
                 choosedTypes = parameters[0];

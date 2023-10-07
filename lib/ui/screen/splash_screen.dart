@@ -28,12 +28,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<void>? isInitialized;
-
   @override
   void initState() {
     super.initState();
-    isInitialized = _initializeApp();
+    _initializeApp();
   }
 
   Future<void> _initializeApp() async {

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:haversine_distance/haversine_distance.dart';
-import 'package:places/data/interactor/place_interactor.dart';
-import 'package:places/data/repository/place_repository.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
@@ -10,13 +8,13 @@ import 'package:places/ui/screen/sight_search/sight_search_model.dart';
 
 final Location redSquare = Location(55.989198, 37.601605);
 
-RangeValues currentRangeValues = const RangeValues(0, 10000);
+double currentRangeValue = 10000;
 
 final haversineDistance = HaversineDistance();
 
 Map<String, bool> setCategory = {
   'cafe': true,
-  'restaurant': true,
+  'restourant': true,
   'other': true,
   'park': true,
   'museum': true,
@@ -49,11 +47,11 @@ List<String> choisedCategory() {
 }
 
 //проверка входит ли место в нужный радиус поиска
-bool isPlaceNear(Location checkPlace, Location centerPlace, double kmMax) {
-  double distanceInMeter =
-      haversineDistance.haversine(checkPlace, centerPlace, Unit.METER);
-  return distanceInMeter <= currentRangeValues.end;
-}
+// bool isPlaceNear(Location checkPlace, Location centerPlace, double kmMax) {
+//   double distanceInMeter =
+//       haversineDistance.haversine(checkPlace, centerPlace, Unit.METER);
+//   return distanceInMeter <= currentRangeValues.end;
+// }
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({Key? key}) : super(key: key);
@@ -63,14 +61,17 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  void _clickBack() {
-    Navigator.pop(context, [choisedCategory(), currentRangeValues.end]);
+  void _clickBack() async {
+    await filterPlace(redSquare.latitude, redSquare.longitude,
+        currentRangeValue, choisedCategory(), "");
+    Navigator.pop(context, [choisedCategory(), currentRangeValue]);
   }
 
   @override
   void initState() {
     super.initState();
-    searchPlace(redSquare.latitude, redSquare.longitude, currentRangeValues.end,
+
+    filterPlace(redSquare.latitude, redSquare.longitude, currentRangeValue,
         choisedCategory(), "");
   }
 
@@ -112,8 +113,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
               TextButton(
                 onPressed: () async {
                   setDefault();
-                  await searchPlace(redSquare.latitude, redSquare.longitude,
-                      currentRangeValues.end, choisedCategory(), "");
+                  await filterPlace(redSquare.latitude, redSquare.longitude,
+                      currentRangeValue, choisedCategory(), "");
 
                   setState(() {});
                 },
@@ -143,14 +144,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             InkWell(
                               onTap: () async {
                                 //клик на иконку отеля
-                                await searchPlace(
+                                catClick("hotel");
+
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
-
-                                catClick("hotel");
 
                                 setState(() {});
                               },
@@ -174,15 +175,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
                             InkWell(
                               onTap: () async {
                                 //клик на иконку Парк
+                                catClick('park');
 
-                                await searchPlace(
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
 
-                                catClick('park');
                                 setState(() {});
                               },
                               child: Stack(
@@ -208,14 +209,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           children: [
                             InkWell(
                               onTap: () async {
-                                await searchPlace(
+                                catClick("restourant");
+
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
-
-                                catClick("restourant");
 
                                 setState(() {});
                               },
@@ -239,14 +240,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     40), //добавляем разделитель между строками
                             InkWell(
                               onTap: () async {
-                                await searchPlace(
+                                catClick("museum");
+
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
-
-                                catClick("museum");
 
                                 setState(() {});
                               },
@@ -274,14 +275,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
                           children: [
                             InkWell(
                               onTap: () async {
-                                await searchPlace(
+                                catClick("other");
+
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
-
-                                catClick("other");
 
                                 setState(() {});
                               },
@@ -304,14 +305,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     40), //добавляем разделитель между строками
                             InkWell(
                               onTap: () async {
-                                await searchPlace(
+                                catClick("cafe");
+
+                                await filterPlace(
                                     redSquare.latitude,
                                     redSquare.longitude,
-                                    currentRangeValues.end,
+                                    currentRangeValue,
                                     choisedCategory(),
                                     "");
 
-                                catClick("cafe");
                                 setState(() {});
                               },
                               child: Stack(
@@ -338,26 +340,26 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       const Text(AppStrings.distance,
                           style: AppTypography.textText16Regular),
                       const Spacer(),
-                      Text(
-                          'от ${currentRangeValues.start.round()} до ${currentRangeValues.end.round()} м.',
+                      Text('до ${currentRangeValue.round()} м.',
                           style: AppTypography.textText16Regular)
                     ],
                   ),
                 ],
               )),
-          RangeSlider(
-              values: currentRangeValues,
+          Slider(
+              value: currentRangeValue,
               activeColor: Colors.green,
               inactiveColor: Colors.grey,
               max: 10000,
               // min: 100,
               divisions: 100,
-              onChanged: (RangeValues values) async {
+              onChanged: (double value) async {
+                await filterPlace(redSquare.latitude, redSquare.longitude,
+                    currentRangeValue, choisedCategory(), "");
+
                 setState(() {
-                  currentRangeValues = values;
+                  currentRangeValue = value;
                 });
-                await searchPlace(redSquare.latitude, redSquare.longitude,
-                    currentRangeValues.end, choisedCategory(), "");
               }),
           const Spacer(),
           Container(
@@ -369,11 +371,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
                 onPressed: () {
-                  Navigator.pop(
-                      context, [choisedCategory, currentRangeValues.end]);
+                  _clickBack();
                 },
                 child: Text(
-                  '${AppStrings.showFilteredList} ($filteredListLength)',
+                  '${AppStrings.showFilteredList} (${sightList.length})',
                   style: AppTypography.textText14bold,
                 )),
           )
