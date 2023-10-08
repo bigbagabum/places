@@ -149,7 +149,6 @@ class PlaceInteractor {
         item.status = SightStatus.sightToVisit;
       }
     }
-    //tempData[sightId] = SightStatus.sightToVisit;
   }
 
 // удалим место из избранного
