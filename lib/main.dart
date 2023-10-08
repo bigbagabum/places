@@ -4,7 +4,6 @@ import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/ui/screen/router/app_router.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:places/ui/screen/res/themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
