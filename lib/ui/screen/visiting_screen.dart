@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/res/app_theme.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/sight_card/sight_card.dart';
 import 'package:places/ui/res/app_strings.dart';
 
 class VisitingScreen extends StatefulWidget {
@@ -17,12 +19,16 @@ class _VisitingScreenState extends State<VisitingScreen>
   late TabController _controller;
   final listKey = ValueKey;
 
-  void cancelIconClick(int index) {
+  void cancelIconClick(Sight sight) {
+    final PlaceRepository placeRepository = PlaceRepository();
+    final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+
     setState(() {
-      mocks
-          .firstWhere((itemToCancelFromVisitList) =>
-              itemToCancelFromVisitList.sightId == index)
-          .status = SightStatus.sightNoPlans;
+      try {
+        placeInteractor.removeFromFavorites(sight.sightId);
+      } catch (error) {
+        print('Error during download data from server: $error');
+      }
     });
   }
 
@@ -34,7 +40,7 @@ class _VisitingScreenState extends State<VisitingScreen>
           key: ValueKey(listSights[i].sightId),
           sight: listSights[i],
           listIndex: SightListIndex.planList,
-          onDelete: () => cancelIconClick(listSights[i].sightId),
+          onDelete: () => cancelIconClick(listSights[i]),
         ));
       }
     }

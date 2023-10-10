@@ -60,4 +60,14 @@ class AppStrings {
   static const dialogPhoto = 'Фотография';
   static const dialogFile = 'Файл';
   static const showFilteredList = 'Показать';
+
+  static const typeHotelApi = 'hotel';
+  static const typeParkApi = 'park';
+  static const typeRestourantApi = 'restaurant';
+  static const typeMuseumApi = 'museum';
+  static const typePartikularPlaceApi = 'other';
+  static const typeCafeApi = 'cafe';
+
+  static const dialogApiNewPlaceAdded = 'Место успешно добавлено';
+  static const dialogApiErrorWhenPlaceNotAdded = 'Ошибка при добавлении места:';
 }

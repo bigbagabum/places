@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
@@ -24,26 +26,21 @@ class SightCard extends StatefulWidget {
 }
 
 class _SightCardState extends State<SightCard> {
-  String _heartIconClick() {
-    return '';
-  }
-
   DateTime selectedDate = DateTime.now();
 
-  // Future<void> _calendarIconClick(BuildContext context) async {
-  //   final DateTime? selectDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2022),
-  //     lastDate: DateTime(2024),
-  //   );
+  void _heartIconClick() {
+    final PlaceRepository placeRepository = PlaceRepository();
+    final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
 
-  //   if (selectDate != null) {
-  //     setState(() {
-  //       selectedDate = selectDate;
-  //     });
-  //   }
-  // }
+    try {
+      (widget.sight.status == SightStatus.sightNoPlans)
+          ? placeInteractor.addToFavorites(widget.sight.sightId)
+          : placeInteractor.removeFromFavorites(widget.sight.sightId);
+      setState(() {});
+    } catch (error) {
+      print('Error during download data from server: $error');
+    }
+  }
 
   Future<void> calendarIconClick(BuildContext context) async {
     DateTime? newDate;
@@ -93,8 +90,10 @@ class _SightCardState extends State<SightCard> {
       case SightListIndex.mainList:
         return GestureDetector(
           onTap: _heartIconClick,
-          child: const Image(
-            image: AssetImage(AppAssets.iconHeart),
+          child: Image(
+            image: (widget.sight.status == SightStatus.sightNoPlans)
+                ? const AssetImage(AppAssets.iconHeart)
+                : const AssetImage(AppAssets.iconHeartFull),
             color: AppColors.lightGrey,
           ),
         );
@@ -254,8 +253,9 @@ class _SightCardState extends State<SightCard> {
                         children: [
                           SizedBox(
                             width: double.infinity,
-                            child: Image(
-                              image: AssetImage(widget.sight.img[0]),
+                            child: Image.network(
+                              widget.sight.img[0],
+                              //image: AssetImage(widget.sight.img[0]),
                               fit: BoxFit.cover,
                               loadingBuilder: (BuildContext context,
                                   Widget child,

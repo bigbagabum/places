@@ -1,12 +1,33 @@
 class Sight {
-  final String name, url, details, type;
+  String name, details, type;
   List<String> img;
-  final double lat, lan;
+  double lat, lng;
   SightStatus status;
   int sightId; // статус :никакой, хочу посетить, посетил
 
-  Sight(this.name, this.url, this.details, this.type, this.lat, this.lan,
-      this.img, this.status, this.sightId);
+  Sight({
+    required this.name,
+    required this.details,
+    required this.type,
+    required this.lat,
+    required this.lng,
+    required this.img,
+    required this.status,
+    required this.sightId,
+  });
+
+  factory Sight.fromJson(Map<String, dynamic> json) {
+    return Sight(
+      name: json['name'],
+      details: json['description'],
+      type: json['placeType'],
+      lat: json['lat'].toDouble(),
+      lng: json['lng'].toDouble(),
+      img: List<String>.from(json['urls']),
+      status: SightStatus.sightNoPlans,
+      sightId: json['id'],
+    );
+  }
 }
 
 enum SightStatus {

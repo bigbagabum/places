@@ -5,8 +5,9 @@ import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
 import 'package:places/ui/screen/router/route_names.dart';
+import 'package:places/ui/screen/sight_search/filters_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screen/sight_card/sight_card.dart';
 
 List<Sight> sightList = mocks; //входной поток данных
 List<Sight> filteredSightsList =
@@ -29,6 +30,10 @@ class _MainList extends State<MainList> {
     super.dispose();
   }
 
+  void updateFilteredListOfItems() {
+    setState(() {});
+  }
+
   String mask() {
     return textSearchFieldController.text.toLowerCase().endsWith(' ')
         ? textSearchFieldController.text
@@ -38,66 +43,49 @@ class _MainList extends State<MainList> {
 
   var textSearchFieldController = TextEditingController();
 
-  // Widget searchHistoryScreen() {
-  //   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-  //     Padding(
-  //       padding: const EdgeInsets.only(
-  //         left: 16,
-  //         top: 38,
-  //       ),
-  //       child: Text(AppStrings.searchHistory,
-  //           style: Theme.of(context).textTheme.headlineMedium),
-  //     ),
-  //     Column(
-  //         children: (searchHistory.asMap().entries.map((item) =>
-  //                 HistorySearchItem(itemName: item.value, itemIndex: item.key)))
-  //             .toList()),
-  //     GestureDetector(
-  //         onTap: () {
-  //           setState(() {
-  //             searchHistory = [];
-  //           });
-  //         },
-  //         child: const Padding(
-  //           padding: EdgeInsets.only(left: 16, top: 28),
-  //           child: Text(AppStrings.clearHistory,
-  //               style: TextStyle(
-  //                   fontFamily: 'Roboto', fontSize: 16, color: Colors.green)),
-  //         ))
-  //   ]);
-  // }
-
   Widget bodyContent() {
     if (filteredSightsList.isEmpty) {
+      //Если список отфильтрованных мест пуст
       if (textSearchFieldController.text.isNotEmpty) {
-        // вывод пустого результата поиска
-        return SliverFillRemaining(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Image(
-                  image: AssetImage(AppAssets.iconEmptySearch),
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  AppStrings.emptySearchResult,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  AppStrings.tryToChangeParametersForSearch,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
+        // при этом если текстовое поле ввода НЕ ПУСТОЕ
+        if (searchHistory.isEmpty) //При этом в истории поиска ничего нет
+
+        {
+          //показываем заглушку про пустой поиск
+          return SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Image(
+                    image: AssetImage(AppAssets.iconEmptySearch),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    AppStrings.emptySearchResult,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    AppStrings.tryToChangeParametersForSearch,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          //если при этом есть история поиска, тогда отображаем историю поиска
+          return SliverToBoxAdapter(
+              key: UniqueKey(),
+              child: SearchHistory(updateScreen: () => setState(() {})));
+        }
       } else {
-        // вывод без фильтра все подряд
+        // а если отфильтрованный список filteredSightsList пуст но при этом тестовое поле не пустое отображаем все подряд
+        // вывод без фильтра все подряд из mocks[]
         return SliverGrid(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
@@ -107,15 +95,16 @@ class _MainList extends State<MainList> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return SightCard(
-                sight: mocks[index],
+                sight: sightList[index],
                 listIndex: SightListIndex.mainList,
               );
             },
-            childCount: mocks.length,
+            childCount: sightList.length,
           ),
         );
       }
     } else {
+      // но всетаки если filteredSightsList не пуст и есть совпадения тогда отображаем список из совпалений
       // отфильтрованный список
       return SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -165,43 +154,46 @@ class _MainList extends State<MainList> {
                       child: TextField(
                         controller: textSearchFieldController,
                         textAlignVertical: TextAlignVertical.center,
-                        onSubmitted: (_) {
+                        onSubmitted: (_) async {
                           //обрабатываем ввод в строке поиска
 
                           if (textSearchFieldController.text.isNotEmpty) {
+                            await searchPlace(55.989198, 37.601605, maxDistance,
+                                choosedTypes, textSearchFieldController.text);
+
                             setState(() {
-                              filteredSightsList = filteredListOfItems(
-                                  textSearchFieldController.text, sightList);
+                              // filteredSightsList = filteredListOfItems(
+                              //     textSearchFieldController.text, sightList);
                             });
                           } else {
                             filteredSightsList = [];
                           }
                         },
-                        onChanged: (_) {
+                        onChanged: (_) async {
                           //обрабатываем ввод в строке поиска
                           if (textSearchFieldController.text
                               .toLowerCase()
                               .endsWith(' ')) {
-                            setState(
-                              () {
-                                if (textSearchFieldController.text
-                                        .toLowerCase()
-                                        .endsWith(' ') &&
-                                    !textSearchFieldController.text
-                                        .toLowerCase()
-                                        .startsWith(' ')) {
-                                  filteredSightsList = filteredListOfItems(
-                                      textSearchFieldController.text
-                                          .toLowerCase()
-                                          .substring(
-                                              0,
-                                              textSearchFieldController
-                                                      .text.length -
-                                                  1),
-                                      sightList);
-                                }
-                              },
-                            );
+                            if (textSearchFieldController.text
+                                    .toLowerCase()
+                                    .endsWith(' ') &&
+                                !textSearchFieldController.text
+                                    .toLowerCase()
+                                    .startsWith(' ')) {
+                              await searchPlace(
+                                redSquare.latitude,
+                                redSquare.longitude,
+                                maxDistance,
+                                choosedTypes,
+                                textSearchFieldController.text
+                                    .toLowerCase()
+                                    .substring(
+                                        0,
+                                        textSearchFieldController.text.length -
+                                            1),
+                              );
+                              setState(() {});
+                            }
                           } else if (textSearchFieldController.text.isEmpty) {
                             setState(() {
                               filteredSightsList = [];
@@ -222,9 +214,9 @@ class _MainList extends State<MainList> {
                               image: AssetImage(AppAssets.iconSearch),
                             ),
                             suffixIcon: SuffixIcon(
-                              searchIsEmpty: mask().isEmpty,
-                              clearTextController: clearSearch,
-                            )),
+                                searchIsEmpty: mask().isEmpty,
+                                clearTextController: clearSearch,
+                                callBack: updateFilteredListOfItems)),
                       ),
                     ),
                   ),

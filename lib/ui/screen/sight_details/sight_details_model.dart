@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
+import 'package:places/domain/sight.dart';
+
+void onHeartIconClick(VoidCallback heartIconClick, Sight sight) {
+  final PlaceRepository placeRepository = PlaceRepository();
+  final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+
+  try {
+    (sight.status == SightStatus.sightNoPlans)
+        ? placeInteractor.addToFavorites(sight.sightId)
+        : placeInteractor.removeFromFavorites(sight.sightId);
+    heartIconClick();
+  } catch (error) {
+    print('Error during download data from server: $error');
+  }
+}
 
 class ImageGallery extends StatefulWidget {
   final List<String> imgList;
@@ -24,9 +41,9 @@ class _ImageGalleryState extends State<ImageGallery> {
             });
           },
           itemBuilder: (context, index) {
-            return Image(
+            return Image.network(
+              widget.imgList[index],
               fit: BoxFit.fitHeight,
-              image: AssetImage(widget.imgList[index]),
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {

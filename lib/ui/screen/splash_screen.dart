@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/repository/place_repository.dart';
+import 'package:places/mocks.dart';
 import 'package:places/ui/screen/router/route_names.dart';
+
+Future<void> initData() async {
+  final PlaceRepository placeRepository = PlaceRepository();
+  final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+
+  try {
+    mocks = await placeInteractor.getFilteredPlaces(
+        55.989198,
+        37.601605,
+        10000.0,
+        ["other", "cafe", "restaurant", "park", "museum", "hotel"],
+        "");
+  } catch (error) {
+    print('Error during download data from server: $error');
+  }
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,17 +28,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<void>? isInitialized;
-
   @override
   void initState() {
     super.initState();
-    isInitialized = _initializeApp();
+    _initializeApp();
   }
 
   Future<void> _initializeApp() async {
     //инициализация приложения.....
-    await Future.delayed(const Duration(seconds: 2));
+
+    await initData();
 
     _navigateToNext();
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:provider/provider.dart';
-import '../../main.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -13,14 +13,23 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool isDarkTheme = false;
+  late ThemeInteractor appThemeInteractor;
+
+  @override
+  void initState() {
+    super.initState();
+    appThemeInteractor = context.read<ThemeInteractor>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           title: Center(
             child: Text(AppStrings.appTitleSettings,
-                //textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18.0,
                     color: Theme.of(context).primaryColorLight,
@@ -34,7 +43,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: const EdgeInsets.only(left: 5.0, right: 10.0),
             height: 50,
             width: double.infinity,
-            //color: Colors.amber,
             child: Row(
               children: [
                 Text(
@@ -46,18 +54,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 const Divider(),
-                //const Spacer(),
-                CupertinoSwitch(
-                    value: MyTheme.isBlack,
-                    //value: isBlack,
-                    onChanged: (bool? value) {
+                Consumer<ThemeInteractor>(
+                    builder: (context, appThemeInteractor, child) {
+                  return CupertinoSwitch(
+                    value: ThemeInteractor.isBlack,
+                    onChanged: (bool value) {
                       setState(() {
-                        //isChecked = value!;
-                        MyTheme.isBlack = value!;
+                        appThemeInteractor.changeTheme(value);
                       });
-                      context.read<MyTheme>().changeTheme(MyTheme.isBlack);
-                      //myTheme().changeTheme(isBlack);
-                    })
+                    },
+                  );
+                })
               ],
             ),
           ),
@@ -90,11 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               )),
           Divider(
-            height: 1,
-            //width: double.infinity,
             color: Theme.of(context).secondaryHeaderColor,
-            // Color.fromRGBO(124, 126, 146, 0.3),
-            //margin: const EdgeInsets.only(left: 16, right: 16)
           ),
         ],
       ),
