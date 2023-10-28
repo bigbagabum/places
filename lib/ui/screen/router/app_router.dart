@@ -29,7 +29,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AddSightScreen());
 
       case Routes.setFilterSights:
-        return MaterialPageRoute(builder: (_) => const FiltersScreen());
+        return MaterialPageRoute(
+            builder: (_) => FiltersScreen(appState: appState));
 
       case Routes.setTypeSight:
         return MaterialPageRoute(

@@ -3,6 +3,7 @@ import 'package:haversine_distance/haversine_distance.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/res/app_state.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:places/ui/screen/sight_search/sight_search_model.dart';
 
@@ -54,7 +55,9 @@ List<String> choisedCategory() {
 // }
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({Key? key}) : super(key: key);
+  final AppState appState;
+
+  const FiltersScreen({Key? key, required this.appState}) : super(key: key);
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -63,7 +66,8 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
   void _clickBack() async {
     await filterPlace(redSquare.latitude, redSquare.longitude,
-        currentRangeValue, choisedCategory(), "");
+        currentRangeValue, choisedCategory(), "", widget.appState);
+
     Navigator.pop(context, [choisedCategory(), currentRangeValue]);
   }
 
@@ -72,7 +76,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     super.initState();
 
     filterPlace(redSquare.latitude, redSquare.longitude, currentRangeValue,
-        choisedCategory(), "");
+        choisedCategory(), "", widget.appState);
   }
 
   int filteredListLength = filteredSightsList.length;
@@ -113,8 +117,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
               TextButton(
                 onPressed: () async {
                   setDefault();
-                  await filterPlace(redSquare.latitude, redSquare.longitude,
-                      currentRangeValue, choisedCategory(), "");
+                  await filterPlace(
+                      redSquare.latitude,
+                      redSquare.longitude,
+                      currentRangeValue,
+                      choisedCategory(),
+                      "",
+                      widget.appState);
 
                   setState(() {});
                 },
@@ -151,7 +160,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -182,7 +192,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -216,7 +227,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -247,7 +259,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -282,7 +295,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -312,7 +326,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                                     redSquare.longitude,
                                     currentRangeValue,
                                     choisedCategory(),
-                                    "");
+                                    "",
+                                    widget.appState);
 
                                 setState(() {});
                               },
@@ -355,7 +370,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               divisions: 100,
               onChanged: (double value) async {
                 await filterPlace(redSquare.latitude, redSquare.longitude,
-                    currentRangeValue, choisedCategory(), "");
+                    currentRangeValue, choisedCategory(), "", widget.appState);
 
                 setState(() {
                   currentRangeValue = value;

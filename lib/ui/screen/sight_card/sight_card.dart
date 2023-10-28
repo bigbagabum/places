@@ -5,6 +5,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
 import 'package:places/ui/res/app_theme.dart';
+import 'package:places/ui/screen/home_page.dart';
 import 'package:places/ui/screen/sight_details/sight_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
@@ -28,10 +29,10 @@ class SightCard extends StatefulWidget {
 class _SightCardState extends State<SightCard> {
   DateTime selectedDate = DateTime.now();
 
-  void _heartIconClick() {
+  void _heartIconClick() async {
     final PlaceRepository placeRepository = PlaceRepository();
     final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
-
+    //appState.setLoading(true);
     try {
       (widget.sight.status == SightStatus.sightNoPlans)
           ? placeInteractor.addToFavorites(widget.sight.sightId)
@@ -39,6 +40,8 @@ class _SightCardState extends State<SightCard> {
       setState(() {});
     } catch (error) {
       print('Error during download data from server: $error');
+    } finally {
+      //appState.setLoading(false);
     }
   }
 
