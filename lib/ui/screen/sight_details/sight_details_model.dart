@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screen/home_page.dart';
 
 void onHeartIconClick(VoidCallback heartIconClick, Sight sight) {
   final PlaceRepository placeRepository = PlaceRepository();
@@ -9,8 +10,14 @@ void onHeartIconClick(VoidCallback heartIconClick, Sight sight) {
 
   try {
     (sight.status == SightStatus.sightNoPlans)
-        ? placeInteractor.addToFavorites(sight.sightId)
-        : placeInteractor.removeFromFavorites(sight.sightId);
+        ? {
+            placeInteractor.addToFavorites(sight.sightId),
+            appState.favoriteStatus.accept(sight)
+          }
+        : {
+            placeInteractor.removeFromFavorites(sight.sightId),
+            appState.favoriteStatus.accept(sight)
+          };
     heartIconClick();
   } catch (error) {
     print('Error during download data from server: $error');
