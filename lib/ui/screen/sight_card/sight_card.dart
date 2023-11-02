@@ -29,19 +29,31 @@ class SightCard extends StatefulWidget {
 class _SightCardState extends State<SightCard> {
   DateTime selectedDate = DateTime.now();
 
-  void _heartIconClick() async {
+  // StreamedState<SightStatus> favoriteStatus =
+  //     StreamedState<SightStatus>(SightStatus.sightNoPlans);
+
+  @override
+  void initState() {
+    super.initState();
+    // appState.favoriteStatus.stream.listen((isFav) {
+    //   favoriteStatus.accept(isFav);
+    // });
+  }
+
+  void _heartIconClick() {
     final PlaceRepository placeRepository = PlaceRepository();
     final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
-    //appState.setLoading(true);
+
     try {
-      (widget.sight.status == SightStatus.sightNoPlans)
-          ? placeInteractor.addToFavorites(widget.sight.sightId)
-          : placeInteractor.removeFromFavorites(widget.sight.sightId);
-      setState(() {});
+      if (widget.sight.status == SightStatus.sightNoPlans) {
+        placeInteractor.addToFavorites(widget.sight.sightId);
+        appState.favoriteStatus.accept(widget.sight);
+      } else {
+        placeInteractor.removeFromFavorites(widget.sight.sightId);
+        appState.favoriteStatus.accept(widget.sight);
+      }
     } catch (error) {
       print('Error during download data from server: $error');
-    } finally {
-      //appState.setLoading(false);
     }
   }
 
@@ -93,12 +105,25 @@ class _SightCardState extends State<SightCard> {
       case SightListIndex.mainList:
         return GestureDetector(
           onTap: _heartIconClick,
-          child: Image(
-            image: (widget.sight.status == SightStatus.sightNoPlans)
-                ? const AssetImage(AppAssets.iconHeart)
-                : const AssetImage(AppAssets.iconHeartFull),
-            color: AppColors.lightGrey,
-          ),
+          child: StreamBuilder<Sight?>(
+              stream: appState.favoriteStatus.stream,
+              initialData: appState.favoriteStatus.value,
+              builder: (context, snapshot) {
+                return (snapshot.data?.sightId == widget.sight.sightId)
+                    ? Image(
+                        image:
+                            (snapshot.data?.status == SightStatus.sightNoPlans)
+                                ? const AssetImage(AppAssets.iconHeart)
+                                : const AssetImage(AppAssets.iconHeartFull),
+                        color: AppColors.lightGrey,
+                      )
+                    : Image(
+                        image: (widget.sight.status == SightStatus.sightNoPlans)
+                            ? const AssetImage(AppAssets.iconHeart)
+                            : const AssetImage(AppAssets.iconHeartFull),
+                        color: AppColors.lightGrey,
+                      );
+              }),
         );
       case SightListIndex.planList:
         switch (widget.sight.status) {

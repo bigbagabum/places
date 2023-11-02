@@ -22,7 +22,7 @@ void main() {
         ),
         ChangeNotifierProvider<AppState>(
           create: (context) => AppState(),
-        ),
+        )
       ],
       child: const MyApp(),
     ),

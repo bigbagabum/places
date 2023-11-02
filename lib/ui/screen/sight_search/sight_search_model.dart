@@ -40,7 +40,7 @@ Future<void> filterPlace(double lat, double lng, double radius,
   appState.setLoading(true);
 
   try {
-    LoadingIndicator();
+    const LoadingIndicator();
     sightList =
         await placeInteractor.filterPlaces(lat, lng, radius, typePlaces, name);
   } catch (error) {

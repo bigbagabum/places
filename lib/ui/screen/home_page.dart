@@ -6,7 +6,7 @@ import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
 
-final appState = AppState();
+AppState appState = AppState();
 
 class HomePage extends StatefulWidget {
   //final Orientation orientationDevice;
