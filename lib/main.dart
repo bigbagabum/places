@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/data/interactor/settings_interactor.dart';
+import 'package:places/ui/screen/res/app_state.dart';
 import 'package:places/ui/screen/router/app_router.dart';
 import 'package:places/ui/screen/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +15,15 @@ void main() {
   ]);
 
   runApp(
-    ChangeNotifierProvider<ThemeInteractor>(
-      create: (context) => ThemeInteractor(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeInteractor>(
+          create: (context) => ThemeInteractor(),
+        ),
+        ChangeNotifierProvider<AppState>(
+          create: (context) => AppState(),
+        )
+      ],
       child: const MyApp(),
     ),
   );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/res/app_strings.dart';
+import 'package:places/ui/screen/home_page.dart';
 import 'package:places/ui/screen/sight_details/sight_details_model.dart';
 
 class SightDetails extends StatefulWidget {
@@ -216,32 +217,38 @@ class _SightDetailsState extends State<SightDetails> {
                         child: GestureDetector(
                           onTap: () {
                             onHeartIconClick(() {
-                              setState(() {});
+                              //   setState(() {});
                             }, widget.detailSight);
                           },
-                          child: Container(
-                            height: 40,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(
-                                    image: AssetImage(
-                                        widget.detailSight.status ==
-                                                SightStatus.sightNoPlans
-                                            ? AppAssets.iconHeart
-                                            : AppAssets.iconHeartFull),
-                                    color: Theme.of(context).primaryColorLight),
-                                Text(
-                                  AppStrings.inFavorite,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color:
-                                          Theme.of(context).primaryColorLight),
-                                )
-                              ],
-                            ),
-                          ),
+                          child: StreamBuilder<Sight?>(
+                              stream: appState.favoriteStatus.stream,
+                              initialData: appState.favoriteStatus.value,
+                              builder: (context, snapshot) {
+                                return Container(
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image(
+                                          image: AssetImage(
+                                              widget.detailSight.status ==
+                                                      SightStatus.sightNoPlans
+                                                  ? AppAssets.iconHeart
+                                                  : AppAssets.iconHeartFull),
+                                          color: Theme.of(context)
+                                              .primaryColorLight),
+                                      Text(
+                                        AppStrings.inFavorite,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Theme.of(context)
+                                                .primaryColorLight),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }),
                         ),
                       )
                     ],

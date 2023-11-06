@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/res/app_assets.dart';
 import 'package:places/ui/screen/map_screen.dart';
+import 'package:places/ui/screen/res/app_state.dart';
 import 'package:places/ui/screen/settings_screen.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
 import 'package:places/ui/screen/visiting_screen.dart';
+
+AppState appState = AppState();
 
 class HomePage extends StatefulWidget {
   //final Orientation orientationDevice;
@@ -28,7 +31,8 @@ class _HomePageState extends State<HomePage> {
     // _orientation = MediaQuery.of(context).orientation; // Получение ориентации
 
     final List<Widget> screenSelected = <Widget>[
-      MainList(orientation: MediaQuery.of(context).orientation),
+      MainList(
+          orientation: MediaQuery.of(context).orientation, appState: appState),
       const MapScreen(),
       const VisitingScreen(),
       const SettingsScreen(),

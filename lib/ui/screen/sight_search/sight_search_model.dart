@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
+import 'package:places/ui/screen/res/app_state.dart';
 import 'package:places/ui/screen/router/route_names.dart';
 
 import 'package:places/domain/sight.dart';
@@ -21,29 +22,48 @@ double maxDistance = 10000;
 var textSearchFieldController =
     TextEditingController(); // контроллер строки ввода
 
+class LoadingIndicator extends StatelessWidget {
+  const LoadingIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
 Future<void> filterPlace(double lat, double lng, double radius,
-    List<String> typePlaces, String name) async {
+    List<String> typePlaces, String name, AppState appState) async {
   final PlaceRepository placeRepository = PlaceRepository();
   final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
+  appState.setLoading(true);
 
   try {
+    const LoadingIndicator();
     sightList =
         await placeInteractor.filterPlaces(lat, lng, radius, typePlaces, name);
   } catch (error) {
     print('Error during download data from server: $error');
+  } finally {
+    appState.setLoading(false);
   }
 }
 
 Future<void> searchPlace(double lat, double lng, double radius,
-    List<String> typePlaces, String name) async {
+    List<String> typePlaces, String name, AppState appState) async {
   final PlaceRepository placeRepository = PlaceRepository();
   final PlaceInteractor placeInteractor = PlaceInteractor(placeRepository);
 
+  appState.setLoading(true);
   try {
+    LoadingIndicator();
     filteredSightsList =
         await placeInteractor.searchPlaces(lat, lng, radius, typePlaces, name);
   } catch (error) {
     print('Error during download data from server: $error');
+  } finally {
+    appState.setLoading(false);
   }
 }
 
