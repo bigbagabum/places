@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:places/data/error_handlers.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/model/place_dto.dart';
 import 'package:places/domain/sight.dart';
@@ -34,8 +35,12 @@ class PlaceRepository {
           handler.next(response);
         },
         onError: (DioException dioError, ErrorInterceptorHandler handler) {
+          final NetworkException err = NetworkException(
+              requestName: dioError.requestOptions.path,
+              errorCode: dioError.response?.statusCode ?? 0,
+              errorMessage: dioError.message.toString());
           // Вывести информацию при возникновении ошибки
-          print('Request Error: ${dioError.message}');
+          print(err.toString());
           handler.next(dioError);
         },
       ),
@@ -57,10 +62,14 @@ class PlaceRepository {
             data.map((json) => PlaceDto.fromJson(json)).toList();
         return places;
       } else {
-        throw Exception('Failed to fetch filtered places');
+        throw NetworkException(
+            requestName: '/filtered_places',
+            errorCode: response.statusCode ?? 0,
+            errorMessage: response.statusMessage ?? 'unknown error');
       }
-    } catch (error) {
-      throw Exception('Network error: $error');
+    } on NetworkException catch (error) {
+      print(error.toString()); // Используется переопределенный метод toString
+      rethrow;
     }
   }
 
