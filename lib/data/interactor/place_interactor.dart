@@ -2,9 +2,8 @@ import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screen/errors/error_handlers.dart';
 import 'package:places/ui/screen/sight_search/sight_search.dart';
-import 'package:places/data/error_handlers.dart';
-
 
 List<Sight> tempData = [];
 
