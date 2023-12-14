@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -42,6 +43,9 @@ class PlaceRepository {
               errorMessage: dioError.message.toString());
           // Вывести информацию при возникновении ошибки
           print(err.toString());
+
+          ErrorManager().addError(true);
+
           handler.next(dioError);
         },
       ),
@@ -211,4 +215,8 @@ class PlaceRepository {
       throw Exception('Network error: $error');
     }
   }
+
+  // void dispose() {
+  //   errorStreamController.close();
+  // }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/screen/add_sight/add_sight_screen.dart';
 import 'package:places/ui/screen/categories_screen.dart';
+import 'package:places/ui/screen/errors/network_error_screen.dart';
 import 'package:places/ui/screen/home_page.dart';
 import 'package:places/ui/screen/onboarding_screens/onboarding.dart';
 import 'package:places/ui/screen/router/route_names.dart';
@@ -35,6 +36,11 @@ class AppRouter {
       case Routes.setTypeSight:
         return MaterialPageRoute(
           builder: (_) => const ChooseCategories(),
+        );
+
+      case Routes.netError:
+        return MaterialPageRoute(
+          builder: (_) => const NetError(),
         );
 
       default:

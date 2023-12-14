@@ -216,9 +216,7 @@ class _SightDetailsState extends State<SightDetails> {
                         flex: 1,
                         child: GestureDetector(
                           onTap: () {
-                            onHeartIconClick(() {
-                              //   setState(() {});
-                            }, widget.detailSight);
+                            onHeartIconClick(() {}, widget.detailSight);
                           },
                           child: StreamBuilder<Sight?>(
                               stream: appState.favoriteStatus.stream,
